@@ -1,0 +1,711 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// enums
+
+enum Role {
+  user
+  admin
+}
+
+enum Plan {
+  FREE
+  BASIC
+  PRO
+}
+
+enum SectionType {
+  SUMMARY
+  SKILLS
+  EXPERIENCE
+  EDUCATION
+  PROJECTS
+  CERTIFICATIONS
+  LANGUAGES
+  AWARDS
+  REFERENCES
+  CUSTOM
+}
+
+enum ApplicationStatus {
+  WISHLIST
+  APPLIED
+  INTERVIEWING
+  OFFER
+  REJECTED
+}
+
+enum EmploymentType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERNSHIP
+  TEMPORARY
+  FREELANCE
+}
+
+enum WorkModel {
+  REMOTE
+  HYBRID
+  ONSITE
+}
+
+enum PageFormat {
+  A4
+  LETTER
+}
+
+// better auth
+model User {
+  id               String       @id
+  name             String
+  email            String
+  emailVerified    Boolean      @default(false)
+  image            String?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  twoFactorEnabled Boolean?     @default(false)
+  role             Role?        @default(user)
+  banned           Boolean?     @default(false)
+  banReason        String?
+  banExpires       DateTime?
+  sessions         Session[]
+  accounts         Account[]
+  twofactors       TwoFactor[]
+  passkeys         Passkey[]
+  members          Member[]
+  invitations      Invitation[]
+
+  // core models
+  plan                Plan                 @default(FREE)
+  aiCredits           Int                  @default(0)
+  curriculumVitaes    CurriculumVitae[]
+  coverLetters        CoverLetter[]
+  applications        JobApplication[]
+  jobContacts         JobContact[]
+  jobTimelineEvents   JobTimelineEvent[]
+  savedSearches       SavedSearch[]
+  aiGenerations       AiGeneration[]
+  subscription        Subscription?
+  calendarConnections CalendarConnection[]
+  importJobs          ImportJob[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id                   String   @id
+  expiresAt            DateTime
+  token                String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  ipAddress            String?
+  userAgent            String?
+  userId               String
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  impersonatedBy       String?
+  activeOrganizationId String?
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+model TwoFactor {
+  id                      String    @id
+  secret                  String
+  backupCodes             String
+  userId                  String
+  user                    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  verified                Boolean?  @default(true)
+  failedVerificationCount Int?      @default(0)
+  lockedUntil             DateTime?
+
+  @@index([secret])
+  @@index([userId])
+  @@map("twoFactor")
+}
+
+model Passkey {
+  id           String    @id
+  name         String?
+  publicKey    String
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  credentialID String
+  counter      Int
+  deviceType   String
+  backedUp     Boolean
+  transports   String?
+  createdAt    DateTime?
+  aaguid       String?
+
+  @@index([userId])
+  @@index([credentialID])
+  @@map("passkey")
+}
+
+model Organization {
+  id          String       @id
+  name        String
+  slug        String
+  logo        String?
+  createdAt   DateTime
+  metadata    String?
+  members     Member[]
+  invitations Invitation[]
+
+  @@unique([slug])
+  @@map("organization")
+}
+
+model Member {
+  id             String       @id
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role           String       @default("member")
+  createdAt      DateTime
+
+  @@index([organizationId])
+  @@index([userId])
+  @@map("member")
+}
+
+model Invitation {
+  id             String       @id
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  email          String
+  role           String?
+  status         String       @default("pending")
+  expiresAt      DateTime
+  createdAt      DateTime     @default(now())
+  inviterId      String
+  user           User         @relation(fields: [inviterId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([email])
+  @@map("invitation")
+}
+
+// core models
+
+model CurriculumVitae {
+  id                String     @id @default(cuid())
+  userId            String
+  user              User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title             String     @default("Untitled CV")
+  templateId        String     @default("classic")
+  pageFormat        PageFormat @default(A4)
+  language          String     @default("en-GB")
+  dateFormat        String     @default("MM/YYYY")
+  fontFamily        String     @default("serif")
+  fontScale         Float      @default(1.0)
+  spacingScale      Float      @default(1.0)
+  accentColor       String     @default("#1f2937")
+  contentWidth      String     @default("standard")
+  showDividers      Boolean    @default(true)
+  headingStyle      String     @default("normal")
+  headingWeight     String     @default("bold")
+  showSectionIcons  Boolean    @default(false)
+  footer            String?
+  headerLayout      String     @default("stacked")
+  entryStyle        String     @default("bullet")
+  showEntryDates    Boolean    @default(true)
+  showEntryLocation Boolean    @default(true)
+  showPhoto         Boolean    @default(false)
+  shared            Boolean    @default(false)
+  shareId           String?    @unique
+  viewCount         Int        @default(0)
+  downloadCount     Int        @default(0)
+  archivedAt        DateTime?
+
+  personalDetails PersonalDetails?
+  sections        CurriculumVitaeSection[]
+  snapshots       CurriculumVitaeSnapshot[]
+  coverLetters    CoverLetter[]
+  applications    JobApplication[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@map("curriculumVitae")
+}
+
+model PersonalDetails {
+  id                String          @id @default(cuid())
+  curriculumVitaeId String          @unique
+  curriculumVitae   CurriculumVitae @relation(fields: [curriculumVitaeId], references: [id], onDelete: Cascade)
+  fullName          String          @default("")
+  jobTitle          String          @default("")
+  email             String?
+  phone             String?
+  location          String?
+  photoUrl          String?
+  nationality       String?
+  links             Json            @default("[]")
+
+  updatedAt DateTime @updatedAt
+
+  @@map("personalDetails")
+}
+
+model CurriculumVitaeSection {
+  id                String          @id @default(cuid())
+  curriculumVitaeId String
+  curriculumVitae   CurriculumVitae @relation(fields: [curriculumVitaeId], references: [id], onDelete: Cascade)
+  type              SectionType
+  title             String
+  order             Int
+  visible           Boolean         @default(true)
+  content           String?
+
+  experienceEntries    ExperienceEntry[]
+  educationEntries     EducationEntry[]
+  projectEntries       ProjectEntry[]
+  skillGroups          SkillGroup[]
+  certificationEntries CertificationEntry[]
+  languageEntries      LanguageEntry[]
+  awardEntries         AwardEntry[]
+  referenceEntries     ReferenceEntry[]
+  customEntries        CustomEntry[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([curriculumVitaeId, order])
+  @@map("curriculumVitaeSection")
+}
+
+model ExperienceEntry {
+  id          String                 @id @default(cuid())
+  sectionId   String
+  section     CurriculumVitaeSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  company     String
+  role        String
+  location    String?
+  startDate   String
+  endDate     String?
+  current     Boolean                @default(false)
+  description String?
+  bullets     String[]
+  order       Int
+
+  @@index([sectionId, order])
+  @@map("experienceEntry")
+}
+
+model EducationEntry {
+  id          String                 @id @default(cuid())
+  sectionId   String
+  section     CurriculumVitaeSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  institution String
+  degree      String
+  location    String?
+  startDate   String?
+  endDate     String?
+  order       Int
+
+  @@index([sectionId, order])
+  @@map("educationEntry")
+}
+
+model ProjectEntry {
+  id           String                 @id @default(cuid())
+  sectionId    String
+  section      CurriculumVitaeSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  name         String
+  link         String?
+  description  String?
+  technologies String[]
+  order        Int
+
+  @@index([sectionId, order])
+  @@map("projectEntry")
+}
+
+model SkillGroup {
+  id        String                 @id @default(cuid())
+  sectionId String
+  section   CurriculumVitaeSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  label     String
+  skills    String[]
+  order     Int
+  visible   Boolean                @default(true)
+
+  @@index([sectionId, order])
+  @@map("skillGroup")
+}
+
+model CertificationEntry {
+  id            String                 @id @default(cuid())
+  sectionId     String
+  section       CurriculumVitaeSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  name          String
+  issuer        String?
+  issueDate     String?
+  expiryDate    String?
+  credentialId  String?
+  credentialUrl String?
+  order         Int
+
+  @@index([sectionId, order])
+  @@map("certificationEntry")
+}
+
+model LanguageEntry {
+  id          String                 @id @default(cuid())
+  sectionId   String
+  section     CurriculumVitaeSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  name        String
+  proficiency String?
+  order       Int
+
+  @@index([sectionId, order])
+  @@map("languageEntry")
+}
+
+model AwardEntry {
+  id          String                 @id @default(cuid())
+  sectionId   String
+  section     CurriculumVitaeSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  title       String
+  issuer      String?
+  date        String?
+  description String?
+  order       Int
+
+  @@index([sectionId, order])
+  @@map("awardEntry")
+}
+
+model ReferenceEntry {
+  id        String                 @id @default(cuid())
+  sectionId String
+  section   CurriculumVitaeSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  name      String
+  jobTitle  String?
+  company   String?
+  email     String?
+  phone     String?
+  order     Int
+
+  @@index([sectionId, order])
+  @@map("referenceEntry")
+}
+
+model CustomEntry {
+  id          String                 @id @default(cuid())
+  sectionId   String
+  section     CurriculumVitaeSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  title       String
+  subtitle    String?
+  link        String?
+  startDate   String?
+  endDate     String?
+  location    String?
+  description String?
+  order       Int
+
+  @@index([sectionId, order])
+  @@map("customEntry")
+}
+
+model CurriculumVitaeSnapshot {
+  id                String          @id @default(cuid())
+  curriculumVitaeId String
+  curriculumVitae   CurriculumVitae @relation(fields: [curriculumVitaeId], references: [id], onDelete: Cascade)
+  label             String?
+  data              Json
+  createdAt         DateTime        @default(now())
+
+  @@index([curriculumVitaeId])
+  @@map("curriculumVitaeSnapshot")
+}
+
+model CoverLetter {
+  id                String           @id @default(cuid())
+  userId            String
+  user              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  curriculumVitaeId String?
+  curriculumVitae   CurriculumVitae? @relation(fields: [curriculumVitaeId], references: [id], onDelete: SetNull)
+  title             String           @default("Untitled Cover Letter")
+  fullName          String           @default("")
+  professionalTitle String           @default("")
+  email             String           @default("")
+  phone             String           @default("")
+  location          String           @default("")
+  date              String           @default("")
+  recipientName     String?
+  companyName       String?
+  body              String           @default("")
+  fontFamily        String           @default("serif")
+  templateId        String           @default("classic")
+  accentColor       String           @default("#1f2937")
+  archivedAt        DateTime?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  applications JobApplication[]
+
+  @@index([userId])
+  @@index([curriculumVitaeId])
+  @@map("coverLetter")
+}
+
+model JobApplication {
+  id                String            @id @default(cuid())
+  userId            String
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title             String
+  company           String
+  location          String?
+  salaryMin         Int?
+  salaryMax         Int?
+  salaryCurrency    String?
+  jobUrl            String?
+  description       String?
+  status            ApplicationStatus @default(WISHLIST)
+  order             Int               @default(0)
+  curriculumVitaeId String?
+  curriculumVitae   CurriculumVitae?  @relation(fields: [curriculumVitaeId], references: [id], onDelete: SetNull)
+  coverLetterId     String?
+  coverLetter       CoverLetter?      @relation(fields: [coverLetterId], references: [id], onDelete: SetNull)
+  notes             String?
+  appliedAt         DateTime?
+  followUpAt        DateTime?
+  interviewAt       DateTime?
+
+  // Expanded fields
+  companyWebsite     String?
+  companyDescription String?
+  employmentType     EmploymentType?
+  workModel          WorkModel?
+  source             String?
+  skills             String[]
+  color              String?
+  archived           Boolean         @default(false)
+  archivedAt         DateTime?
+
+  // Relations to new models
+  contacts       JobContact[]
+  timelineEvents JobTimelineEvent[]
+  interviews     JobInterview[]
+  offers         JobOffer[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, status])
+  @@index([userId, archived])
+  @@index([curriculumVitaeId])
+  @@index([coverLetterId])
+  @@map("jobApplication")
+}
+
+model JobContact {
+  id               String         @id @default(cuid())
+  jobApplicationId String
+  jobApplication   JobApplication @relation(fields: [jobApplicationId], references: [id], onDelete: Cascade)
+  userId           String
+  user             User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name             String
+  role             String?
+  email            String?
+  phone            String?
+  notes            String?
+  linkedInUrl      String?
+  order            Int            @default(0)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@index([jobApplicationId])
+  @@index([userId])
+  @@map("jobContact")
+}
+
+model JobTimelineEvent {
+  id               String         @id @default(cuid())
+  jobApplicationId String
+  jobApplication   JobApplication @relation(fields: [jobApplicationId], references: [id], onDelete: Cascade)
+  userId           String
+  user             User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type             String // applied, interview, offer, rejection, follow-up, note, status-change, document, other
+  title            String
+  description      String?
+  eventDate        DateTime       @default(now())
+  createdAt        DateTime       @default(now())
+
+  @@index([jobApplicationId])
+  @@index([userId, eventDate])
+  @@map("jobTimelineEvent")
+}
+
+model JobInterview {
+  id               String         @id @default(cuid())
+  jobApplicationId String
+  jobApplication   JobApplication @relation(fields: [jobApplicationId], references: [id], onDelete: Cascade)
+  round            String // phone, technical, behavioural, onsite, final, other
+  title            String?
+  scheduledAt      DateTime
+  durationMinutes  Int?
+  location         String? // physical address or video link
+  meetingLink      String?
+  interviewers     String[]
+  notes            String?
+  feedback         String?
+  type             String         @default("video") // phone, video, onsite, technical-test
+  order            Int            @default(0)
+  completed        Boolean        @default(false)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@index([jobApplicationId])
+  @@map("jobInterview")
+}
+
+model JobOffer {
+  id               String         @id @default(cuid())
+  jobApplicationId String
+  jobApplication   JobApplication @relation(fields: [jobApplicationId], references: [id], onDelete: Cascade)
+  salaryMin        Int?
+  salaryMax        Int?
+  salaryCurrency   String?
+  equityInfo       String?
+  bonusInfo        String?
+  benefits         String[]
+  deadline         DateTime?
+  status           String         @default("pending") // pending, accepted, declined, negotiated, expired
+  notes            String?
+  receivedAt       DateTime       @default(now())
+  respondedAt      DateTime?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@index([jobApplicationId])
+  @@map("jobOffer")
+}
+
+model SavedSearch {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  filters   Json // stored filter state
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@map("savedSearch")
+}
+
+model CalendarConnection {
+  id           String    @id @default(cuid())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  provider     String    @default("google")
+  accessToken  String
+  refreshToken String?
+  expiresAt    DateTime?
+  calendarId   String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("calendarConnection")
+}
+
+model ImportJob {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sourceType String
+  rawText    String?
+  parsedData Json?
+  status     String   @default("pending")
+  curriculumVitaeId   String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([userId, status])
+  @@map("importJob")
+}
+
+model AiGeneration {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  feature     String
+  curriculumVitaeId    String?
+  tokensIn    Int      @default(0)
+  tokensOut   Int      @default(0)
+  creditsUsed Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@map("aiGeneration")
+}
+
+model Subscription {
+  id                   String    @id @default(cuid())
+  userId               String    @unique
+  user                 User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stripeCustomerId     String?   @unique
+  stripeSubscriptionId String?   @unique
+  status               String?
+  currentPeriodEnd     DateTime?
+  cancelAtPeriodEnd    Boolean   @default(false)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  @@map("subscription")
+}
+

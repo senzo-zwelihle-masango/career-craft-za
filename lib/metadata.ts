@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
   metadataBase: new URL("https://careercraftza.com"),
   title: {
-    default: "Career Craft ZA | Build Your CV",
+    default: "Career Craft | Build Your CV",
     template: "%s | Career Craft ZA",
   },
   description:
