@@ -66,6 +66,19 @@ enum PageFormat {
   LETTER
 }
 
+enum FeedbackType {
+  BUG_REPORT
+  FEATURE_REQUEST
+  GENERAL
+  REVIEW
+}
+
+enum FeedbackStatus {
+  PENDING
+  REVIEWED
+  RESOLVED
+}
+
 // better auth
 model User {
   id               String       @id
@@ -100,6 +113,7 @@ model User {
   subscription        Subscription?
   calendarConnections CalendarConnection[]
   importJobs          ImportJob[]
+  feedback            Feedback[]
 
   @@unique([email])
   @@map("user")
@@ -664,31 +678,31 @@ model CalendarConnection {
 }
 
 model ImportJob {
-  id         String   @id @default(cuid())
-  userId     String
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  sourceType String
-  rawText    String?
-  parsedData Json?
-  status     String   @default("pending")
-  curriculumVitaeId   String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sourceType        String
+  rawText           String?
+  parsedData        Json?
+  status            String   @default("pending")
+  curriculumVitaeId String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   @@index([userId, status])
   @@map("importJob")
 }
 
 model AiGeneration {
-  id          String   @id @default(cuid())
-  userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  feature     String
-  curriculumVitaeId    String?
-  tokensIn    Int      @default(0)
-  tokensOut   Int      @default(0)
-  creditsUsed Int      @default(0)
-  createdAt   DateTime @default(now())
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  feature           String
+  curriculumVitaeId String?
+  tokensIn          Int      @default(0)
+  tokensOut         Int      @default(0)
+  creditsUsed       Int      @default(0)
+  createdAt         DateTime @default(now())
 
   @@index([userId, createdAt])
   @@map("aiGeneration")
@@ -709,3 +723,23 @@ model Subscription {
   @@map("subscription")
 }
 
+model Feedback {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type   FeedbackType
+  status FeedbackStatus @default(PENDING)
+
+  title  String
+  body   String @db.Text
+  rating Int?   @db.SmallInt
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([type])
+  @@index([status])
+  @@map("feedback")
+}

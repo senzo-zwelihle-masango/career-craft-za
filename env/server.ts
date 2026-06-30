@@ -14,6 +14,11 @@ export const env = createEnv({
     RESEND_API_KEY: z.string().min(1),
     BETTER_AUTH_SECRET: z.string().min(1),
     BETTER_AUTH_URL: z.url(),
+    UPLOADTHING_TOKEN: z.string().min(1),
+    GOOGLE_GENERATIVE_AI_API_KEY: z.string().min(1),
+    AI_API_KEY: z.string().min(1),
+    AI_API_BASE_URL: z.url(),
+    AI_MODEL: z.string().min(1),
   },
   // If you're using Next.js < 13.4.4, you'll need to specify the runtimeEnv manually
   // runtimeEnv: {

@@ -1,6 +1,9 @@
 import { Geist_Mono, Manrope } from "next/font/google"
-
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin"
+import { extractRouterConfig } from "uploadthing/server"
+import { ourFileRouter } from "@/app/api/uploadthing/core"
 import "./globals.css"
+import { LenisProvider } from "@/components/providers/lenis-provider"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { Toaster } from "@/components/ui/sonner"
@@ -22,22 +25,25 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={cn(
-        "antialiased selection:bg-primary",
-        fontMono.variable,
-        "font-sans",
-        manrope.variable
-      )}
-    >
-      <body>
-        <ThemeProvider>
-          <TooltipProvider>{children}</TooltipProvider>
-          <Toaster theme="system" position="top-center" />
-        </ThemeProvider>
-      </body>
-    </html>
+    <LenisProvider>
+      <html
+        lang="en"
+        suppressHydrationWarning
+        className={cn(
+          "antialiased selection:bg-primary",
+          fontMono.variable,
+          "font-sans",
+          manrope.variable
+        )}
+      >
+        <body>
+          <ThemeProvider>
+            <TooltipProvider>{children}</TooltipProvider>
+            <Toaster theme="system" position="top-center" />
+              <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+          </ThemeProvider>
+        </body>
+      </html>
+    </LenisProvider>
   )
 }

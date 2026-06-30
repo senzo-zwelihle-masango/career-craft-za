@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "../node_modules/lenis/dist/lenis.css";
+
 
 @custom-variant dark (&:is(.dark *));
 
@@ -85,7 +87,7 @@
 .dark {
     --background: oklch(0 0 0);
     --foreground: oklch(0.985 0 0);
-    --card: oklch(0 0 0);
+    --card: oklch(0.145 0 0);
     --card-foreground: oklch(0.985 0 0);
     --popover: oklch(0 0 0);
     --popover-foreground: oklch(0.985 0 0);
@@ -126,4 +128,17 @@
   html {
     @apply font-sans;
     }
+}
+
+/* hide scrollbar */
+
+@utility scrollbar-hidden {
+  /* Safari, Chrome, Opera, and newer Edge */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  /* Firefox */
+  scrollbar-width: none;
+  /* Internet Explorer and legacy Edge */
+  -ms-overflow-style: none;
 }
