@@ -24,4 +24,7 @@ fix detail panel
 
 
 settings page needs to be built
-dispay year only for cv
+dispay year only option for cv
+some cv templates show image and they're not supposed to
+docx download not downloading with selected cv template
+text formating on some cv's is broken and doesnt look good

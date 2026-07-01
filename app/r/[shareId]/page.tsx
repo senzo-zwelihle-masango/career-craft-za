@@ -14,7 +14,7 @@ export default async function SharedCvPage({ params }: { params: Promise<{ share
       <div className="mx-auto w-full max-w-[210mm] shadow-xl">
         <div className="relative w-full" style={{ paddingBottom: `${(297 / 210) * 100}%` }}>
           <div className="absolute inset-0 overflow-hidden bg-white">
-            <CvPreview resume={result.data} />
+            <CvPreview cv={result.data} />
           </div>
         </div>
       </div>

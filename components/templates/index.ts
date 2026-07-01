@@ -32,7 +32,7 @@ import { StudentSidebarTemplate, templateMeta as studentSidebarMeta } from "./fi
 import { CleanStartTemplate, templateMeta as cleanStartMeta } from "./first-job/clean-start"
 
 export type TemplateComponent = (props: {
-  resume: CvWithRelations
+  cv: CvWithRelations
 }) => React.ReactElement
 
 export interface TemplateInfo {

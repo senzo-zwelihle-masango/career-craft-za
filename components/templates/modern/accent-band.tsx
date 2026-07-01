@@ -23,18 +23,18 @@ export const templateMeta: TemplateMeta = {
   },
 }
 
-export function AccentBandTemplate({ resume }: { resume: CvWithRelations }) {
-  const pd = resume.personalDetails
-  const fs = resume.fontScale || 1
-  const ss = resume.spacingScale || 1
-  const pageFormat = resume.pageFormat || "A4"
+export function AccentBandTemplate({ cv }: { cv: CvWithRelations }) {
+  const pd = cv.personalDetails
+  const fs = cv.fontScale || 1
+  const ss = cv.spacingScale || 1
+  const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
-  const accentColor = resume.accentColor || "#2563eb"
-  const fontCSS = FONT_FAMILY_MAP[resume.fontFamily]?.css || resume.fontFamily || "Inter, sans-serif"
+  const accentColor = cv.accentColor || "#2563eb"
+  const fontCSS = FONT_FAMILY_MAP[cv.fontFamily]?.css || cv.fontFamily || "Inter, sans-serif"
   const links = getLinks(pd)
-  const showPhoto = resume.showPhoto && pd?.photoUrl
+  const showPhoto = cv.showPhoto && pd?.photoUrl
 
-  const visibleSections = resume.sections
+  const visibleSections = cv.sections
     .filter(s => s.visible !== false)
     .sort((a, b) => a.order - b.order)
 
@@ -67,6 +67,7 @@ export function AccentBandTemplate({ resume }: { resume: CvWithRelations }) {
               width: 72,
               height: 90,
               objectFit: "cover",
+              objectPosition: pd?.photoObjectPosition || "50% 50%",
               borderRadius: 8,
               marginBottom: `${8 * ss}px`,
             }}
@@ -115,7 +116,7 @@ export function AccentBandTemplate({ resume }: { resume: CvWithRelations }) {
         {pd?.location && <span>{pd.location}</span>}
         {pd?.nationality && <span>{pd.nationality}</span>}
         {links.map((link, i) => (
-          <span key={i}>{linkTypeLabels[link.type] || link.type}: {link.url}</span>
+          <span key={i}>        {linkTypeLabels[link.type] || link.label || link.url}</span>
         ))}
       </div>
 
@@ -125,20 +126,20 @@ export function AccentBandTemplate({ resume }: { resume: CvWithRelations }) {
           <div key={section.id} style={{ marginBottom: `${16 * ss}px` }}>
             <SectionRenderer
               section={section}
-              resume={resume}
-              showDividers={resume.showDividers ?? true}
-              entryStyle={resume.entryStyle || "bullet"}
-              showEntryDates={resume.showEntryDates ?? true}
-              showEntryLocation={resume.showEntryLocation ?? true}
+              cv={cv}
+              showDividers={cv.showDividers ?? true}
+              entryStyle={cv.entryStyle || "bullet"}
+              showEntryDates={cv.showEntryDates ?? true}
+              showEntryLocation={cv.showEntryLocation ?? true}
               accentColor={accentColor}
-              showSectionIcons={resume.showSectionIcons ?? false}
-              headingStyle={resume.headingStyle || "uppercase"}
-              headingWeight={resume.headingWeight || "bold"}
+              showSectionIcons={cv.showSectionIcons ?? false}
+              headingStyle={cv.headingStyle || "uppercase"}
+              headingWeight={cv.headingWeight || "bold"}
             />
           </div>
         ))}
 
-        {resume.footer && (
+        {cv.footer && (
           <p
             style={{
               textAlign: "center",
@@ -147,7 +148,7 @@ export function AccentBandTemplate({ resume }: { resume: CvWithRelations }) {
               marginTop: `${16 * ss}px`,
             }}
           >
-            {resume.footer}
+            {cv.footer}
           </p>
         )}
       </div>

@@ -145,7 +145,7 @@ const JobTrackerPage = () => {
   // CRUD
   async function handleCreate(data: Record<string, unknown>) {
     setAddSheetOpen(false)
-    const { data: job, error } = await createJobApplication(data)
+    const { data: job, error } = await createJobApplication(data as Parameters<typeof createJobApplication>[0])
     if (error) {
       toast.error(error)
       return
@@ -161,11 +161,11 @@ const JobTrackerPage = () => {
       return
     }
     setJobs((prev) =>
-      prev.map((j) => (j.id === id ? { ...j, status } : j))
+      prev.map((j) => (j.id === id ? { ...j, status: status as typeof j.status } : j))
     )
     if (selectedJob?.id === id) {
       setSelectedJob((prev) =>
-        prev ? { ...prev, status } : null
+        prev ? { ...prev, status: status as typeof prev.status } : null
       )
     }
   }
@@ -358,9 +358,9 @@ const JobTrackerPage = () => {
             </div>
 
             {/* Details panel */}
-            {showDetails && selectedJob && (
+            {showDetails && selectedJob && view === "table" && (
               <div
-                className="shrink-0 hidden lg:flex flex-col border-l relative"
+                className="shrink-0 hidden lg:flex flex-col relative"
                 style={{ width: panelWidth, minWidth: 340, maxWidth: 420 }}
               >
                 <div
@@ -387,7 +387,7 @@ const JobTrackerPage = () => {
             )}
 
             {/* Mobile details overlay */}
-            {isMobile && showDetails && selectedJob && (
+            {isMobile && showDetails && selectedJob && view === "table" && (
               <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/10" onClick={() => setShowDetails(false)}>
                 <div
                   className="relative w-full sm:max-w-lg max-h-[85vh] rounded-t-xl sm:rounded-xl bg-popover shadow-lg ring-1 ring-foreground/10 overflow-hidden"

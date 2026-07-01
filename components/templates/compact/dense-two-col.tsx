@@ -24,16 +24,16 @@ export const templateMeta: TemplateMeta = {
   },
 }
 
-export function DenseTwoColTemplate({ resume }: { resume: CvWithRelations }) {
-  const pd = resume.personalDetails
-  const fs = resume.fontScale || 1
-  const ss = resume.spacingScale || 1
-  const pageFormat = resume.pageFormat || "A4"
+export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
+  const pd = cv.personalDetails
+  const fs = cv.fontScale || 1
+  const ss = cv.spacingScale || 1
+  const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
-  const accentColor = resume.accentColor || "#374151"
-  const fontCSS = FONT_FAMILY_MAP[resume.fontFamily]?.css || resume.fontFamily || "Inter, sans-serif"
+  const accentColor = cv.accentColor || "#374151"
+  const fontCSS = FONT_FAMILY_MAP[cv.fontFamily]?.css || cv.fontFamily || "Inter, sans-serif"
 
-  const visibleSections = resume.sections
+  const visibleSections = cv.sections
     .filter(s => s.visible !== false)
     .sort((a, b) => a.order - b.order)
 
@@ -42,12 +42,12 @@ export function DenseTwoColTemplate({ resume }: { resume: CvWithRelations }) {
   const mainSections = visibleSections.filter(s => !sidebarTypes.includes(s.type))
 
   const links = getLinks(pd)
-  const headingStyle = resume.headingStyle || "uppercase"
-  const headingWeight = resume.headingWeight || "bold"
-  const entryStyle = resume.entryStyle || "bullet"
-  const showDates = resume.showEntryDates !== false
-  const showLocation = resume.showEntryLocation !== false
-  const dateFormat = resume.dateFormat || "MM/YYYY"
+  const headingStyle = cv.headingStyle || "uppercase"
+  const headingWeight = cv.headingWeight || "bold"
+  const entryStyle = cv.entryStyle || "bullet"
+  const showDates = cv.showEntryDates !== false
+  const showLocation = cv.showEntryLocation !== false
+  const dateFormat = cv.dateFormat || "MM/YYYY"
 
   const renderMainSection = (section: CvWithRelations["sections"][0]) => {
     if (section.type === "SUMMARY" && section.content) {
@@ -57,7 +57,7 @@ export function DenseTwoColTemplate({ resume }: { resume: CvWithRelations }) {
             title={section.title}
             headingStyle={headingStyle}
             headingWeight={headingWeight}
-            showSectionIcons={resume.showSectionIcons}
+            showSectionIcons={cv.showSectionIcons}
             accentColor={accentColor}
           />
           <div className="prose prose-sm max-w-none text-[10px] leading-relaxed text-gray-700" style={{ marginTop: 2 * ss }} dangerouslySetInnerHTML={{ __html: section.content }} />
@@ -71,7 +71,7 @@ export function DenseTwoColTemplate({ resume }: { resume: CvWithRelations }) {
           title={section.title}
           headingStyle={headingStyle}
           headingWeight={headingWeight}
-          showSectionIcons={resume.showSectionIcons}
+          showSectionIcons={cv.showSectionIcons}
           accentColor={accentColor}
         />
 
@@ -136,7 +136,7 @@ export function DenseTwoColTemplate({ resume }: { resume: CvWithRelations }) {
         title={section.title}
         headingStyle={headingStyle}
         headingWeight={headingWeight}
-        showSectionIcons={resume.showSectionIcons}
+        showSectionIcons={cv.showSectionIcons}
         accentColor={accentColor}
       />
 
@@ -183,9 +183,18 @@ export function DenseTwoColTemplate({ resume }: { resume: CvWithRelations }) {
               <div key={entry.id} className="break-inside-avoid" style={{ marginBottom: 3 * ss }}>
                 <p className="text-[10px] font-semibold leading-tight">{entry.name}</p>
                 {entry.issuer && <p className="text-[9px] text-gray-600">{entry.issuer}</p>}
-                {entry.issueDate && (
-                  <p className="text-[8px] text-gray-500">{formatDate(entry.issueDate, dateFormat)}</p>
-                )}
+                  {entry.issueDate && (
+                    <p className="text-[8px] text-gray-500">{formatDate(entry.issueDate, dateFormat)}</p>
+                  )}
+                  {entry.credentialUrl ? (
+                    <p className="text-[8px] mt-px">
+                      <span onClick={(e) => { e.stopPropagation(); window.open(entry.credentialUrl, "_blank") }} className="underline text-inherit cursor-pointer" role="link" tabIndex={0}>
+                        {entry.credentialId || "View credential"}
+                      </span>
+                    </p>
+                  ) : entry.credentialId ? (
+                    <p className="text-[8px] text-gray-500 mt-px">{entry.credentialId}</p>
+                  ) : null}
               </div>
             ))}
         </div>
@@ -236,7 +245,7 @@ export function DenseTwoColTemplate({ resume }: { resume: CvWithRelations }) {
           {pd?.phone && <span>{pd.phone}</span>}
           {pd?.location && <span>{pd.location}</span>}
           {links.map((link, i) => (
-            <span key={i}>{linkTypeLabels[link.type] || link.type}: {link.url}</span>
+            <span key={i}>        {linkTypeLabels[link.type] || link.label || link.url}</span>
           ))}
         </div>
       </div>
@@ -255,9 +264,9 @@ export function DenseTwoColTemplate({ resume }: { resume: CvWithRelations }) {
       </div>
 
       {/* Footer */}
-      {resume.footer && (
+      {cv.footer && (
         <div style={{ marginTop: 8 * ss, textAlign: "center", fontSize: `${0.5625 * fs}rem`, color: "#9CA3AF" }}>
-          {resume.footer}
+          {cv.footer}
         </div>
       )}
     </div>

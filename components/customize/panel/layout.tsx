@@ -12,6 +12,7 @@ export function LayoutPanel() {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
+        <p className="text-sm font-medium">Layout</p>
         <PanelTip tip={PANEL_TIPS.Layout} />
       </div>
       <div className="space-y-2">

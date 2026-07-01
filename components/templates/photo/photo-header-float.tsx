@@ -4,16 +4,16 @@ import { getLinks, linkTypeLabels } from "../_base/getLinks"
 import { FONT_FAMILY_MAP } from "../_base/font-map"
 import type { TemplateMeta } from "../types"
 
-export function PhotoHeaderFloatTemplate({ resume }: { resume: CvWithRelations }) {
-  const pd = resume.personalDetails
-  const fs = resume.fontScale || 1
-  const ss = resume.spacingScale || 1
-  const pageFormat = resume.pageFormat || "A4"
+export function PhotoHeaderFloatTemplate({ cv }: { cv: CvWithRelations }) {
+  const pd = cv.personalDetails
+  const fs = cv.fontScale || 1
+  const ss = cv.spacingScale || 1
+  const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
-  const accentColor = resume.accentColor || "#1f2937"
-  const fontCSS = FONT_FAMILY_MAP[resume.fontFamily]?.css || resume.fontFamily || "Inter, sans-serif"
+  const accentColor = cv.accentColor || "#1f2937"
+  const fontCSS = FONT_FAMILY_MAP[cv.fontFamily]?.css || cv.fontFamily || "Inter, sans-serif"
 
-  const visibleSections = resume.sections
+  const visibleSections = cv.sections
     .filter(s => s.visible !== false)
     .sort((a, b) => a.order - b.order)
 
@@ -90,13 +90,13 @@ export function PhotoHeaderFloatTemplate({ resume }: { resume: CvWithRelations }
               {links.map((link, i) => (
                 <span key={i}>
                   {i > 0 && " · "}
-                  {linkTypeLabels[link.type] || link.type}: {link.url}
+                  {linkTypeLabels[link.type] || link.label || link.url}
                 </span>
               ))}
             </p>
           )}
         </div>
-        {pd?.photoUrl && resume.showPhoto && (
+        {pd?.photoUrl && cv.showPhoto && (
           <div style={{ flexShrink: 0 }}>
             <img
               src={pd.photoUrl}
@@ -106,6 +106,7 @@ export function PhotoHeaderFloatTemplate({ resume }: { resume: CvWithRelations }
                 height: 96 * fs,
                 borderRadius: "50%",
                 objectFit: "cover",
+                objectPosition: pd?.photoObjectPosition || "50% 50%",
                 border: `3px solid ${accentColor}`,
               }}
             />
@@ -118,20 +119,20 @@ export function PhotoHeaderFloatTemplate({ resume }: { resume: CvWithRelations }
           <SectionRenderer
             key={section.id}
             section={section}
-            resume={resume}
-            showDividers={resume.showDividers ?? true}
-            entryStyle={resume.entryStyle || "bullet"}
-            showEntryDates={resume.showEntryDates ?? true}
-            showEntryLocation={resume.showEntryLocation ?? true}
+            cv={cv}
+            showDividers={cv.showDividers ?? true}
+            entryStyle={cv.entryStyle || "bullet"}
+            showEntryDates={cv.showEntryDates ?? true}
+            showEntryLocation={cv.showEntryLocation ?? true}
             accentColor={accentColor}
-            showSectionIcons={resume.showSectionIcons || false}
-            headingStyle={resume.headingStyle || "normal"}
-            headingWeight={resume.headingWeight || "bold"}
+            showSectionIcons={cv.showSectionIcons || false}
+            headingStyle={cv.headingStyle || "normal"}
+            headingWeight={cv.headingWeight || "bold"}
           />
         ))}
       </div>
 
-      {resume.footer && (
+      {cv.footer && (
         <div
           style={{
             marginTop: 16 * ss,
@@ -140,7 +141,7 @@ export function PhotoHeaderFloatTemplate({ resume }: { resume: CvWithRelations }
             color: "#9CA3AF",
           }}
         >
-          {resume.footer}
+          {cv.footer}
         </div>
       )}
     </div>

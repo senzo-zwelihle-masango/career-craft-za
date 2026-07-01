@@ -24,24 +24,24 @@ const linkTypeLabels: Record<string, string> = {
 }
 
 interface RuledEditorialProps {
-  resume: CvWithRelations
+  cv: CvWithRelations
 }
 
-export function RuledEditorial({ resume }: RuledEditorialProps) {
-  const pd = resume.personalDetails
-  const fs = resume.fontScale || 1
-  const ss = resume.spacingScale || 1
-  const pageFormat = resume.pageFormat || "A4"
+export function RuledEditorial({ cv }: RuledEditorialProps) {
+  const pd = cv.personalDetails
+  const fs = cv.fontScale || 1
+  const ss = cv.spacingScale || 1
+  const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
-  const accentColor = resume.accentColor || "#1f2937"
-  const fontCSS = FONT_FAMILY_MAP[resume.fontFamily]?.css || resume.fontFamily || "Inter, sans-serif"
+  const accentColor = cv.accentColor || "#1f2937"
+  const fontCSS = FONT_FAMILY_MAP[cv.fontFamily]?.css || cv.fontFamily || "Inter, sans-serif"
 
-  const visibleSections = resume.sections
+  const visibleSections = cv.sections
     .filter((s) => s.visible !== false)
     .sort((a, b) => a.order - b.order)
 
   const headingTextTransform =
-    resume.headingStyle === "uppercase" ? "uppercase" : "none"
+    cv.headingStyle === "uppercase" ? "uppercase" : "none"
 
   return (
     <div
@@ -99,7 +99,7 @@ export function RuledEditorial({ resume }: RuledEditorialProps) {
           {pd?.phone && <span>{pd.phone}</span>}
           {pd?.location && <span>{pd.location}</span>}
           {getLinks(pd).map((link, i) => (
-            <span key={i}>{linkTypeLabels[link.type] || link.url}</span>
+            <span key={i}>{linkTypeLabels[link.type] || link.label || link.url}</span>
           ))}
         </div>
       </div>
@@ -107,7 +107,7 @@ export function RuledEditorial({ resume }: RuledEditorialProps) {
       {/* Sections */}
       {visibleSections.map((section, idx) => {
         const showDivider =
-          resume.showDividers !== false && idx < visibleSections.length - 1
+          cv.showDividers !== false && idx < visibleSections.length - 1
 
         return (
           <div key={section.id} style={{ marginBottom: `${18 * ss}px` }}>
@@ -182,7 +182,7 @@ export function RuledEditorial({ resume }: RuledEditorialProps) {
                         <span style={{ fontWeight: 600, fontSize: `${0.875 * fs}rem` }}>
                           {entry.role}
                         </span>
-                        {resume.showEntryDates !== false && (
+                        {cv.showEntryDates !== false && (
                           <span
                             style={{
                               fontSize: `${0.6875 * fs}rem`,
@@ -190,12 +190,12 @@ export function RuledEditorial({ resume }: RuledEditorialProps) {
                               whiteSpace: "nowrap",
                             }}
                           >
-                            {formatDate(entry.startDate, resume.dateFormat || "MM/YYYY")}
+                            {formatDate(entry.startDate, cv.dateFormat || "MM/YYYY")}
                             {" — "}
                             {entry.current
                               ? "Present"
                               : entry.endDate
-                                ? formatDate(entry.endDate, resume.dateFormat || "MM/YYYY")
+                                ? formatDate(entry.endDate, cv.dateFormat || "MM/YYYY")
                                 : ""}
                           </span>
                         )}
@@ -208,7 +208,7 @@ export function RuledEditorial({ resume }: RuledEditorialProps) {
                         }}
                       >
                         {entry.company}
-                        {resume.showEntryLocation !== false && entry.location
+                        {cv.showEntryLocation !== false && entry.location
                           ? ` · ${entry.location}`
                           : ""}
                       </p>
@@ -224,7 +224,7 @@ export function RuledEditorial({ resume }: RuledEditorialProps) {
                           dangerouslySetInnerHTML={{ __html: entry.description }}
                         />
                       )}
-                      {resume.entryStyle !== "paragraph" &&
+                      {cv.entryStyle !== "paragraph" &&
                         entry.bullets.length > 0 && (
                           <ul
                             style={{
@@ -267,7 +267,7 @@ export function RuledEditorial({ resume }: RuledEditorialProps) {
                         <span style={{ fontWeight: 600, fontSize: `${0.875 * fs}rem` }}>
                           {entry.institution}
                         </span>
-                        {resume.showEntryDates !== false && (
+                        {cv.showEntryDates !== false && (
                           <span
                             style={{
                               fontSize: `${0.6875 * fs}rem`,
@@ -276,9 +276,9 @@ export function RuledEditorial({ resume }: RuledEditorialProps) {
                             }}
                           >
                             {entry.startDate &&
-                              formatDate(entry.startDate, resume.dateFormat || "MM/YYYY")}
+                              formatDate(entry.startDate, cv.dateFormat || "MM/YYYY")}
                             {entry.endDate &&
-                              ` — ${formatDate(entry.endDate, resume.dateFormat || "MM/YYYY")}`}
+                              ` — ${formatDate(entry.endDate, cv.dateFormat || "MM/YYYY")}`}
                           </span>
                         )}
                       </div>
@@ -290,7 +290,7 @@ export function RuledEditorial({ resume }: RuledEditorialProps) {
                         }}
                       >
                         {entry.degree}
-                        {resume.showEntryLocation !== false && entry.location
+                        {cv.showEntryLocation !== false && entry.location
                           ? ` · ${entry.location}`
                           : ""}
                       </p>
@@ -402,10 +402,21 @@ export function RuledEditorial({ resume }: RuledEditorialProps) {
                         >
                           {cert.issuer}
                           {cert.issueDate
-                            ? ` · ${formatDate(cert.issueDate, resume.dateFormat || "MM/YYYY")}`
+                            ? ` · ${formatDate(cert.issueDate, cv.dateFormat || "MM/YYYY")}`
                             : ""}
                         </p>
                       )}
+                      {cert.credentialUrl ? (
+                        <p style={{ margin: `${1 * ss}px 0 0`, fontSize: `${0.6875 * fs}rem` }}>
+                          <span onClick={(e) => { e.stopPropagation(); window.open(cert.credentialUrl, "_blank") }} style={{ color: "inherit", textDecoration: "underline", cursor: "pointer" }} role="link" tabIndex={0}>
+                            {cert.credentialId || "View credential"}
+                          </span>
+                        </p>
+                      ) : cert.credentialId ? (
+                        <p style={{ margin: `${1 * ss}px 0 0`, fontSize: `${0.6875 * fs}rem`, color: "#6B7280" }}>
+                          {cert.credentialId}
+                        </p>
+                      ) : null}
                     </div>
                   ))}
 
@@ -463,7 +474,7 @@ export function RuledEditorial({ resume }: RuledEditorialProps) {
                         >
                           {award.issuer}
                           {award.date
-                            ? ` · ${formatDate(award.date, resume.dateFormat || "MM/YYYY")}`
+                            ? ` · ${formatDate(award.date, cv.dateFormat || "MM/YYYY")}`
                             : ""}
                         </p>
                       )}
@@ -554,7 +565,7 @@ export function RuledEditorial({ resume }: RuledEditorialProps) {
         )
       })}
 
-      {resume.footer && (
+      {cv.footer && (
         <p
           style={{
             margin: `${20 * ss}px 0 0`,
@@ -563,7 +574,7 @@ export function RuledEditorial({ resume }: RuledEditorialProps) {
             textAlign: "center",
           }}
         >
-          {resume.footer}
+          {cv.footer}
         </p>
       )}
     </div>

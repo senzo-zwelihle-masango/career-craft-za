@@ -8,9 +8,19 @@ export function useDownloadActions(title: string, cvId: string) {
   const safeTitle = title.replace(/\s+/g, "_")
 
   const downloadPdf = useCallback(async () => {
+    const popup = window.open("", "_blank")
+    if (!popup) {
+      toast.error("Please allow popups to download PDF")
+      return
+    }
     toast.loading("Generating PDF...")
     try {
-      const res = await fetch(`/api/pdf/curriculum-vitae/${cvId}`)
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 8000)
+      const res = await fetch(`/api/pdf/curriculum-vitae/${cvId}`, {
+        signal: controller.signal,
+      })
+      clearTimeout(timeoutId)
       if (!res.ok) throw new Error("Failed")
       const contentType = res.headers.get("content-type") ?? ""
       if (!contentType.includes("application/pdf")) throw new Error("PDF generation failed")
@@ -21,30 +31,14 @@ export function useDownloadActions(title: string, cvId: string) {
       a.download = `${safeTitle}.pdf`
       a.click()
       URL.revokeObjectURL(url)
+      popup.close()
       toast.dismiss()
       toast.success("CV successfully downloaded")
     } catch {
       toast.dismiss()
       toast.loading("Opening print dialog...")
-      try {
-        const res = await fetch(`/api/pdf/curriculum-vitae/${cvId}/html?print=1`)
-        if (!res.ok) throw new Error("Failed")
-        const html = await res.text()
-        const win = window.open("", "_blank")
-        if (win) {
-          win.document.write(html)
-          win.document.close()
-          win.focus()
-          const checkClosed = setInterval(() => {
-            if (win.closed) { clearInterval(checkClosed); toast.dismiss() }
-          }, 500)
-        } else {
-          throw new Error("Popup blocked")
-        }
-      } catch {
-        toast.dismiss()
-        toast.error("Failed to download PDF")
-      }
+      popup.location.href = `/api/pdf/curriculum-vitae/${cvId}/html?print=1`
+      toast.dismiss()
     }
   }, [cvId, safeTitle])
 

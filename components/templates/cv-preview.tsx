@@ -6,16 +6,16 @@ import { getTemplate } from "./index"
 import { FONT_FAMILY_MAP } from "./_base/font-map"
 import type { CvWithRelations } from "@/lib/data/editor/types"
 
-export function CvPreview({ resume: propResume }: { resume?: CvWithRelations } = {}) {
-  const storeResume = useEditorStore((s) => s.cv)
-  const resume = propResume ?? storeResume
-  if (!resume) return null
+export function CvPreview({ cv: propCv }: { cv?: CvWithRelations } = {}) {
+  const storeCv = useEditorStore((s) => s.cv)
+  const cv = propCv ?? storeCv
+  if (!cv) return null
 
-  const fontFamily = FONT_FAMILY_MAP[resume.fontFamily]?.css || resume.fontFamily || "Inter, sans-serif"
-  const fs = resume.fontScale || 1
+  const fontFamily = FONT_FAMILY_MAP[cv.fontFamily]?.css || cv.fontFamily || "Inter, sans-serif"
+  const fs = cv.fontScale || 1
 
   return (
-    <div className="bg-white text-black h-full resume-scale-root" style={{ fontFamily }}>
+    <div className="bg-white text-black h-full cv-scale-root" style={{ fontFamily }}>
       <style>{`
         .cv-scale-root .text-\\[10px\\] { font-size: ${(0.625 * fs).toFixed(4)}rem !important; }
         .cv-scale-root .text-\\[11px\\] { font-size: ${(0.6875 * fs).toFixed(4)}rem !important; }
@@ -28,11 +28,11 @@ export function CvPreview({ resume: propResume }: { resume?: CvWithRelations } =
         .cv-scale-root .text-xl { font-size: ${(1.25 * fs).toFixed(4)}rem !important; }
         .cv-scale-root .text-2xl { font-size: ${(1.5 * fs).toFixed(4)}rem !important; }
         .cv-scale-root .text-3xl { font-size: ${(1.875 * fs).toFixed(4)}rem !important; }
-        .resume-scale-root ul { list-style-type: disc; padding-left: 1.5em; }
-        .resume-scale-root ol { list-style-type: decimal; padding-left: 1.5em; }
-        .resume-scale-root li { display: list-item; }
+        .cv-scale-root ul { list-style-type: disc; padding-left: 1.5em; }
+        .cv-scale-root ol { list-style-type: decimal; padding-left: 1.5em; }
+        .cv-scale-root li { display: list-item; }
       `}</style>
-      {createElement(getTemplate(resume.templateId), { resume })}
+      {createElement(getTemplate(cv.templateId), { cv })}
     </div>
   )
 }

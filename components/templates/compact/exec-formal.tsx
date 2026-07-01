@@ -24,27 +24,27 @@ export const templateMeta: TemplateMeta = {
   },
 }
 
-export function ExecFormalTemplate({ resume }: { resume: CvWithRelations }) {
-  const pd = resume.personalDetails
-  const fs = resume.fontScale || 1
-  const ss = resume.spacingScale || 1
-  const pageFormat = resume.pageFormat || "A4"
+export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
+  const pd = cv.personalDetails
+  const fs = cv.fontScale || 1
+  const ss = cv.spacingScale || 1
+  const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
-  const accentColor = resume.accentColor || "#1e3a5f"
-  const fontCSS = FONT_FAMILY_MAP[resume.fontFamily]?.css || resume.fontFamily || "Inter, sans-serif"
+  const accentColor = cv.accentColor || "#1e3a5f"
+  const fontCSS = FONT_FAMILY_MAP[cv.fontFamily]?.css || cv.fontFamily || "Inter, sans-serif"
 
-  const visibleSections = resume.sections
+  const visibleSections = cv.sections
     .filter(s => s.visible !== false)
     .sort((a, b) => a.order - b.order)
 
   const links = getLinks(pd)
-  const headingStyle = resume.headingStyle || "uppercase"
-  const headingWeight = resume.headingWeight || "bold"
-  const showDividers = resume.showDividers !== false
-  const entryStyle = resume.entryStyle || "bullet"
-  const showDates = resume.showEntryDates !== false
-  const showLocation = resume.showEntryLocation !== false
-  const dateFormat = resume.dateFormat || "MM/YYYY"
+  const headingStyle = cv.headingStyle || "uppercase"
+  const headingWeight = cv.headingWeight || "bold"
+  const showDividers = cv.showDividers !== false
+  const entryStyle = cv.entryStyle || "bullet"
+  const showDates = cv.showEntryDates !== false
+  const showLocation = cv.showEntryLocation !== false
+  const dateFormat = cv.dateFormat || "MM/YYYY"
 
   const renderSection = (section: CvWithRelations["sections"][0]) => {
     if (section.type === "SUMMARY" && section.content) {
@@ -54,7 +54,7 @@ export function ExecFormalTemplate({ resume }: { resume: CvWithRelations }) {
             title={section.title}
             headingStyle={headingStyle}
             headingWeight={headingWeight}
-            showSectionIcons={resume.showSectionIcons}
+            showSectionIcons={cv.showSectionIcons}
             accentColor={accentColor}
           />
           <div className="prose prose-sm max-w-none text-[11px] leading-relaxed text-gray-800" style={{ marginTop: 4 * ss, marginBottom: 2 * ss }} dangerouslySetInnerHTML={{ __html: section.content }} />
@@ -68,7 +68,7 @@ export function ExecFormalTemplate({ resume }: { resume: CvWithRelations }) {
           title={section.title}
           headingStyle={headingStyle}
           headingWeight={headingWeight}
-          showSectionIcons={resume.showSectionIcons}
+          showSectionIcons={cv.showSectionIcons}
           accentColor={accentColor}
         />
 
@@ -187,6 +187,15 @@ export function ExecFormalTemplate({ resume }: { resume: CvWithRelations }) {
                       {entry.expiryDate ? ` — ${formatDate(entry.expiryDate, dateFormat)}` : ""}
                     </p>
                   )}
+                  {entry.credentialUrl ? (
+                    <p className="text-[10px] mt-0.5">
+                      <span onClick={(e) => { e.stopPropagation(); window.open(entry.credentialUrl, "_blank") }} className="underline text-inherit cursor-pointer" role="link" tabIndex={0}>
+                        {entry.credentialId || "View credential"}
+                      </span>
+                    </p>
+                  ) : entry.credentialId ? (
+                    <p className="text-[10px] text-gray-500 mt-0.5">{entry.credentialId}</p>
+                  ) : null}
                 </div>
               ))}
           </div>
@@ -284,7 +293,7 @@ export function ExecFormalTemplate({ resume }: { resume: CvWithRelations }) {
           {pd?.location && <span>{pd.location}</span>}
           {pd?.nationality && <span>{pd.nationality}</span>}
           {links.map((link, i) => (
-            <span key={i}>{linkTypeLabels[link.type] || link.type}: {link.url}</span>
+            <span key={i}>        {linkTypeLabels[link.type] || link.label || link.url}</span>
           ))}
         </div>
       </div>
@@ -302,9 +311,9 @@ export function ExecFormalTemplate({ resume }: { resume: CvWithRelations }) {
       </div>
 
       {/* Footer */}
-      {resume.footer && (
+      {cv.footer && (
         <div style={{ marginTop: 12 * ss, textAlign: "center", fontSize: `${0.625 * fs}rem`, color: "#9CA3AF" }}>
-          {resume.footer}
+          {cv.footer}
         </div>
       )}
     </div>

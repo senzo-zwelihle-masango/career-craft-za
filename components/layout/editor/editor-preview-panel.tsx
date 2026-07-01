@@ -1,17 +1,21 @@
 "use client"
 
-import { useRef, useEffect, useState } from "react"
+import { useRef, useEffect, useState, useCallback } from "react"
 import { useEditorStore } from "@/lib/data/editor/store"
 import { CvPreview } from "@/components/templates/cv-preview"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { Maximize02Icon } from "@hugeicons/core-free-icons"
+import { Button } from "@/components/ui/button"
 
 
 const PAGE_WIDTH_PX = 794
 const A4_RATIO = 297 / 210
 
 export function EditorPreviewPanel() {
-  const resume = useEditorStore((s) => s.cv)
+  const cv = useEditorStore((s) => s.cv)
   const containerRef = useRef<HTMLDivElement>(null)
   const measureRef = useRef<HTMLDivElement>(null)
+  const fullscreenRef = useRef<HTMLDivElement>(null)
   const [zoom, setZoom] = useState(0.75)
   const [pages, setPages] = useState(1)
 
@@ -45,35 +49,59 @@ export function EditorPreviewPanel() {
     return () => ro.disconnect()
   }, [])
 
-  if (!resume) return null
+  const handleFullscreen = useCallback(() => {
+    const el = fullscreenRef.current
+    if (!el) return
+    if (document.fullscreenElement) {
+      document.exitFullscreen()
+    } else {
+      el.requestFullscreen()
+    }
+  }, [])
+
+  if (!cv) return null
 
   return (
     <div className="flex h-full flex-col">
-      <div ref={containerRef} className="flex-1 overflow-y-auto scrollbar-hidden p-4" data-lenis-prevent>
-        <div className="mx-auto flex flex-col items-center gap-6">
-          {Array.from({ length: pages }).map((_, i) => (
-            <div
-              key={i}
-              className="overflow-hidden rounded-sm bg-white"
-              style={{
-                width: pageWidth,
-                height: pageHeight,
-                boxShadow: "0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04)",
-              }}
-            >
-              <div style={{ transform: `translateY(-${i * pageHeight}px)` }}>
-                <div
-                  style={{
-                    width: PAGE_WIDTH_PX,
-                    transform: `scale(${zoom})`,
-                    transformOrigin: "top left",
-                  }}
-                >
-                  <CvPreview />
+      <div
+        ref={fullscreenRef}
+        className="relative flex-1 overflow-y-auto scrollbar-hidden p-4 group"
+        data-lenis-prevent
+      >
+        <Button
+          onClick={handleFullscreen}
+          className="absolute right-6 top-6 z-10"
+        >
+          <HugeiconsIcon icon={Maximize02Icon} className="h-3.5 w-3.5" />
+          Fullscreen
+        </Button>
+        <div ref={containerRef}>
+          <div className="mx-auto flex flex-col items-center gap-6">
+            {Array.from({ length: pages }).map((_, i) => (
+              <div
+                key={i}
+                className="overflow-hidden rounded-sm bg-white"
+                style={{
+                  width: pageWidth,
+                  height: pageHeight,
+                  boxShadow: "0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04)",
+                }}
+              >
+                <div style={{ transform: `translateY(-${i * pageHeight}px)` }}>
+                  <div
+                    style={{
+                      width: PAGE_WIDTH_PX,
+                      height: PAGE_WIDTH_PX * A4_RATIO,
+                      transform: `scale(${zoom})`,
+                      transformOrigin: "top left",
+                    }}
+                  >
+                    <CvPreview />
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 

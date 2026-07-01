@@ -44,19 +44,19 @@ export const templateMeta: TemplateMeta = {
 }
 
 interface SidebarInkProps {
-  resume: CvWithRelations
+  cv: CvWithRelations
 }
 
-export function SidebarInk({ resume }: SidebarInkProps) {
-  const pd = resume.personalDetails
-  const fs = resume.fontScale || 1
-  const ss = resume.spacingScale || 1
-  const pageFormat = resume.pageFormat || "A4"
+export function SidebarInk({ cv }: SidebarInkProps) {
+  const pd = cv.personalDetails
+  const fs = cv.fontScale || 1
+  const ss = cv.spacingScale || 1
+  const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
-  const accentColor = resume.accentColor || "#1f2937"
-  const fontCSS = FONT_FAMILY_MAP[resume.fontFamily]?.css || resume.fontFamily || "Inter, sans-serif"
+  const accentColor = cv.accentColor || "#1f2937"
+  const fontCSS = FONT_FAMILY_MAP[cv.fontFamily]?.css || cv.fontFamily || "Inter, sans-serif"
 
-  const visibleSections = resume.sections
+  const visibleSections = cv.sections
     .filter((s) => s.visible !== false)
     .sort((a, b) => a.order - b.order)
 
@@ -66,7 +66,7 @@ export function SidebarInk({ resume }: SidebarInkProps) {
 
   const sidebarBg = "#faf5ff"
   const headingTextTransform =
-    resume.headingStyle === "uppercase" ? "uppercase" : "none"
+    cv.headingStyle === "uppercase" ? "uppercase" : "none"
 
   return (
     <div
@@ -79,6 +79,7 @@ export function SidebarInk({ resume }: SidebarInkProps) {
         maxWidth,
         margin: "0 auto",
         display: "flex",
+        height: "100%",
         minHeight: `${1056 * ss}px`,
       }}
     >
@@ -91,6 +92,7 @@ export function SidebarInk({ resume }: SidebarInkProps) {
           padding: `${32 * ss}px ${20 * ss}px`,
           display: "flex",
           flexDirection: "column",
+          height: "100%",
         }}
       >
         {/* Decorative accent top border */}
@@ -106,7 +108,7 @@ export function SidebarInk({ resume }: SidebarInkProps) {
 
         {/* Sidebar header info */}
         <div style={{ marginBottom: `${20 * ss}px` }}>
-          {pd?.photoUrl && resume.showPhoto && (
+          {pd?.photoUrl && cv.showPhoto && (
             <img
               src={pd.photoUrl}
               alt={pd?.fullName || ""}
@@ -115,6 +117,7 @@ export function SidebarInk({ resume }: SidebarInkProps) {
                 height: `${72 * ss}px`,
                 borderRadius: "50%",
                 objectFit: "cover",
+                objectPosition: pd?.photoObjectPosition || "50% 50%",
                 marginBottom: `${10 * ss}px`,
                 border: `3px solid ${accentColor}30`,
               }}
@@ -161,7 +164,7 @@ export function SidebarInk({ resume }: SidebarInkProps) {
             {getLinks(pd).length > 0 && (
               <div style={{ marginTop: `${4 * ss}px` }}>
                 {getLinks(pd).map((link, i) => (
-                  <div key={i}>{linkTypeLabels[link.type] || link.url}</div>
+                  <div key={i}>{linkTypeLabels[link.type] || link.label || link.url}</div>
                 ))}
               </div>
             )}
@@ -313,12 +316,23 @@ export function SidebarInk({ resume }: SidebarInkProps) {
                             color: "#9CA3AF",
                           }}
                         >
-                          {formatDate(cert.issueDate, resume.dateFormat || "MM/YYYY")}
+                          {formatDate(cert.issueDate, cv.dateFormat || "MM/YYYY")}
                           {cert.expiryDate
-                            ? ` — ${formatDate(cert.expiryDate, resume.dateFormat || "MM/YYYY")}`
+                            ? ` — ${formatDate(cert.expiryDate, cv.dateFormat || "MM/YYYY")}`
                             : ""}
                         </p>
                       )}
+                      {cert.credentialUrl ? (
+                        <p style={{ margin: `${1 * ss}px 0 0`, fontSize: `${0.5625 * fs}rem` }}>
+                          <span onClick={(e) => { e.stopPropagation(); window.open(cert.credentialUrl, "_blank") }} style={{ color: "inherit", textDecoration: "underline", cursor: "pointer" }} role="link" tabIndex={0}>
+                            {cert.credentialId || "View credential"}
+                          </span>
+                        </p>
+                      ) : cert.credentialId ? (
+                        <p style={{ margin: `${1 * ss}px 0 0`, fontSize: `${0.5625 * fs}rem`, color: "#9CA3AF" }}>
+                          {cert.credentialId}
+                        </p>
+                      ) : null}
                     </div>
                   ))}
 
@@ -363,7 +377,7 @@ export function SidebarInk({ resume }: SidebarInkProps) {
                             color: "#9CA3AF",
                           }}
                         >
-                          {formatDate(award.date, resume.dateFormat || "MM/YYYY")}
+                          {formatDate(award.date, cv.dateFormat || "MM/YYYY")}
                         </p>
                       )}
                     </div>
@@ -395,7 +409,7 @@ export function SidebarInk({ resume }: SidebarInkProps) {
       >
         {mainSections.map((section, idx) => {
           const showDivider =
-            resume.showDividers !== false && idx < mainSections.length - 1
+            cv.showDividers !== false && idx < mainSections.length - 1
 
           return (
             <div key={section.id} style={{ marginBottom: `${16 * ss}px` }}>
@@ -456,7 +470,7 @@ export function SidebarInk({ resume }: SidebarInkProps) {
                         >
                           {entry.role}
                         </span>
-                        {resume.showEntryDates !== false && (
+                        {cv.showEntryDates !== false && (
                           <span
                             style={{
                               fontSize: `${0.6875 * fs}rem`,
@@ -465,12 +479,12 @@ export function SidebarInk({ resume }: SidebarInkProps) {
                               whiteSpace: "nowrap",
                             }}
                           >
-                            {formatDate(entry.startDate, resume.dateFormat || "MM/YYYY")}
+                            {formatDate(entry.startDate, cv.dateFormat || "MM/YYYY")}
                             {" — "}
                             {entry.current
                               ? "Present"
                               : entry.endDate
-                                ? formatDate(entry.endDate, resume.dateFormat || "MM/YYYY")
+                                ? formatDate(entry.endDate, cv.dateFormat || "MM/YYYY")
                                 : ""}
                           </span>
                         )}
@@ -483,7 +497,7 @@ export function SidebarInk({ resume }: SidebarInkProps) {
                         }}
                       >
                         {entry.company}
-                        {resume.showEntryLocation !== false && entry.location
+                        {cv.showEntryLocation !== false && entry.location
                           ? ` · ${entry.location}`
                           : ""}
                       </p>
@@ -499,7 +513,7 @@ export function SidebarInk({ resume }: SidebarInkProps) {
                           dangerouslySetInnerHTML={{ __html: entry.description }}
                         />
                       )}
-                      {resume.entryStyle !== "paragraph" &&
+                      {cv.entryStyle !== "paragraph" &&
                         entry.bullets.length > 0 && (
                           <ul
                             style={{
@@ -548,7 +562,7 @@ export function SidebarInk({ resume }: SidebarInkProps) {
                         >
                           {entry.institution}
                         </span>
-                        {resume.showEntryDates !== false && (
+                        {cv.showEntryDates !== false && (
                           <span
                             style={{
                               fontSize: `${0.6875 * fs}rem`,
@@ -558,9 +572,9 @@ export function SidebarInk({ resume }: SidebarInkProps) {
                             }}
                           >
                             {entry.startDate &&
-                              formatDate(entry.startDate, resume.dateFormat || "MM/YYYY")}
+                              formatDate(entry.startDate, cv.dateFormat || "MM/YYYY")}
                             {entry.endDate &&
-                              ` — ${formatDate(entry.endDate, resume.dateFormat || "MM/YYYY")}`}
+                              ` — ${formatDate(entry.endDate, cv.dateFormat || "MM/YYYY")}`}
                           </span>
                         )}
                       </div>
@@ -572,7 +586,7 @@ export function SidebarInk({ resume }: SidebarInkProps) {
                         }}
                       >
                         {entry.degree}
-                        {resume.showEntryLocation !== false && entry.location
+                        {cv.showEntryLocation !== false && entry.location
                           ? ` · ${entry.location}`
                           : ""}
                       </p>
@@ -723,7 +737,7 @@ export function SidebarInk({ resume }: SidebarInkProps) {
           )
         })}
 
-        {resume.footer && (
+        {cv.footer && (
           <p
             style={{
               margin: `${16 * ss}px 0 0`,
@@ -732,7 +746,7 @@ export function SidebarInk({ resume }: SidebarInkProps) {
               textAlign: "center",
             }}
           >
-            {resume.footer}
+            {cv.footer}
           </p>
         )}
       </div>

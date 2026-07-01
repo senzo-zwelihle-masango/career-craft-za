@@ -12,6 +12,7 @@ export function EntriesPanel() {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
+        <p className="text-sm font-medium">Entries</p>
         <PanelTip tip={PANEL_TIPS.Entries} />
       </div>
       <div className="space-y-2">

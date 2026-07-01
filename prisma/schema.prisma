@@ -303,6 +303,8 @@ model PersonalDetails {
   phone             String?
   location          String?
   photoUrl          String?
+  photoObjectPosition String? @default("center")
+  photoCrop          Json?
   nationality       String?
   links             Json            @default("[]")
 

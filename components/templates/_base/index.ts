@@ -1,7 +1,7 @@
 export { getLinks, linkTypeLabels } from "./getLinks"
 export type { LinkItem } from "./getLinks"
 export { FONT_FAMILY_MAP } from "./font-map"
-export { ResumeHeader } from "./ResumeHeader"
+export { CvHeader } from "./CvHeader"
 export { SectionHeading } from "./SectionHeading"
 export { EntryItem } from "./EntryItem"
 export { BulletList } from "./BulletList"

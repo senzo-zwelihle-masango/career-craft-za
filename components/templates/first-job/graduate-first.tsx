@@ -1,22 +1,22 @@
 import type { CvWithRelations } from "@/lib/data/editor/types"
-import { ResumeHeader } from "../_base/ResumeHeader"
+import { CvHeader } from "../_base/CvHeader"
 import { SectionRenderer } from "../_base/SectionRenderer"
 import { FONT_FAMILY_MAP } from "../_base/font-map"
 import type { TemplateMeta } from "../types"
 
 interface GraduateFirstTemplateProps {
-  resume: CvWithRelations
+  cv: CvWithRelations
 }
 
-export function GraduateFirstTemplate({ resume }: GraduateFirstTemplateProps) {
-  const fs = resume.fontScale || 1
-  const ss = resume.spacingScale || 1
-  const pageFormat = resume.pageFormat || "A4"
+export function GraduateFirstTemplate({ cv }: GraduateFirstTemplateProps) {
+  const fs = cv.fontScale || 1
+  const ss = cv.spacingScale || 1
+  const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
-  const accentColor = resume.accentColor || "#1f2937"
-  const fontCSS = FONT_FAMILY_MAP[resume.fontFamily]?.css || resume.fontFamily || "Inter, sans-serif"
+  const accentColor = cv.accentColor || "#1f2937"
+  const fontCSS = FONT_FAMILY_MAP[cv.fontFamily]?.css || cv.fontFamily || "Inter, sans-serif"
 
-  const sorted = [...resume.sections]
+  const sorted = [...cv.sections]
     .filter((s) => s.visible !== false)
     .sort((a, b) => a.order - b.order)
   const education = sorted.filter((s) => s.type === "EDUCATION")
@@ -35,13 +35,13 @@ export function GraduateFirstTemplate({ resume }: GraduateFirstTemplateProps) {
         margin: "0 auto",
       }}
     >
-      <ResumeHeader
-        pd={resume.personalDetails}
-        resume={resume}
+      <CvHeader
+        pd={cv.personalDetails}
+        cv={cv}
         nameStyle={{ fontSize: `${1.6 * fs}rem`, color: accentColor }}
       />
 
-      {resume.showDividers && (
+      {cv.showDividers && (
         <hr style={{ border: "none", borderTop: `2px solid ${accentColor}`, margin: `${12 * ss}px 0` }} />
       )}
 
@@ -50,23 +50,23 @@ export function GraduateFirstTemplate({ resume }: GraduateFirstTemplateProps) {
           <div key={section.id} style={{ marginBottom: `${16 * ss}px` }}>
             <SectionRenderer
               section={section}
-              resume={resume}
-              showDividers={resume.showDividers ?? true}
-              entryStyle={resume.entryStyle || "bullet"}
-              showEntryDates={resume.showEntryDates ?? true}
-              showEntryLocation={resume.showEntryLocation ?? true}
+              cv={cv}
+              showDividers={cv.showDividers ?? true}
+              entryStyle={cv.entryStyle || "bullet"}
+              showEntryDates={cv.showEntryDates ?? true}
+              showEntryLocation={cv.showEntryLocation ?? true}
               accentColor={accentColor}
-              showSectionIcons={resume.showSectionIcons ?? false}
-              headingStyle={resume.headingStyle || "normal"}
-              headingWeight={resume.headingWeight || "bold"}
+              showSectionIcons={cv.showSectionIcons ?? false}
+              headingStyle={cv.headingStyle || "normal"}
+              headingWeight={cv.headingWeight || "bold"}
             />
           </div>
         ))}
       </div>
 
-      {resume.footer && (
+      {cv.footer && (
         <div style={{ marginTop: `${16 * ss}px`, textAlign: "center", fontSize: `${0.7 * fs}rem`, color: "#9CA3AF" }}>
-          {resume.footer}
+          {cv.footer}
         </div>
       )}
     </div>

@@ -23,18 +23,18 @@ export const templateMeta: TemplateMeta = {
   },
 }
 
-export function GradientCapTemplate({ resume }: { resume: CvWithRelations }) {
-  const pd = resume.personalDetails
-  const fs = resume.fontScale || 1
-  const ss = resume.spacingScale || 1
-  const pageFormat = resume.pageFormat || "A4"
+export function GradientCapTemplate({ cv }: { cv: CvWithRelations }) {
+  const pd = cv.personalDetails
+  const fs = cv.fontScale || 1
+  const ss = cv.spacingScale || 1
+  const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
-  const accentColor = resume.accentColor || "#4f46e5"
-  const fontCSS = FONT_FAMILY_MAP[resume.fontFamily]?.css || resume.fontFamily || "Inter, sans-serif"
+  const accentColor = cv.accentColor || "#4f46e5"
+  const fontCSS = FONT_FAMILY_MAP[cv.fontFamily]?.css || cv.fontFamily || "Inter, sans-serif"
   const links = getLinks(pd)
-  const showPhoto = resume.showPhoto && pd?.photoUrl
+  const showPhoto = cv.showPhoto && pd?.photoUrl
 
-  const visibleSections = resume.sections
+  const visibleSections = cv.sections
     .filter(s => s.visible !== false)
     .sort((a, b) => a.order - b.order)
 
@@ -67,6 +67,7 @@ export function GradientCapTemplate({ resume }: { resume: CvWithRelations }) {
               width: 88,
               height: 88,
               objectFit: "cover",
+              objectPosition: pd?.photoObjectPosition || "50% 50%",
               borderRadius: "50%",
               margin: `0 auto ${10 * ss}px`,
               display: "block",
@@ -117,7 +118,7 @@ export function GradientCapTemplate({ resume }: { resume: CvWithRelations }) {
         {pd?.phone && <ContactChip label={pd.phone} />}
         {pd?.nationality && <ContactChip label={pd.nationality} />}
         {links.map((link, i) => (
-          <ContactChip key={i} label={`${linkTypeLabels[link.type] || link.type}: ${link.url}`} />
+          <ContactChip key={i} label={linkTypeLabels[link.type] || link.label || link.url} />
         ))}
       </div>
 
@@ -135,20 +136,20 @@ export function GradientCapTemplate({ resume }: { resume: CvWithRelations }) {
           >
             <SectionRenderer
               section={section}
-              resume={resume}
-              showDividers={resume.showDividers ?? false}
-              entryStyle={resume.entryStyle || "bullet"}
-              showEntryDates={resume.showEntryDates ?? true}
-              showEntryLocation={resume.showEntryLocation ?? true}
+              cv={cv}
+              showDividers={cv.showDividers ?? false}
+              entryStyle={cv.entryStyle || "bullet"}
+              showEntryDates={cv.showEntryDates ?? true}
+              showEntryLocation={cv.showEntryLocation ?? true}
               accentColor={accentColor}
-              showSectionIcons={resume.showSectionIcons ?? false}
-              headingStyle={resume.headingStyle || "normal"}
-              headingWeight={resume.headingWeight || "bold"}
+              showSectionIcons={cv.showSectionIcons ?? false}
+              headingStyle={cv.headingStyle || "normal"}
+              headingWeight={cv.headingWeight || "bold"}
             />
           </div>
         ))}
 
-        {resume.footer && (
+        {cv.footer && (
           <p
             style={{
               textAlign: "center",
@@ -159,7 +160,7 @@ export function GradientCapTemplate({ resume }: { resume: CvWithRelations }) {
               paddingLeft: 0,
             }}
           >
-            {resume.footer}
+            {cv.footer}
           </p>
         )}
       </div>

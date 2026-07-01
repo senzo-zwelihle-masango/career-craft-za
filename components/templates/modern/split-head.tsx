@@ -23,18 +23,18 @@ export const templateMeta: TemplateMeta = {
   },
 }
 
-export function SplitHeadTemplate({ resume }: { resume: CvWithRelations }) {
-  const pd = resume.personalDetails
-  const fs = resume.fontScale || 1
-  const ss = resume.spacingScale || 1
-  const pageFormat = resume.pageFormat || "A4"
+export function SplitHeadTemplate({ cv }: { cv: CvWithRelations }) {
+  const pd = cv.personalDetails
+  const fs = cv.fontScale || 1
+  const ss = cv.spacingScale || 1
+  const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
-  const accentColor = resume.accentColor || "#0f172a"
-  const fontCSS = FONT_FAMILY_MAP[resume.fontFamily]?.css || resume.fontFamily || "Inter, sans-serif"
+  const accentColor = cv.accentColor || "#0f172a"
+  const fontCSS = FONT_FAMILY_MAP[cv.fontFamily]?.css || cv.fontFamily || "Inter, sans-serif"
   const links = getLinks(pd)
-  const showPhoto = resume.showPhoto && pd?.photoUrl
+  const showPhoto = cv.showPhoto && pd?.photoUrl
 
-  const visibleSections = resume.sections
+  const visibleSections = cv.sections
     .filter(s => s.visible !== false)
     .sort((a, b) => a.order - b.order)
 
@@ -70,6 +70,7 @@ export function SplitHeadTemplate({ resume }: { resume: CvWithRelations }) {
               width: 64,
               height: 80,
               objectFit: "cover",
+              objectPosition: pd?.photoObjectPosition || "50% 50%",
               borderRadius: 6,
             }}
           />
@@ -108,7 +109,7 @@ export function SplitHeadTemplate({ resume }: { resume: CvWithRelations }) {
             <div style={{ marginTop: `${4 * ss}px` }}>
               {links.map((link, i) => (
                 <div key={i}>
-                  {linkTypeLabels[link.type] || link.type}: {link.url}
+                  {linkTypeLabels[link.type] || link.label || link.url}
                 </div>
               ))}
             </div>
@@ -122,20 +123,20 @@ export function SplitHeadTemplate({ resume }: { resume: CvWithRelations }) {
           <div key={section.id} style={{ marginBottom: `${16 * ss}px` }}>
             <SectionRenderer
               section={section}
-              resume={resume}
-              showDividers={resume.showDividers ?? true}
-              entryStyle={resume.entryStyle || "bullet"}
-              showEntryDates={resume.showEntryDates ?? true}
-              showEntryLocation={resume.showEntryLocation ?? true}
+              cv={cv}
+              showDividers={cv.showDividers ?? true}
+              entryStyle={cv.entryStyle || "bullet"}
+              showEntryDates={cv.showEntryDates ?? true}
+              showEntryLocation={cv.showEntryLocation ?? true}
               accentColor={accentColor}
-              showSectionIcons={resume.showSectionIcons ?? false}
-              headingStyle={resume.headingStyle || "normal"}
-              headingWeight={resume.headingWeight || "bold"}
+              showSectionIcons={cv.showSectionIcons ?? false}
+              headingStyle={cv.headingStyle || "normal"}
+              headingWeight={cv.headingWeight || "bold"}
             />
           </div>
         ))}
 
-        {resume.footer && (
+        {cv.footer && (
           <p
             style={{
               textAlign: "center",
@@ -144,7 +145,7 @@ export function SplitHeadTemplate({ resume }: { resume: CvWithRelations }) {
               marginTop: `${16 * ss}px`,
             }}
           >
-            {resume.footer}
+            {cv.footer}
           </p>
         )}
       </div>

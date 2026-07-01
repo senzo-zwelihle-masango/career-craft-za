@@ -6,16 +6,16 @@ import { getTemplate } from "./index"
 import type { CvWithRelations } from "@/lib/data/editor/types"
 
 export function CvThumbnail({
-  resume,
+  cv,
   className,
 }: {
-  resume: CvWithRelations
+  cv: CvWithRelations
   className?: string
 }) {
   return (
     <ResponsiveThumbnail className={className}>
-      <div className="bg-white text-black h-full" style={{ fontFamily: resume.fontFamily }}>
-        {createElement(getTemplate(resume.templateId), { resume })}
+      <div className="bg-white text-black h-full" style={{ fontFamily: cv.fontFamily }}>
+        {createElement(getTemplate(cv.templateId), { cv })}
       </div>
     </ResponsiveThumbnail>
   )

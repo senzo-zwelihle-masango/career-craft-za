@@ -73,7 +73,6 @@ export function ContentSectionEntriesEditor({
     const order = entries?.length ?? 0
     const createData: Record<string, unknown> = { order, ...extraFields }
     for (const def of fieldDefs) {
-      if (def.type === "switch") continue
       const val = newEntry[def.key]
       if (val) createData[def.key] = val
     }

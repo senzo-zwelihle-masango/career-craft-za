@@ -43,6 +43,7 @@ export function SharePanel() {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
+        <p className="text-sm font-medium">Share</p>
         <PanelTip tip={PANEL_TIPS.Share} />
       </div>
       <div className="flex items-center justify-between">

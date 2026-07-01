@@ -74,7 +74,7 @@ const thandiweMokoena: CvWithRelations = base("classic", {
     fullName: "Thandiwe Mokoena", jobTitle: "Senior Product Designer",
     email: "thandiwe.mokoena@example.co.za", phone: "+27 82 123 4567",
     location: "Johannesburg, Gauteng",
-    photoUrl: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&h=500&fit=crop", nationality: null, updatedAt: new Date(), links: [
+    photoUrl: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&h=500&fit=crop", photoObjectPosition: null, photoCrop: null, nationality: null, updatedAt: new Date(), links: [
       { type: "linkedin", url: "linkedin.com/in/thandiwemokoena" },
       { type: "website", url: "thandiwemokoena.design" },
     ],
@@ -149,7 +149,7 @@ const johanDeVilliers: CvWithRelations = base("modern-sidebar", {
     fullName: "Johan de Villiers", jobTitle: "Marketing Director",
     email: "johan.devilliers@example.co.za", phone: "+27 72 234 5678",
     location: "Cape Town, Western Cape",
-    photoUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop", nationality: null, updatedAt: new Date(), links: [
+    photoUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop", photoObjectPosition: null, photoCrop: null, nationality: null, updatedAt: new Date(), links: [
       { type: "linkedin", url: "linkedin.com/in/johandevilliers" },
       { type: "website", url: "johandevilliers.co.za" },
     ],
@@ -224,7 +224,7 @@ const drNalediKhumalo: CvWithRelations = base("minimal", {
     fullName: "Dr. Naledi Khumalo", jobTitle: "Chief Medical Officer",
     email: "naledi.khumalo@example.co.za", phone: "+27 83 345 6789",
     location: "Durban, KwaZulu-Natal",
-    photoUrl: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=500&fit=crop", nationality: null, updatedAt: new Date(), links: [
+    photoUrl: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=500&fit=crop", photoObjectPosition: null, photoCrop: null, nationality: null, updatedAt: new Date(), links: [
       { type: "linkedin", url: "linkedin.com/in/drnaledikhumalo" },
     ],
   },
@@ -297,7 +297,7 @@ const fatimaEssack: CvWithRelations = base("executive", {
     fullName: "Fatima Essack", jobTitle: "Chief Financial Officer",
     email: "fatima.essack@example.co.za", phone: "+27 84 456 7890",
     location: "Johannesburg, Gauteng",
-    photoUrl: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=500&fit=crop", nationality: null, updatedAt: new Date(), links: [
+    photoUrl: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=500&fit=crop", photoObjectPosition: null, photoCrop: null, nationality: null, updatedAt: new Date(), links: [
       { type: "linkedin", url: "linkedin.com/in/fatimaessackcfo" },
     ],
   },
@@ -370,7 +370,7 @@ const lwaziNkosi: CvWithRelations = base("creative", {
     fullName: "Lwazi Nkosi", jobTitle: "Creative Director",
     email: "lwazi.nkosi@example.co.za", phone: "+27 73 567 8901",
     location: "Cape Town, Western Cape",
-    photoUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=500&fit=crop", nationality: null, updatedAt: new Date(), links: [
+    photoUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=500&fit=crop", photoObjectPosition: null, photoCrop: null, nationality: null, updatedAt: new Date(), links: [
       { type: "linkedin", url: "linkedin.com/in/lwazinkosi" },
       { type: "website", url: "lwazinkosi.studio" },
       { type: "portfolio", url: "lwazinkosi.studio/work" },
@@ -445,7 +445,7 @@ const siphoDlamini: CvWithRelations = base("compact", {
     fullName: "Sipho Dlamini", jobTitle: "Senior Software Engineer",
     email: "sipho.dlamini@example.co.za", phone: "+27 82 678 9012",
     location: "Stellenbosch, Western Cape",
-    photoUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop", nationality: null, updatedAt: new Date(), links: [
+    photoUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop", photoObjectPosition: null, photoCrop: null, nationality: null, updatedAt: new Date(), links: [
       { type: "linkedin", url: "linkedin.com/in/sipholdlamini" },
       { type: "website", url: "siphodlamini.dev" },
       { type: "github", url: "github.com/sipho-dev" },
@@ -522,7 +522,7 @@ const amaraOkafor: CvWithRelations = base("gradient-cap", {
     fullName: "Amara Okafor", jobTitle: "Data Science Lead",
     email: "amara.okafor@example.ng", phone: "+234 802 345 6789",
     location: "Lagos, Nigeria",
-    photoUrl: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=400&h=500&fit=crop", nationality: null, updatedAt: new Date(), links: [
+    photoUrl: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=400&h=500&fit=crop", photoObjectPosition: null, photoCrop: null, nationality: null, updatedAt: new Date(), links: [
       { type: "linkedin", url: "linkedin.com/in/amaraokafor" },
       { type: "github", url: "github.com/amara-ai" },
     ],
@@ -538,7 +538,7 @@ const kwameAsante: CvWithRelations = base("bold-stamp", {
     fullName: "Kwame Asante", jobTitle: "Corporate Counsel",
     email: "kwame.asante@example.gh", phone: "+233 302 456 7890",
     location: "Accra, Ghana",
-    photoUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop", nationality: null, updatedAt: new Date(), links: [
+    photoUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop", photoObjectPosition: null, photoCrop: null, nationality: null, updatedAt: new Date(), links: [
       { type: "linkedin", url: "linkedin.com/in/kwameasante" },
     ],
   },
@@ -553,7 +553,7 @@ const tumiMoshesh: CvWithRelations = base("sidebar-ink", {
     fullName: "Tumi Moshesh", jobTitle: "Operations Director",
     email: "tumi.moshesh@example.co.za", phone: "+27 71 234 5678",
     location: "Gaborone, Botswana",
-    photoUrl: "https://images.unsplash.com/photo-1598550874175-4d0ef314c0c9?w=400&h=500&fit=crop", nationality: null, updatedAt: new Date(), links: [
+    photoUrl: "https://images.unsplash.com/photo-1598550874175-4d0ef314c0c9?w=400&h=500&fit=crop", photoObjectPosition: null, photoCrop: null, nationality: null, updatedAt: new Date(), links: [
       { type: "linkedin", url: "linkedin.com/in/tumimoshesh" },
     ],
   },

@@ -102,6 +102,7 @@ export function LinksPanel() {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
+        <p className="text-sm font-medium">Links</p>
         <PanelTip tip={PANEL_TIPS.Links} />
       </div>
 

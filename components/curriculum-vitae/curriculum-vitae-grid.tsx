@@ -139,7 +139,7 @@ const CurriculumVitaeGrid = ({
                 <div className="relative aspect-210/297 overflow-hidden rounded-lg bg-muted/30">
                   <div className="absolute inset-0 flex items-start justify-center">
                     <CvThumbnail
-                      resume={cv}
+                      cv={cv}
                       className="rounded-sm shadow-[0_0_0_1px_hsl(var(--border))]"
                     />
                   </div>

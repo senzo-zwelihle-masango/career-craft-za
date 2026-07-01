@@ -123,7 +123,7 @@ export async function updateCv(id: string, json: Record<string, unknown>) {
         }
         if (ee.delete) {
           for (const del of ee.delete) {
-            await prisma.experienceEntry.delete({ where: { id: del.id } })
+            await prisma.experienceEntry.deleteMany({ where: { id: del.id } })
           }
         }
       }
@@ -143,7 +143,7 @@ export async function updateCv(id: string, json: Record<string, unknown>) {
         }
         if (ed.delete) {
           for (const del of ed.delete) {
-            await prisma.educationEntry.delete({ where: { id: del.id } })
+            await prisma.educationEntry.deleteMany({ where: { id: del.id } })
           }
         }
       }
@@ -161,7 +161,7 @@ export async function updateCv(id: string, json: Record<string, unknown>) {
         }
         if (sg.delete) {
           for (const del of sg.delete) {
-            await prisma.skillGroup.delete({ where: { id: del.id } })
+            await prisma.skillGroup.deleteMany({ where: { id: del.id } })
           }
         }
       }
@@ -179,7 +179,7 @@ export async function updateCv(id: string, json: Record<string, unknown>) {
         }
         if (pe.delete) {
           for (const del of pe.delete) {
-            await prisma.projectEntry.delete({ where: { id: del.id } })
+            await prisma.projectEntry.deleteMany({ where: { id: del.id } })
           }
         }
       }
@@ -197,9 +197,14 @@ export async function updateCv(id: string, json: Record<string, unknown>) {
         }
         if (ce.delete) {
           for (const del of ce.delete) {
-            await prisma.customEntry.delete({ where: { id: del.id } })
+            await prisma.customEntry.deleteMany({ where: { id: del.id } })
           }
         }
+      }
+
+      const nestedKeys = ["experienceEntries", "educationEntries", "skillGroups", "projectEntries", "customEntries"]
+      for (const key of nestedKeys) {
+        delete e[key]
       }
 
       await prisma.curriculumVitaeSection.update({ where: { id: where.id }, data: e as never })

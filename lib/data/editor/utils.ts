@@ -20,6 +20,8 @@ export function formatDate(date: string, format: string = "MM/YYYY"): string {
   if (isNaN(month)) return date
 
   switch (format) {
+    case "YYYY":
+      return year
     case "MMM YYYY":
       return `${MONTHS_SHORT[month - 1] || month} ${year}`
     case "MMMM YYYY":

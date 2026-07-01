@@ -51,9 +51,9 @@ function formatDateForHeader(dateStr: string, format: string): string {
   }
 }
 
-interface ResumeHeaderProps {
+interface CvHeaderProps {
   pd: PersonalDetails | null
-  resume: { showPhoto?: boolean; dateFormat?: string; headerLayout?: string }
+  cv: { showPhoto?: boolean; dateFormat?: string; headerLayout?: string }
   className?: string
   nameStyle?: React.CSSProperties
   contactStyle?: React.CSSProperties
@@ -62,18 +62,18 @@ interface ResumeHeaderProps {
   photoSize?: number
 }
 
-export function ResumeHeader({
+export function CvHeader({
   pd,
-  resume,
+  cv,
   className = "",
   nameStyle,
   contactStyle,
   showNationality = true,
   renderPhoto = false,
   photoSize = 80,
-}: ResumeHeaderProps) {
+}: CvHeaderProps) {
   const links = getLinks(pd)
-  const layout = resume.headerLayout || "stacked"
+  const layout = cv.headerLayout || "stacked"
 
   const contactParts: string[] = []
   if (pd?.email) contactParts.push(pd.email)
@@ -82,14 +82,14 @@ export function ResumeHeader({
   if (showNationality && pd?.nationality) contactParts.push(pd.nationality)
 
   const photoUrl =
-    renderPhoto && resume.showPhoto && pd?.photoUrl ? pd.photoUrl : null
+    renderPhoto && cv.showPhoto && pd?.photoUrl ? pd.photoUrl : null
 
   const photoMarkup = photoUrl ? (
     <img
       src={photoUrl}
       alt=""
       className="rounded object-cover"
-      style={{ width: photoSize, height: photoSize * 1.25 }}
+      style={{ width: photoSize, height: photoSize * 1.25, objectPosition: pd?.photoObjectPosition || "50% 50%" }}
     />
   ) : null
 
@@ -128,7 +128,7 @@ export function ResumeHeader({
               ))}
               {links.map((link, i) => (
                 <div key={`link-${i}`}>
-                  {linkTypeLabels[link.type] || link.type}: {link.url}
+                  {linkTypeLabels[link.type] || link.label || link.url}
                 </div>
               ))}
             </div>
@@ -220,7 +220,7 @@ export function ResumeHeader({
           {links.map((link, i) => (
             <span key={i}>
               {i > 0 && " · "}
-              {linkTypeLabels[link.type] || link.type}: {link.url}
+              {linkTypeLabels[link.type] || link.label || link.url}
             </span>
           ))}
         </p>

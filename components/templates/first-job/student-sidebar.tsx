@@ -1,22 +1,22 @@
 import type { CvWithRelations } from "@/lib/data/editor/types"
-import { ResumeHeader } from "../_base/ResumeHeader"
+import { CvHeader } from "../_base/CvHeader"
 import { SectionRenderer } from "../_base/SectionRenderer"
 import { FONT_FAMILY_MAP } from "../_base/font-map"
 import type { TemplateMeta } from "../types"
 
 interface StudentSidebarTemplateProps {
-  resume: CvWithRelations
+  cv: CvWithRelations
 }
 
-export function StudentSidebarTemplate({ resume }: StudentSidebarTemplateProps) {
-  const fs = resume.fontScale || 1
-  const ss = resume.spacingScale || 1
-  const pageFormat = resume.pageFormat || "A4"
+export function StudentSidebarTemplate({ cv }: StudentSidebarTemplateProps) {
+  const fs = cv.fontScale || 1
+  const ss = cv.spacingScale || 1
+  const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
-  const accentColor = resume.accentColor || "#1f2937"
-  const fontCSS = FONT_FAMILY_MAP[resume.fontFamily]?.css || resume.fontFamily || "Inter, sans-serif"
+  const accentColor = cv.accentColor || "#1f2937"
+  const fontCSS = FONT_FAMILY_MAP[cv.fontFamily]?.css || cv.fontFamily || "Inter, sans-serif"
 
-  const sorted = [...resume.sections]
+  const sorted = [...cv.sections]
     .filter((s) => s.visible !== false)
     .sort((a, b) => a.order - b.order)
 
@@ -37,13 +37,13 @@ export function StudentSidebarTemplate({ resume }: StudentSidebarTemplateProps) 
     >
       {/* Main content */}
       <div className="flex-1" style={{ padding: `${16 * ss}px ${18 * ss}px` }}>
-        <ResumeHeader
-          pd={resume.personalDetails}
-          resume={resume}
+        <CvHeader
+          pd={cv.personalDetails}
+          cv={cv}
           nameStyle={{ fontSize: `${1.5 * fs}rem`, color: accentColor }}
         />
 
-        {resume.showDividers && (
+        {cv.showDividers && (
           <hr style={{ border: "none", borderTop: `2px solid ${accentColor}`, margin: `${10 * ss}px 0` }} />
         )}
 
@@ -52,23 +52,23 @@ export function StudentSidebarTemplate({ resume }: StudentSidebarTemplateProps) 
             <div key={section.id} style={{ marginBottom: `${14 * ss}px` }}>
               <SectionRenderer
                 section={section}
-                resume={resume}
-                showDividers={resume.showDividers ?? true}
-                entryStyle={resume.entryStyle || "bullet"}
-                showEntryDates={resume.showEntryDates ?? true}
-                showEntryLocation={resume.showEntryLocation ?? true}
+                cv={cv}
+                showDividers={cv.showDividers ?? true}
+                entryStyle={cv.entryStyle || "bullet"}
+                showEntryDates={cv.showEntryDates ?? true}
+                showEntryLocation={cv.showEntryLocation ?? true}
                 accentColor={accentColor}
-                showSectionIcons={resume.showSectionIcons ?? false}
-                headingStyle={resume.headingStyle || "normal"}
-                headingWeight={resume.headingWeight || "bold"}
+                showSectionIcons={cv.showSectionIcons ?? false}
+                headingStyle={cv.headingStyle || "normal"}
+                headingWeight={cv.headingWeight || "bold"}
               />
             </div>
           ))}
         </div>
 
-        {resume.footer && (
+        {cv.footer && (
           <div style={{ marginTop: `${14 * ss}px`, textAlign: "center", fontSize: `${0.7 * fs}rem`, color: "#9CA3AF" }}>
-            {resume.footer}
+            {cv.footer}
           </div>
         )}
       </div>
@@ -81,7 +81,7 @@ export function StudentSidebarTemplate({ resume }: StudentSidebarTemplateProps) 
           padding: `${16 * ss}px ${14 * ss}px`,
         }}
       >
-        {resume.personalDetails && (
+        {cv.personalDetails && (
           <div style={{ marginBottom: `${12 * ss}px` }}>
             <h3
               style={{
@@ -97,9 +97,9 @@ export function StudentSidebarTemplate({ resume }: StudentSidebarTemplateProps) 
             </h3>
             <hr style={{ border: "none", borderTop: "1px solid #D1D5DB", margin: `${4 * ss}px 0` }} />
             <div style={{ fontSize: `${0.75 * fs}rem`, color: "#374151", lineHeight: `${1.6 * ss}` }}>
-              {resume.personalDetails.email && <p style={{ margin: `${2 * ss}px 0` }}>{resume.personalDetails.email}</p>}
-              {resume.personalDetails.phone && <p style={{ margin: `${2 * ss}px 0` }}>{resume.personalDetails.phone}</p>}
-              {resume.personalDetails.location && <p style={{ margin: `${2 * ss}px 0` }}>{resume.personalDetails.location}</p>}
+              {cv.personalDetails.email && <p style={{ margin: `${2 * ss}px 0` }}>{cv.personalDetails.email}</p>}
+              {cv.personalDetails.phone && <p style={{ margin: `${2 * ss}px 0` }}>{cv.personalDetails.phone}</p>}
+              {cv.personalDetails.location && <p style={{ margin: `${2 * ss}px 0` }}>{cv.personalDetails.location}</p>}
             </div>
           </div>
         )}
@@ -108,13 +108,13 @@ export function StudentSidebarTemplate({ resume }: StudentSidebarTemplateProps) 
           <div key={section.id} style={{ marginBottom: `${12 * ss}px` }}>
             <SectionRenderer
               section={section}
-              resume={resume}
+              cv={cv}
               showDividers={false}
-              entryStyle={resume.entryStyle || "bullet"}
-              showEntryDates={resume.showEntryDates ?? true}
-              showEntryLocation={resume.showEntryLocation ?? true}
+              entryStyle={cv.entryStyle || "bullet"}
+              showEntryDates={cv.showEntryDates ?? true}
+              showEntryLocation={cv.showEntryLocation ?? true}
               accentColor={accentColor}
-              showSectionIcons={resume.showSectionIcons ?? false}
+              showSectionIcons={cv.showSectionIcons ?? false}
               headingStyle="uppercase"
               headingWeight="bold"
             />

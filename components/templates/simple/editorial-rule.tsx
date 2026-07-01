@@ -1,5 +1,5 @@
 import type { CvWithRelations } from "@/lib/data/editor/types"
-import { ResumeHeader } from "../_base/ResumeHeader"
+import { CvHeader } from "../_base/CvHeader"
 import { SectionRenderer, SectionIcon } from "../_base"
 import { FONT_FAMILY_MAP } from "../_base/font-map"
 import type { TemplateMeta } from "../types"
@@ -20,15 +20,15 @@ function OrnamentalDivider({ accentColor }: { accentColor: string }) {
   )
 }
 
-export function EditorialRuleTemplate({ resume }: { resume: CvWithRelations }) {
-  const fs = resume.fontScale || 1
-  const ss = resume.spacingScale || 1
-  const pageFormat = resume.pageFormat || "A4"
+export function EditorialRuleTemplate({ cv }: { cv: CvWithRelations }) {
+  const fs = cv.fontScale || 1
+  const ss = cv.spacingScale || 1
+  const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
-  const accentColor = resume.accentColor || "#1f2937"
-  const fontCSS = FONT_FAMILY_MAP[resume.fontFamily]?.css || resume.fontFamily || "Georgia, serif"
+  const accentColor = cv.accentColor || "#1f2937"
+  const fontCSS = FONT_FAMILY_MAP[cv.fontFamily]?.css || cv.fontFamily || "Georgia, serif"
 
-  const visibleSections = resume.sections
+  const visibleSections = cv.sections
     .filter(s => s.visible !== false)
     .sort((a, b) => a.order - b.order)
 
@@ -47,9 +47,9 @@ export function EditorialRuleTemplate({ resume }: { resume: CvWithRelations }) {
       }}
     >
       <div style={{ textAlign: "center" }}>
-        <ResumeHeader
-          pd={resume.personalDetails}
-          resume={resume}
+        <CvHeader
+          pd={cv.personalDetails}
+          cv={cv}
           nameStyle={{
             fontSize: `${1.75 * fs}rem`,
             fontWeight: 400,
@@ -118,7 +118,7 @@ export function EditorialRuleTemplate({ resume }: { resume: CvWithRelations }) {
                 gap: 6,
               }}
             >
-              {resume.showSectionIcons && (
+              {cv.showSectionIcons && (
                 <SectionIcon sectionType={section.type} size="1em" />
               )}
               {section.title}
@@ -135,22 +135,22 @@ export function EditorialRuleTemplate({ resume }: { resume: CvWithRelations }) {
           <div style={{ textAlign: "center" }}>
             <SectionRenderer
               section={section}
-              resume={resume}
+              cv={cv}
               showDividers={false}
-              entryStyle={resume.entryStyle || "bullet"}
-              showEntryDates={resume.showEntryDates ?? true}
-              showEntryLocation={resume.showEntryLocation ?? true}
+              entryStyle={cv.entryStyle || "bullet"}
+              showEntryDates={cv.showEntryDates ?? true}
+              showEntryLocation={cv.showEntryLocation ?? true}
               accentColor={accentColor}
-              showSectionIcons={resume.showSectionIcons ?? false}
-              headingStyle={resume.headingStyle || "normal"}
-              headingWeight={resume.headingWeight || "bold"}
+              showSectionIcons={cv.showSectionIcons ?? false}
+              headingStyle={cv.headingStyle || "normal"}
+              headingWeight={cv.headingWeight || "bold"}
               noHeading
             />
           </div>
         </div>
       ))}
 
-      {resume.footer && (
+      {cv.footer && (
         <div
           style={{
             marginTop: `${24 * ss}px`,
@@ -168,7 +168,7 @@ export function EditorialRuleTemplate({ resume }: { resume: CvWithRelations }) {
               margin: "0 auto 8px",
             }}
           />
-          {resume.footer}
+          {cv.footer}
         </div>
       )}
     </div>

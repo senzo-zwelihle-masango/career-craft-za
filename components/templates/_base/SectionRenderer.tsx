@@ -6,7 +6,7 @@ import { getLinks, linkTypeLabels } from "./getLinks"
 
 interface SectionRendererProps {
   section: CvWithRelations["sections"][0]
-  resume: CvWithRelations
+  cv: CvWithRelations
   showDividers?: boolean
   entryStyle?: string
   showEntryDates?: boolean
@@ -20,7 +20,7 @@ interface SectionRendererProps {
 
 export function SectionRenderer({
   section,
-  resume,
+  cv,
   showDividers = true,
   entryStyle = "bullet",
   showEntryDates = true,
@@ -32,7 +32,7 @@ export function SectionRenderer({
   noHeading = false,
 }: SectionRendererProps) {
   if (!section.visible) return null
-  const dateFormat = resume.dateFormat || "MM/YYYY"
+  const dateFormat = cv.dateFormat || "MM/YYYY"
 
   const renderSectionHeading = () => {
     if (noHeading) return null
@@ -212,18 +212,23 @@ export function SectionRenderer({
               const metaParts: string[] = []
               if (entry.issuer) metaParts.push(entry.issuer)
               if (entry.issueDate) metaParts.push(formatDate(entry.issueDate, dateFormat))
-              if (entry.credentialId) metaParts.push(`ID: ${entry.credentialId}`)
               return (
                 <EntryItem
                   key={entry.id}
                   title={entry.name}
                   meta={metaParts.length > 0 ? metaParts.join(" | ") : undefined}
                 >
-                  {entry.credentialUrl && (
-                    <p style={{ margin: "2px 0 0", fontSize: "0.75em", color: "#6B7280" }}>
-                      {entry.credentialUrl}
+                  {entry.credentialUrl ? (
+                    <p style={{ margin: "2px 0 0", fontSize: "0.75em" }}>
+                      <span onClick={(e) => { e.stopPropagation(); window.open(entry.credentialUrl, "_blank") }} style={{ color: "inherit", textDecoration: "underline", cursor: "pointer" }} role="link" tabIndex={0}>
+                        {entry.credentialId || "View credential"}
+                      </span>
                     </p>
-                  )}
+                  ) : entry.credentialId ? (
+                    <p style={{ margin: "2px 0 0", fontSize: "0.75em", color: "#6B7280" }}>
+                      {entry.credentialId}
+                    </p>
+                  ) : null}
                   {entry.expiryDate && (
                     <p style={{ margin: "2px 0 0", fontSize: "0.75em", color: "#6B7280" }}>
                       Expires: {formatDate(entry.expiryDate, dateFormat)}

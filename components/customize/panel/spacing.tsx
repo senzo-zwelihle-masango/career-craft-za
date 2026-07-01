@@ -14,6 +14,7 @@ export function SpacingPanel() {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
+        <p className="text-sm font-medium">Spacing</p>
         <PanelTip tip={PANEL_TIPS.Spacing} />
       </div>
       <div className="space-y-2">

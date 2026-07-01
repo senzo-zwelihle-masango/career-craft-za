@@ -90,4 +90,5 @@ export const DATE_FORMAT_OPTIONS = [
   { value: "MMM YYYY", label: "May 2024" },
   { value: "MMMM YYYY", label: "May 2024" },
   { value: "YYYY-MM", label: "2024-05" },
+  { value: "YYYY", label: "2024" },
 ]

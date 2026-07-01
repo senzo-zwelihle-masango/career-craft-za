@@ -14,6 +14,7 @@ export function FontSizePanel() {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
+        <p className="text-sm font-medium">Font Size</p>
         <PanelTip tip={PANEL_TIPS["Font Size"]} />
       </div>
       <div className="space-y-2">

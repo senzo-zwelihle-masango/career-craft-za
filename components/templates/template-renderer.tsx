@@ -17,8 +17,8 @@ interface TemplateRendererProps {
   width?: number
   /** pixel height. Only used with width. */
   height?: number
-  /** Optional real resume data; falls back to dummy */
-  resume?: CvWithRelations
+  /** Optional real cv data; falls back to dummy */
+  cv?: CvWithRelations
   className?: string
   style?: React.CSSProperties
 }
@@ -28,19 +28,19 @@ export const TemplateRenderer = memo(function TemplateRenderer({
   scale = 0.5,
   width,
   height,
-  resume: customResume,
+  cv: customCv,
   className,
   style,
 }: TemplateRendererProps) {
-  const cachedResume = useMemo(
-    () => customResume ?? createCurriculumVitae(templateId),
-    [templateId, customResume],
+  const cachedCv = useMemo(
+    () => customCv ?? createCurriculumVitae(templateId),
+    [templateId, customCv],
   )
   const Template = getTemplate(templateId)
 
   const fontFamily =
-    FONT_FAMILY_MAP[cachedResume.fontFamily]?.css ||
-    cachedResume.fontFamily ||
+    FONT_FAMILY_MAP[cachedCv.fontFamily]?.css ||
+    cachedCv.fontFamily ||
     "Inter, sans-serif"
 
   // — Scale mode: container in mm —
@@ -62,7 +62,7 @@ export const TemplateRenderer = memo(function TemplateRenderer({
           }}
         >
           <div className="bg-white text-black h-full" style={{ fontFamily }}>
-            <Template resume={cachedResume} />
+            <Template cv={cachedCv} />
           </div>
         </div>
       </div>
@@ -87,7 +87,7 @@ export const TemplateRenderer = memo(function TemplateRenderer({
         }}
       >
         <div className="bg-white text-black h-full" style={{ fontFamily }}>
-          <Template resume={cachedResume} />
+          <Template cv={cachedCv} />
         </div>
       </div>
     </div>

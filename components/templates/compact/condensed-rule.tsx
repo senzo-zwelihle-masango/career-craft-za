@@ -24,26 +24,26 @@ export const templateMeta: TemplateMeta = {
   },
 }
 
-export function CondensedRuleTemplate({ resume }: { resume: CvWithRelations }) {
-  const pd = resume.personalDetails
-  const fs = resume.fontScale || 1
-  const ss = resume.spacingScale || 1
-  const pageFormat = resume.pageFormat || "A4"
+export function CondensedRuleTemplate({ cv }: { cv: CvWithRelations }) {
+  const pd = cv.personalDetails
+  const fs = cv.fontScale || 1
+  const ss = cv.spacingScale || 1
+  const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
-  const accentColor = resume.accentColor || "#111827"
-  const fontCSS = FONT_FAMILY_MAP[resume.fontFamily]?.css || resume.fontFamily || "Inter, sans-serif"
+  const accentColor = cv.accentColor || "#111827"
+  const fontCSS = FONT_FAMILY_MAP[cv.fontFamily]?.css || cv.fontFamily || "Inter, sans-serif"
 
-  const visibleSections = resume.sections
+  const visibleSections = cv.sections
     .filter(s => s.visible !== false)
     .sort((a, b) => a.order - b.order)
 
   const links = getLinks(pd)
-  const headingStyle = resume.headingStyle || "normal"
-  const headingWeight = resume.headingWeight || "bold"
-  const entryStyle = resume.entryStyle || "bullet"
-  const showDates = resume.showEntryDates !== false
-  const showLocation = resume.showEntryLocation !== false
-  const dateFormat = resume.dateFormat || "MM/YYYY"
+  const headingStyle = cv.headingStyle || "normal"
+  const headingWeight = cv.headingWeight || "bold"
+  const entryStyle = cv.entryStyle || "bullet"
+  const showDates = cv.showEntryDates !== false
+  const showLocation = cv.showEntryLocation !== false
+  const dateFormat = cv.dateFormat || "MM/YYYY"
 
   const renderSection = (section: CvWithRelations["sections"][0]) => {
     if (section.type === "SUMMARY" && section.content) {
@@ -53,7 +53,7 @@ export function CondensedRuleTemplate({ resume }: { resume: CvWithRelations }) {
             title={section.title}
             headingStyle={headingStyle}
             headingWeight={headingWeight}
-            showSectionIcons={resume.showSectionIcons}
+            showSectionIcons={cv.showSectionIcons}
             accentColor={accentColor}
           />
           <hr style={{ border: "none", borderTop: "1px solid #D1D5DB", margin: `${4 * ss}px 0 ${4 * ss}px` }} />
@@ -69,7 +69,7 @@ export function CondensedRuleTemplate({ resume }: { resume: CvWithRelations }) {
           title={section.title}
           headingStyle={headingStyle}
           headingWeight={headingWeight}
-          showSectionIcons={resume.showSectionIcons}
+          showSectionIcons={cv.showSectionIcons}
           accentColor={accentColor}
         />
         <hr style={{ border: "none", borderTop: "1px solid #D1D5DB", margin: `${4 * ss}px 0 ${4 * ss}px` }} />
@@ -189,6 +189,15 @@ export function CondensedRuleTemplate({ resume }: { resume: CvWithRelations }) {
                     {entry.issuer}
                     {entry.issueDate ? ` · ${formatDate(entry.issueDate, dateFormat)}` : ""}
                   </p>
+                  {entry.credentialUrl ? (
+                    <p className="text-[9px] mt-px">
+                      <span onClick={(e) => { e.stopPropagation(); window.open(entry.credentialUrl, "_blank") }} className="underline text-inherit cursor-pointer" role="link" tabIndex={0}>
+                        {entry.credentialId || "View credential"}
+                      </span>
+                    </p>
+                  ) : entry.credentialId ? (
+                    <p className="text-[9px] text-gray-500 mt-px">{entry.credentialId}</p>
+                  ) : null}
                   {idx < section.certificationEntries.length - 1 && <hr style={{ border: "none", borderTop: "1px solid #D1D5DB", margin: `${4 * ss}px 0 ${4 * ss}px` }} />}
                 </div>
               ))}
@@ -285,7 +294,7 @@ export function CondensedRuleTemplate({ resume }: { resume: CvWithRelations }) {
           {pd?.phone && <span>{pd.phone}</span>}
           {pd?.location && <span>{pd.location}</span>}
           {links.map((link, i) => (
-            <span key={i}>{linkTypeLabels[link.type] || link.type}: {link.url}</span>
+            <span key={i}>        {linkTypeLabels[link.type] || link.label || link.url}</span>
           ))}
         </div>
       </div>
@@ -298,9 +307,9 @@ export function CondensedRuleTemplate({ resume }: { resume: CvWithRelations }) {
       </div>
 
       {/* Footer */}
-      {resume.footer && (
+      {cv.footer && (
         <div style={{ marginTop: 8 * ss, textAlign: "center", fontSize: `${0.5 * fs}rem`, color: "#9CA3AF" }}>
-          {resume.footer}
+          {cv.footer}
         </div>
       )}
     </div>

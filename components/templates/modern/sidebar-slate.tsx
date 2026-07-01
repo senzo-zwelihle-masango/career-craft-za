@@ -3,6 +3,7 @@ import { SectionRenderer } from "../_base/SectionRenderer"
 import { FONT_FAMILY_MAP } from "../_base/font-map"
 import { getLinks, linkTypeLabels } from "../_base/getLinks"
 import type { TemplateMeta } from "../types"
+import { formatDate } from "@/lib/data/editor/utils"
 
 export const templateMeta: TemplateMeta = {
   slug: "sidebar-slate",
@@ -23,24 +24,24 @@ export const templateMeta: TemplateMeta = {
   },
 }
 
-export function SidebarSlateTemplate({ resume }: { resume: CvWithRelations }) {
-  const pd = resume.personalDetails
-  const fs = resume.fontScale || 1
-  const ss = resume.spacingScale || 1
-  const pageFormat = resume.pageFormat || "A4"
+export function SidebarSlateTemplate({ cv }: { cv: CvWithRelations }) {
+  const pd = cv.personalDetails
+  const fs = cv.fontScale || 1
+  const ss = cv.spacingScale || 1
+  const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
-  const accentColor = resume.accentColor || "#1f2937"
-  const fontCSS = FONT_FAMILY_MAP[resume.fontFamily]?.css || resume.fontFamily || "Inter, sans-serif"
+  const accentColor = cv.accentColor || "#1f2937"
+  const fontCSS = FONT_FAMILY_MAP[cv.fontFamily]?.css || cv.fontFamily || "Inter, sans-serif"
   const links = getLinks(pd)
 
-  const visibleSections = resume.sections
+  const visibleSections = cv.sections
     .filter(s => s.visible !== false)
     .sort((a, b) => a.order - b.order)
 
   const sidebarTypes = templateMeta.sidebarSectionTypes
   const sidebarSections = visibleSections.filter(s => sidebarTypes.includes(s.type))
   const mainSections = visibleSections.filter(s => !sidebarTypes.includes(s.type))
-  const showPhoto = resume.showPhoto && pd?.photoUrl
+  const showPhoto = cv.showPhoto && pd?.photoUrl
 
   return (
     <div
@@ -48,7 +49,7 @@ export function SidebarSlateTemplate({ resume }: { resume: CvWithRelations }) {
         fontFamily: fontCSS,
         color: "#000",
         backgroundColor: "#fff",
-        minHeight: "100%",
+        height: "100%",
         maxWidth,
         margin: "0 auto",
         fontSize: `${0.8125 * fs}rem`,
@@ -57,67 +58,15 @@ export function SidebarSlateTemplate({ resume }: { resume: CvWithRelations }) {
     >
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "30% 70%",
-          minHeight: "100%",
+          display: "flex",
+          height: "100%",
         }}
       >
-        {/* Main content — DOM first for ATS */}
-        <div style={{ order: 2, padding: `${24 * ss}px` }}>
-          {showPhoto && (
-            <div style={{ textAlign: "center", marginBottom: `${12 * ss}px` }}>
-              <img
-                src={pd!.photoUrl!}
-                alt={pd!.fullName || ""}
-                style={{ width: 80, height: 100, objectFit: "cover", borderRadius: 6 }}
-              />
-            </div>
-          )}
-          <div style={{ marginBottom: `${20 * ss}px` }}>
-            <h1 style={{ fontSize: `${1.5 * fs}rem`, fontWeight: 700, margin: 0, color: "#111827" }}>
-              {pd?.fullName || "Your Name"}
-            </h1>
-            {pd?.jobTitle && (
-              <p style={{ fontSize: `${0.875 * fs}rem`, margin: `${4 * ss}px 0 0`, color: "#4B5563" }}>
-                {pd.jobTitle}
-              </p>
-            )}
-          </div>
-          {mainSections.map(section => (
-            <div key={section.id} style={{ marginBottom: `${16 * ss}px` }}>
-              <SectionRenderer
-                section={section}
-                resume={resume}
-                showDividers={resume.showDividers ?? false}
-                entryStyle={resume.entryStyle || "bullet"}
-                showEntryDates={resume.showEntryDates ?? true}
-                showEntryLocation={resume.showEntryLocation ?? true}
-                accentColor={accentColor}
-                showSectionIcons={resume.showSectionIcons ?? false}
-                headingStyle={resume.headingStyle || "uppercase"}
-                headingWeight={resume.headingWeight || "bold"}
-              />
-            </div>
-          ))}
-          {resume.footer && (
-            <p
-              style={{
-                textAlign: "center",
-                fontSize: `${0.65 * fs}rem`,
-                color: "#9CA3AF",
-                marginTop: `${16 * ss}px`,
-              }}
-            >
-              {resume.footer}
-            </p>
-          )}
-        </div>
-
         {/* Sidebar */}
         <div
           style={{
-            order: 1,
-            backgroundColor: "#1e2937",
+            width: "30%",
+            backgroundColor: accentColor,
             color: "#fff",
             padding: `${24 * ss}px`,
             display: "flex",
@@ -125,12 +74,12 @@ export function SidebarSlateTemplate({ resume }: { resume: CvWithRelations }) {
             gap: `${20 * ss}px`,
           }}
         >
-          <div style={{ textAlign: "center" }}>
+          <div style={{ marginBottom: `${12 * ss}px` }}>
             {showPhoto && (
               <img
                 src={pd!.photoUrl!}
                 alt={pd!.fullName || ""}
-                style={{ width: 72, height: 90, objectFit: "cover", borderRadius: 6, marginBottom: `${8 * ss}px` }}
+                style={{ width: 72, height: 90, objectFit: "cover", objectPosition: pd?.photoObjectPosition || "50% 50%", borderRadius: 6, marginBottom: `${6 * ss}px` }}
               />
             )}
             <h1
@@ -144,7 +93,7 @@ export function SidebarSlateTemplate({ resume }: { resume: CvWithRelations }) {
               {pd?.fullName || "Your Name"}
             </h1>
             {pd?.jobTitle && (
-              <p style={{ fontSize: `${0.8125 * fs}rem`, margin: `${4 * ss}px 0 0`, opacity: 0.8 }}>
+              <p style={{ fontSize: `${0.8125 * fs}rem`, margin: `${2 * ss}px 0 0`, opacity: 0.8 }}>
                 {pd.jobTitle}
               </p>
             )}
@@ -159,7 +108,7 @@ export function SidebarSlateTemplate({ resume }: { resume: CvWithRelations }) {
               <div style={{ marginTop: `${8 * ss}px` }}>
                 {links.map((link, i) => (
                   <p key={i} style={{ margin: `${2 * ss}px 0 0`, wordBreak: "break-all" }}>
-                    {linkTypeLabels[link.type] || link.type}: {link.url}
+                    {linkTypeLabels[link.type] || link.label || link.url}
                   </p>
                 ))}
               </div>
@@ -172,9 +121,41 @@ export function SidebarSlateTemplate({ resume }: { resume: CvWithRelations }) {
               section={section}
               fs={fs}
               ss={ss}
-              dateFormat={resume.dateFormat}
+              dateFormat={cv.dateFormat}
             />
           ))}
+        </div>
+
+        {/* Main content */}
+        <div style={{ flex: 1, padding: `${24 * ss}px` }}>
+          {mainSections.map(section => (
+            <div key={section.id} style={{ marginBottom: `${16 * ss}px` }}>
+              <SectionRenderer
+                section={section}
+                cv={cv}
+                showDividers={cv.showDividers ?? false}
+                entryStyle={cv.entryStyle || "bullet"}
+                showEntryDates={cv.showEntryDates ?? true}
+                showEntryLocation={cv.showEntryLocation ?? true}
+                accentColor={accentColor}
+                showSectionIcons={cv.showSectionIcons ?? false}
+                headingStyle={cv.headingStyle || "uppercase"}
+                headingWeight={cv.headingWeight || "bold"}
+              />
+            </div>
+          ))}
+          {cv.footer && (
+            <p
+              style={{
+                textAlign: "center",
+                fontSize: `${0.65 * fs}rem`,
+                color: "#9CA3AF",
+                marginTop: `${16 * ss}px`,
+              }}
+            >
+              {cv.footer}
+            </p>
+          )}
         </div>
       </div>
     </div>
@@ -282,9 +263,20 @@ function SidebarSection({
                 )}
                 {entry.issueDate && (
                   <p style={{ margin: `${2 * ss}px 0 0`, opacity: 0.7, fontSize: `${0.7 * fs}rem` }}>
-                    {entry.issueDate}
+                    {formatDate(entry.issueDate, dateFormat || "MM/YYYY")}
                   </p>
                 )}
+                {entry.credentialUrl ? (
+                  <p style={{ margin: `${1 * ss}px 0 0`, fontSize: `${0.65 * fs}rem` }}>
+                    <span onClick={(e) => { e.stopPropagation(); window.open(entry.credentialUrl, "_blank") }} style={{ color: "inherit", textDecoration: "underline", cursor: "pointer" }} role="link" tabIndex={0}>
+                      {entry.credentialId || "View credential"}
+                    </span>
+                  </p>
+                ) : entry.credentialId ? (
+                  <p style={{ margin: `${1 * ss}px 0 0`, fontSize: `${0.65 * fs}rem`, opacity: 0.6 }}>
+                    {entry.credentialId}
+                  </p>
+                ) : null}
               </div>
             ))}
         </div>

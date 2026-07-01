@@ -32,6 +32,7 @@ export function ColorsPanel() {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
+        <p className="text-sm font-medium">Colors</p>
         <PanelTip tip={PANEL_TIPS.Colors} />
       </div>
       <div className="space-y-2">
