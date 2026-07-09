@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import '../node_modules/lenis/dist/lenis.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -129,4 +130,15 @@
   html {
     @apply font-sans;
     }
+}
+
+@utility scrollbar-hidden {
+  /* Safari, Chrome, Opera, and newer Edge */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  /* Firefox */
+  scrollbar-width: none;
+  /* Internet Explorer and legacy Edge */
+  -ms-overflow-style: none;
 }
