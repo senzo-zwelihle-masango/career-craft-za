@@ -1,0 +1,1 @@
+1.fix tabs styling - use defualt styling
