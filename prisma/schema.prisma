@@ -110,6 +110,7 @@ model User {
   jobTimelineEvents   JobTimelineEvent[]
   savedSearches       SavedSearch[]
   aiGenerations       AiGeneration[]
+  interviewPreps      InterviewPrep[]
   subscription        Subscription?
   calendarConnections CalendarConnection[]
   importJobs          ImportJob[]
@@ -720,6 +721,25 @@ model AiGeneration {
 
   @@index([userId, createdAt])
   @@map("aiGeneration")
+}
+
+model InterviewPrep {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobId          String?
+  jobTitle       String
+  company        String?
+  questions      Json
+  tips           Json
+  topicsToReview Json
+  customNotes    String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([userId, jobId])
+  @@index([userId, createdAt])
+  @@map("interviewPrep")
 }
 
 model Subscription {
