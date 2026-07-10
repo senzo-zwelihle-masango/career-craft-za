@@ -7,6 +7,7 @@ import { Cancel01Icon, Menu01Icon } from "@hugeicons/core-free-icons"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import Logo from "@/components/svg/icons/logo"
+import ThemeSwitcher from "../ui/theme-switcher"
 
 const menuItems = [
   { name: "Home", href: "#home" },
@@ -94,12 +95,13 @@ const NavigationMenu = () => {
                 </ul>
               </div>
               <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
+                     <ThemeSwitcher />
                 <Button
                   variant="ghost"
                   size="default"
                   className={cn(isScrolled && "lg:hidden")}
                 >
-                  <Link href="#">
+                  <Link href="/sign-in">
                     <span>Sign In</span>
                   </Link>
                 </Button>
@@ -107,7 +109,7 @@ const NavigationMenu = () => {
                   size="default"
                   className={cn(isScrolled && "lg:hidden")}
                 >
-                  <Link href="#">
+                  <Link href="/sign-up">
                     <span>Sign Up</span>
                   </Link>
                 </Button>

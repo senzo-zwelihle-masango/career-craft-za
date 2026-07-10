@@ -2,6 +2,12 @@ import { Geist_Mono, Manrope } from "next/font/google"
 
 import "./globals.css"
 import { metadata } from "@/lib/metadata"
+
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin"
+import { extractRouterConfig } from "uploadthing/server"
+import { ourFileRouter } from "@/app/api/uploadthing/core"
+
+
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import { LenisProvider } from "@/components/providers/lenis-provider"
 import { TooltipProvider } from "@/components/ui/tooltip"
@@ -38,6 +44,7 @@ export default function RootLayout({
           <ThemeProvider>
             <TooltipProvider>{children}</TooltipProvider>
             <Toaster />
+              <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
           </ThemeProvider>
         </body>
       </html>
