@@ -14,7 +14,6 @@ const menuItems = [
   { name: "Features", href: "#features" },
   { name: "Templates", href: "#templates" },
   { name: "Pricing", href: "#pricing" },
-  { name: "About", href: "/about" },
 ]
 const NavigationMenu = () => {
   const [menuState, setMenuState] = React.useState(false)
@@ -117,7 +116,7 @@ const NavigationMenu = () => {
                   size="default"
                   className={cn(isScrolled ? "lg:inline-flex" : "hidden")}
                 >
-                  <Link href="#">
+                  <Link href="/overview">
                     <span>Get Started</span>
                   </Link>
                 </Button>

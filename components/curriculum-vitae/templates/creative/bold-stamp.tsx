@@ -23,7 +23,6 @@ const linkTypeLabels: Record<string, string> = {
   website: "Website",
   portfolio: "Portfolio",
   figma: "Figma",
-  custom: "Link",
 }
 
 interface BoldStampProps {
@@ -34,6 +33,10 @@ export function BoldStamp({ cv }: BoldStampProps) {
   const pd = cv.personalDetails
   const fs = cv.fontScale || 1
   const ss = cv.spacingScale || 1
+  const lh = cv.lineHeight ?? ss
+  const es = cv.elementSpacing ?? ss
+  const mh = cv.marginHorizontal ?? ss
+  const mv = cv.marginVertical ?? ss
   const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
   const accentColor = cv.accentColor || "#1f2937"
@@ -54,20 +57,20 @@ export function BoldStamp({ cv }: BoldStampProps) {
       style={{
         fontFamily: fontCSS,
         fontSize: `${fs}rem`,
-        lineHeight: `${1.4 * ss}`,
+        lineHeight: `${1.4 * lh}`,
         color: "#1f2937",
         background: "#fff",
         maxWidth,
         margin: "0 auto",
-        padding: `${36 * ss}px ${40 * ss}px`,
+        padding: `${36 * mv}px ${40 * mh}px`,
       }}
     >
       {/* Header with stamp */}
       <div
         style={{
           position: "relative",
-          marginBottom: `${28 * ss}px`,
-          paddingBottom: `${16 * ss}px`,
+          marginBottom: `${28 * es}px`,
+          paddingBottom: `${16 * es}px`,
           borderBottom: `4px solid ${accentColor}`,
         }}
       >
@@ -108,8 +111,8 @@ export function BoldStamp({ cv }: BoldStampProps) {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: `${8 * ss}px`,
-                marginTop: `${4 * ss}px`,
+                gap: `${8 * es}px`,
+                marginTop: `${4 * es}px`,
               }}
             >
               <div
@@ -139,8 +142,8 @@ export function BoldStamp({ cv }: BoldStampProps) {
             style={{
               display: "flex",
               flexWrap: "wrap",
-              gap: `0 ${16 * ss}px`,
-              marginTop: `${10 * ss}px`,
+               gap: `0 ${16 * es}px`,
+              marginTop: `${10 * es}px`,
               fontSize: `${0.6875 * fs}rem`,
               color: "#6B7280",
             }}
@@ -163,12 +166,12 @@ export function BoldStamp({ cv }: BoldStampProps) {
           cv.showDividers !== false && idx < visibleSections.length - 1
 
         return (
-          <div key={section.id} style={{ marginBottom: `${16 * ss}px` }}>
+          <div key={section.id} style={{ marginBottom: `${16 * es}px` }}>
             {/* Bold heading with stamp accent */}
             <div
               style={{
                 display: "inline-block",
-                marginBottom: `${6 * ss}px`,
+                marginBottom: `${6 * es}px`,
               }}
             >
               <h2
@@ -185,7 +188,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
               </h2>
               <div
                 style={{
-                  marginTop: `${2 * ss}px`,
+                  marginTop: `${2 * es}px`,
                   width: "32px",
                   height: "3px",
                   backgroundColor: accentColor,
@@ -217,7 +220,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
                     <div
                       key={entry.id}
                       style={{
-                        marginBottom: `${10 * ss}px`,
+                        marginBottom: `${10 * es}px`,
                       }}
                     >
                       <div
@@ -263,7 +266,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
                       </div>
                       <p
                         style={{
-                          margin: `${1 * ss}px 0 0`,
+                          margin: `${1 * es}px 0 0`,
                           fontSize: `${0.75 * fs}rem`,
                           fontWeight: 600,
                           color: accentColor,
@@ -278,7 +281,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
                         <div
                           className="prose prose-sm max-w-none"
                           style={{
-                            marginTop: `${3 * ss}px`,
+                            marginTop: `${3 * es}px`,
                             fontSize: `${0.8125 * fs}rem`,
                             lineHeight: 1.5,
                             color: "#4B5563",
@@ -292,8 +295,8 @@ export function BoldStamp({ cv }: BoldStampProps) {
                         entry.bullets.length > 0 && (
                           <ul
                             style={{
-                              margin: `${3 * ss}px 0 0`,
-                              paddingLeft: `${16 * ss}px`,
+                               margin: `${3 * es}px 0 0`,
+                               paddingLeft: `${16 * mh}px`,
                               fontSize: `${0.8125 * fs}rem`,
                               color: "#4B5563",
                               lineHeight: 1.5,
@@ -317,7 +320,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
                     <div
                       key={entry.id}
                       style={{
-                        marginBottom: `${6 * ss}px`,
+                        marginBottom: `${6 * es}px`,
                       }}
                     >
                       <div
@@ -357,7 +360,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
                       </div>
                       <p
                         style={{
-                          margin: `${1 * ss}px 0 0`,
+                          margin: `${1 * es}px 0 0`,
                           fontSize: `${0.75 * fs}rem`,
                           color: "#6B7280",
                         }}
@@ -378,7 +381,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
                     <div
                       key={entry.id}
                       style={{
-                        marginBottom: `${6 * ss}px`,
+                        marginBottom: `${6 * es}px`,
                       }}
                     >
                       <span
@@ -395,7 +398,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
                           style={{
                             fontSize: `${0.6875 * fs}rem`,
                             color: accentColor,
-                            marginLeft: `${4 * ss}px`,
+                            marginLeft: `${4 * mh}px`,
                           }}
                         >
                           {entry.link}
@@ -405,7 +408,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
                         <div
                           className="prose prose-sm max-w-none"
                           style={{
-                            margin: `${2 * ss}px 0 0`,
+                            margin: `${2 * es}px 0 0`,
                             fontSize: `${0.8125 * fs}rem`,
                             color: "#4B5563",
                           }}
@@ -419,8 +422,8 @@ export function BoldStamp({ cv }: BoldStampProps) {
                           style={{
                             display: "flex",
                             flexWrap: "wrap",
-                            gap: `${3 * ss}px`,
-                            marginTop: `${3 * ss}px`,
+                            gap: `${3 * es}px`,
+                            marginTop: `${3 * es}px`,
                           }}
                         >
                           {entry.technologies.map((tech) => (
@@ -444,7 +447,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
                   ))}
 
               {section.type === "SKILLS" && (
-                <div style={{ marginTop: `${2 * ss}px` }}>
+                <div style={{ marginTop: `${2 * es}px` }}>
                   {section.skillGroups
                     .filter((g) => g.visible !== false)
                     .sort((a, b) => a.order - b.order)
@@ -454,8 +457,8 @@ export function BoldStamp({ cv }: BoldStampProps) {
                         style={{
                           display: "flex",
                           flexWrap: "wrap",
-                          gap: `${4 * ss}px`,
-                          marginBottom: `${4 * ss}px`,
+                          gap: `${4 * es}px`,
+                          marginBottom: `${4 * es}px`,
                         }}
                       >
                         {group.label && (
@@ -464,7 +467,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
                               fontWeight: 700,
                               fontSize: `${0.75 * fs}rem`,
                               color: "#111827",
-                              minWidth: `${80 * ss}px`,
+                              minWidth: `${80 * mv}px`,
                             }}
                           >
                             {group.label}
@@ -474,7 +477,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
                           style={{
                             display: "flex",
                             flexWrap: "wrap",
-                            gap: `${3 * ss}px`,
+                            gap: `${3 * es}px`,
                           }}
                         >
                           {group.skills.map((skill) => (
@@ -506,7 +509,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
                     <div
                       key={cert.id}
                       style={{
-                        marginBottom: `${4 * ss}px`,
+                        marginBottom: `${4 * es}px`,
                         pageBreakInside: "avoid",
                       }}
                     >
@@ -537,7 +540,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
                       {cert.credentialUrl ? (
                         <p
                           style={{
-                            margin: `${1 * ss}px 0 0`,
+                            margin: `${1 * es}px 0 0`,
                             fontSize: `${0.6875 * fs}rem`,
                           }}
                         >
@@ -560,7 +563,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
                       ) : cert.credentialId ? (
                         <p
                           style={{
-                            margin: `${1 * ss}px 0 0`,
+                            margin: `${1 * es}px 0 0`,
                             fontSize: `${0.6875 * fs}rem`,
                             color: "#6B7280",
                           }}
@@ -580,8 +583,8 @@ export function BoldStamp({ cv }: BoldStampProps) {
                       key={lang.id}
                       style={{
                         display: "flex",
-                        gap: `${8 * ss}px`,
-                        marginBottom: `${2 * ss}px`,
+                        gap: `${8 * es}px`,
+                        marginBottom: `${2 * es}px`,
                         fontSize: `${0.8125 * fs}rem`,
                       }}
                     >
@@ -604,7 +607,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
                     <div
                       key={award.id}
                       style={{
-                        marginBottom: `${4 * ss}px`,
+                        marginBottom: `${4 * es}px`,
                         pageBreakInside: "avoid",
                       }}
                     >
@@ -636,7 +639,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
                         <div
                           className="prose prose-sm max-w-none"
                           style={{
-                            margin: `${2 * ss}px 0 0`,
+                            margin: `${2 * es}px 0 0`,
                             fontSize: `${0.8125 * fs}rem`,
                             color: "#4B5563",
                           }}
@@ -656,7 +659,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
                     <div
                       key={ref.id}
                       style={{
-                        marginBottom: `${4 * ss}px`,
+                        marginBottom: `${4 * es}px`,
                       }}
                     >
                       <p
@@ -713,7 +716,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
             {showDivider && (
               <div
                 style={{
-                  marginTop: `${12 * ss}px`,
+                  marginTop: `${12 * es}px`,
                   height: "2px",
                   backgroundColor: `${accentColor}15`,
                 }}
@@ -726,7 +729,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
       {cv.footer && (
         <p
           style={{
-            margin: `${16 * ss}px 0 0`,
+            margin: `${16 * es}px 0 0`,
             fontSize: `${0.625 * fs}rem`,
             color: "#D1D5DB",
             textAlign: "center",

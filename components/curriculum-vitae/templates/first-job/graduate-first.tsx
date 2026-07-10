@@ -11,6 +11,10 @@ interface GraduateFirstTemplateProps {
 export function GraduateFirstTemplate({ cv }: GraduateFirstTemplateProps) {
   const fs = cv.fontScale || 1
   const ss = cv.spacingScale || 1
+  const lh = cv.lineHeight ?? ss
+  const es = cv.elementSpacing ?? ss
+  const mh = cv.marginHorizontal ?? ss
+  const mv = cv.marginVertical ?? ss
   const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
   const accentColor = cv.accentColor || "#1f2937"
@@ -30,7 +34,7 @@ export function GraduateFirstTemplate({ cv }: GraduateFirstTemplateProps) {
       style={{
         fontFamily: fontCSS,
         fontSize: `${0.875 * fs}rem`,
-        lineHeight: `${1.5 * ss}`,
+        lineHeight: `${1.5 * lh}`,
         padding: "20mm 18mm",
         maxWidth,
         margin: "0 auto",
@@ -47,14 +51,14 @@ export function GraduateFirstTemplate({ cv }: GraduateFirstTemplateProps) {
           style={{
             border: "none",
             borderTop: `2px solid ${accentColor}`,
-            margin: `${12 * ss}px 0`,
+              margin: `${12 * es}px 0`,
           }}
         />
       )}
 
-      <div style={{ marginTop: `${12 * ss}px` }}>
+      <div style={{ marginTop: `${12 * es}px` }}>
         {visibleSections.map((section) => (
-          <div key={section.id} style={{ marginBottom: `${16 * ss}px` }}>
+          <div key={section.id} style={{ marginBottom: `${16 * es}px` }}>
             <SectionRenderer
               section={section}
               cv={cv}
@@ -74,7 +78,7 @@ export function GraduateFirstTemplate({ cv }: GraduateFirstTemplateProps) {
       {cv.footer && (
         <div
           style={{
-            marginTop: `${16 * ss}px`,
+            marginTop: `${16 * es}px`,
             textAlign: "center",
             fontSize: `${0.7 * fs}rem`,
             color: "#9CA3AF",

@@ -23,6 +23,10 @@ function CentredDot({ accentColor }: { accentColor: string }) {
 export function CentredSerifTemplate({ cv }: { cv: CvWithRelations }) {
   const fs = cv.fontScale || 1
   const ss = cv.spacingScale || 1
+  const lh = cv.lineHeight ?? ss
+  const es = cv.elementSpacing ?? ss
+  const mh = cv.marginHorizontal ?? ss
+  const mv = cv.marginVertical ?? ss
   const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
   const accentColor = cv.accentColor || "#8B5CF6"
@@ -38,11 +42,11 @@ export function CentredSerifTemplate({ cv }: { cv: CvWithRelations }) {
       style={{
         fontFamily: fontCSS,
         fontSize: `${0.875 * fs}rem`,
-        lineHeight: 1.55 * ss,
-        color: "#111827",
+        lineHeight: 1.55 * lh,
+        color: "#333",
         maxWidth,
         margin: "0 auto",
-        padding: `${40 * ss}px ${32 * ss}px`,
+        padding: `${40 * mv}px ${32 * mh}px`,
         background: "#fff",
         minHeight: "100%",
       }}
@@ -52,8 +56,8 @@ export function CentredSerifTemplate({ cv }: { cv: CvWithRelations }) {
         style={{
           borderTop: `2px solid ${accentColor}30`,
           borderBottom: `2px solid ${accentColor}30`,
-          padding: `${14 * ss}px 0`,
-          marginBottom: `${10 * ss}px`,
+          padding: `${14 * mv}px 0`,
+          marginBottom: `${10 * es}px`,
           textAlign: "center",
         }}
       >
@@ -130,7 +134,7 @@ export function CentredSerifTemplate({ cv }: { cv: CvWithRelations }) {
       {cv.footer && (
         <div
           style={{
-            marginTop: `${24 * ss}px`,
+            marginTop: `${24 * es}px`,
             textAlign: "center",
             fontSize: `${0.65 * fs}rem`,
             color: "#9CA3AF",

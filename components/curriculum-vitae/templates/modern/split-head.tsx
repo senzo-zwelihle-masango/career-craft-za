@@ -28,6 +28,10 @@ export function SplitHeadTemplate({ cv }: { cv: CvWithRelations }) {
   const pd = cv.personalDetails
   const fs = cv.fontScale || 1
   const ss = cv.spacingScale || 1
+  const lh = cv.lineHeight ?? ss
+  const es = cv.elementSpacing ?? ss
+  const mh = cv.marginHorizontal ?? ss
+  const mv = cv.marginVertical ?? ss
   const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
   const accentColor = cv.accentColor || "#0f172a"
@@ -58,8 +62,8 @@ export function SplitHeadTemplate({ cv }: { cv: CvWithRelations }) {
         style={{
           display: "grid",
           gridTemplateColumns: showPhoto ? "auto 1fr 1fr" : "1fr 1fr",
-          gap: `${16 * ss}px`,
-          padding: `${24 * ss}px ${32 * ss}px`,
+          gap: `${16 * es}px`,
+          padding: `${24 * mv}px ${32 * mh}px`,
           borderBottom: `2px solid ${accentColor}`,
           alignItems: "center",
         }}
@@ -93,7 +97,7 @@ export function SplitHeadTemplate({ cv }: { cv: CvWithRelations }) {
             <p
               style={{
                 fontSize: `${0.875 * fs}rem`,
-                margin: `${4 * ss}px 0 0`,
+                margin: `${4 * es}px 0 0`,
                 color: "#6B7280",
               }}
             >
@@ -114,7 +118,7 @@ export function SplitHeadTemplate({ cv }: { cv: CvWithRelations }) {
           {pd?.location && <div>{pd.location}</div>}
           {pd?.nationality && <div>{pd.nationality}</div>}
           {links.length > 0 && (
-            <div style={{ marginTop: `${4 * ss}px` }}>
+              <div style={{ marginTop: `${4 * es}px` }}>
               {links.map((link, i) => (
                 <div key={i}>
                   {linkTypeLabels[link.type] || link.label || link.url}
@@ -126,9 +130,9 @@ export function SplitHeadTemplate({ cv }: { cv: CvWithRelations }) {
       </div>
 
       {/* Content */}
-      <div style={{ padding: `${20 * ss}px ${32 * ss}px` }}>
+      <div style={{ padding: `${20 * mv}px ${32 * mh}px` }}>
         {visibleSections.map((section) => (
-          <div key={section.id} style={{ marginBottom: `${16 * ss}px` }}>
+          <div key={section.id} style={{ marginBottom: `${16 * es}px` }}>
             <SectionRenderer
               section={section}
               cv={cv}
@@ -150,7 +154,7 @@ export function SplitHeadTemplate({ cv }: { cv: CvWithRelations }) {
               textAlign: "center",
               fontSize: `${0.65 * fs}rem`,
               color: "#9CA3AF",
-              marginTop: `${16 * ss}px`,
+              marginTop: `${16 * es}px`,
             }}
           >
             {cv.footer}

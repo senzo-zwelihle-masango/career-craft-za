@@ -8,6 +8,10 @@ export function PhotoHeaderFloatTemplate({ cv }: { cv: CvWithRelations }) {
   const pd = cv.personalDetails
   const fs = cv.fontScale || 1
   const ss = cv.spacingScale || 1
+  const lh = cv.lineHeight ?? ss
+  const es = cv.elementSpacing ?? ss
+  const mh = cv.marginHorizontal ?? ss
+  const mv = cv.marginVertical ?? ss
   const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
   const accentColor = cv.accentColor || "#1f2937"
@@ -26,10 +30,10 @@ export function PhotoHeaderFloatTemplate({ cv }: { cv: CvWithRelations }) {
       style={{
         fontFamily: fontCSS,
         fontSize: `${0.875 * fs}rem`,
-        lineHeight: ss,
+        lineHeight: lh,
         maxWidth,
         margin: "0 auto",
-        padding: `${32 * ss}px ${24 * ss}px`,
+        padding: `${32 * mv}px ${24 * mh}px`,
         color: "#111827",
         background: "#fff",
         minHeight: "100%",
@@ -39,8 +43,8 @@ export function PhotoHeaderFloatTemplate({ cv }: { cv: CvWithRelations }) {
         style={{
           display: "flex",
           alignItems: "flex-start",
-          gap: 24 * ss,
-          marginBottom: 24 * ss,
+          gap: 24 * es,
+          marginBottom: 24 * es,
         }}
       >
         <div style={{ flex: 1 }}>
@@ -59,7 +63,7 @@ export function PhotoHeaderFloatTemplate({ cv }: { cv: CvWithRelations }) {
           {pd?.jobTitle && (
             <p
               style={{
-                margin: `${4 * ss}px 0 0`,
+                margin: `${4 * es}px 0 0`,
                 fontSize: `${0.875 * fs}rem`,
                 color: "#6B7280",
               }}
@@ -70,7 +74,7 @@ export function PhotoHeaderFloatTemplate({ cv }: { cv: CvWithRelations }) {
           {contactParts.length > 0 && (
             <p
               style={{
-                margin: `${8 * ss}px 0 0`,
+                margin: `${8 * es}px 0 0`,
                 fontSize: `${0.75 * fs}rem`,
                 color: "#6B7280",
                 lineHeight: 1.5,
@@ -82,7 +86,7 @@ export function PhotoHeaderFloatTemplate({ cv }: { cv: CvWithRelations }) {
           {links.length > 0 && (
             <p
               style={{
-                margin: `${4 * ss}px 0 0`,
+                margin: `${4 * es}px 0 0`,
                 fontSize: `${0.75 * fs}rem`,
                 color: "#6B7280",
                 lineHeight: 1.5,
@@ -136,7 +140,7 @@ export function PhotoHeaderFloatTemplate({ cv }: { cv: CvWithRelations }) {
       {cv.footer && (
         <div
           style={{
-            marginTop: 16 * ss,
+            marginTop: 16 * es,
             textAlign: "center",
             fontSize: `${0.75 * fs}rem`,
             color: "#9CA3AF",

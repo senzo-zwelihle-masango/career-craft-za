@@ -23,6 +23,10 @@ function OrnamentalDivider({ accentColor }: { accentColor: string }) {
 export function EditorialRuleTemplate({ cv }: { cv: CvWithRelations }) {
   const fs = cv.fontScale || 1
   const ss = cv.spacingScale || 1
+  const lh = cv.lineHeight ?? ss
+  const es = cv.elementSpacing ?? ss
+  const mh = cv.marginHorizontal ?? ss
+  const mv = cv.marginVertical ?? ss
   const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
   const accentColor = cv.accentColor || "#1f2937"
@@ -38,11 +42,11 @@ export function EditorialRuleTemplate({ cv }: { cv: CvWithRelations }) {
       style={{
         fontFamily: fontCSS,
         fontSize: `${0.875 * fs}rem`,
-        lineHeight: 1.6 * ss,
+        lineHeight: 1.6 * lh,
         color: "#111827",
         maxWidth,
         margin: "0 auto",
-        padding: `${38 * ss}px ${30 * ss}px`,
+        padding: `${38 * mv}px ${30 * mh}px`,
         background: "#fffaf5",
         minHeight: "100%",
       }}
@@ -72,7 +76,7 @@ export function EditorialRuleTemplate({ cv }: { cv: CvWithRelations }) {
           color: `${accentColor}40`,
           fontSize: `${0.5 * fs}rem`,
           letterSpacing: 12,
-          margin: `${10 * ss}px 0 ${6 * ss}px`,
+            margin: `${10 * es}px 0 ${6 * es}px`,
         }}
       >
         ❧
@@ -82,7 +86,7 @@ export function EditorialRuleTemplate({ cv }: { cv: CvWithRelations }) {
         style={{
           height: 1,
           background: `linear-gradient(to right, transparent, ${accentColor}40, transparent)`,
-          marginBottom: `${14 * ss}px`,
+          marginBottom: `${14 * es}px`,
         }}
       />
 
@@ -154,7 +158,7 @@ export function EditorialRuleTemplate({ cv }: { cv: CvWithRelations }) {
       {cv.footer && (
         <div
           style={{
-            marginTop: `${24 * ss}px`,
+            marginTop: `${24 * es}px`,
             textAlign: "center",
             fontSize: `${0.65 * fs}rem`,
             color: "#9CA3AF",

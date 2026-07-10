@@ -32,6 +32,10 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
   const pd = cv.personalDetails
   const fs = cv.fontScale || 1
   const ss = cv.spacingScale || 1
+  const lh = cv.lineHeight ?? ss
+  const es = cv.elementSpacing ?? ss
+  const mh = cv.marginHorizontal ?? ss
+  const mv = cv.marginVertical ?? ss
   const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
   const accentColor = cv.accentColor || "#374151"
@@ -61,7 +65,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
   const renderMainSection = (section: CvWithRelations["sections"][0]) => {
     if (section.type === "SUMMARY" && section.content) {
       return (
-        <div key={section.id} style={{ marginBottom: 8 * ss }}>
+        <div key={section.id} style={{ marginBottom: 8 * es }}>
           <SectionHeading
             title={section.title}
             headingStyle={headingStyle}
@@ -71,7 +75,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
           />
           <div
             className="prose prose-sm max-w-none text-[10px] leading-relaxed text-gray-700"
-            style={{ marginTop: 2 * ss }}
+            style={{ marginTop: 2 * es }}
             dangerouslySetInnerHTML={{ __html: section.content }}
           />
         </div>
@@ -79,7 +83,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
     }
 
     return (
-      <div key={section.id} style={{ marginBottom: 8 * ss }}>
+      <div key={section.id} style={{ marginBottom: 8 * es }}>
         <SectionHeading
           title={section.title}
           headingStyle={headingStyle}
@@ -90,7 +94,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
 
         {section.type === "EXPERIENCE" &&
           section.experienceEntries.length > 0 && (
-            <div style={{ marginTop: 2 * ss }}>
+            <div style={{ marginTop: 2 * es }}>
               {section.experienceEntries
                 .slice()
                 .sort((a, b) => a.order - b.order)
@@ -98,7 +102,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
                   <div
                     key={entry.id}
                     className="break-inside-avoid"
-                    style={{ marginBottom: 6 * ss }}
+                    style={{ marginBottom: 6 * es }}
                   >
                     <p className="text-[10px] leading-tight font-semibold">
                       {entry.role}
@@ -142,7 +146,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
 
         {section.type === "EDUCATION" &&
           section.educationEntries.length > 0 && (
-            <div style={{ marginTop: 2 * ss }}>
+            <div style={{ marginTop: 2 * es }}>
               {section.educationEntries
                 .slice()
                 .sort((a, b) => a.order - b.order)
@@ -150,7 +154,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
                   <div
                     key={entry.id}
                     className="break-inside-avoid"
-                    style={{ marginBottom: 4 * ss }}
+                    style={{ marginBottom: 4 * es }}
                   >
                     <p className="text-[10px] leading-tight font-semibold">
                       {entry.institution}
@@ -180,7 +184,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
   }
 
   const renderSidebarSection = (section: CvWithRelations["sections"][0]) => (
-    <div key={section.id} style={{ marginBottom: 8 * ss }}>
+    <div key={section.id} style={{ marginBottom: 8 * es }}>
       <SectionHeading
         title={section.title}
         headingStyle={headingStyle}
@@ -190,7 +194,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
       />
 
       {section.type === "SKILLS" && (
-        <div style={{ marginTop: 2 * ss }}>
+        <div style={{ marginTop: 2 * es }}>
           {section.skillGroups
             .filter((g) => g.visible !== false)
             .slice()
@@ -199,7 +203,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
               <p
                 key={group.id}
                 className="text-[9px] leading-relaxed text-gray-700"
-                style={{ marginBottom: 2 * ss }}
+                style={{ marginBottom: 2 * es }}
               >
                 {group.label && (
                   <span className="font-semibold">{group.label}: </span>
@@ -211,7 +215,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
       )}
 
       {section.type === "PROJECTS" && section.projectEntries.length > 0 && (
-        <div style={{ marginTop: 2 * ss }}>
+        <div style={{ marginTop: 2 * es }}>
           {section.projectEntries
             .slice()
             .sort((a, b) => a.order - b.order)
@@ -219,7 +223,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
               <div
                 key={entry.id}
                 className="break-inside-avoid"
-                style={{ marginBottom: 4 * ss }}
+                style={{ marginBottom: 4 * es }}
               >
                 <p className="text-[10px] leading-tight font-semibold">
                   {entry.name}
@@ -242,7 +246,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
 
       {section.type === "CERTIFICATIONS" &&
         section.certificationEntries.length > 0 && (
-          <div style={{ marginTop: 2 * ss }}>
+          <div style={{ marginTop: 2 * es }}>
             {section.certificationEntries
               .slice()
               .sort((a, b) => a.order - b.order)
@@ -250,7 +254,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
                 <div
                   key={entry.id}
                   className="break-inside-avoid"
-                  style={{ marginBottom: 3 * ss }}
+                  style={{ marginBottom: 3 * es }}
                 >
                   <p className="text-[10px] leading-tight font-semibold">
                     {entry.name}
@@ -288,7 +292,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
         )}
 
       {section.type === "LANGUAGES" && section.languageEntries.length > 0 && (
-        <div style={{ marginTop: 2 * ss }}>
+        <div style={{ marginTop: 2 * es }}>
           {section.languageEntries
             .slice()
             .sort((a, b) => a.order - b.order)
@@ -296,7 +300,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
               <p
                 key={entry.id}
                 className="text-[9px] text-gray-700"
-                style={{ marginBottom: 1 * ss }}
+                style={{ marginBottom: 1 * es }}
               >
                 {entry.name}
                 {entry.proficiency ? ` – ${entry.proficiency}` : ""}
@@ -312,7 +316,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
       style={{
         fontFamily: fontCSS,
         fontSize: `${fs}rem`,
-        lineHeight: `${1.25 * ss}`,
+        lineHeight: `${1.25 * lh}`,
         maxWidth,
         margin: "0 auto",
         padding: "10px 12px",
@@ -324,8 +328,8 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
       {/* Header */}
       <div
         style={{
-          marginBottom: 8 * ss,
-          paddingBottom: 6 * ss,
+          marginBottom: 8 * es,
+          paddingBottom: 6 * es,
           borderBottom: "1px solid #E5E7EB",
         }}
       >
@@ -352,7 +356,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
         )}
         <div
           style={{
-            marginTop: 4 * ss,
+            marginTop: 4 * es,
             fontSize: `${0.625 * fs}rem`,
             color: "#9CA3AF",
             display: "flex",
@@ -377,7 +381,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
         style={{
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
-          columnGap: 16 * ss,
+          columnGap: 16 * es,
           alignItems: "start",
         }}
       >
@@ -392,7 +396,7 @@ export function DenseTwoColTemplate({ cv }: { cv: CvWithRelations }) {
       {cv.footer && (
         <div
           style={{
-            marginTop: 8 * ss,
+            marginTop: 8 * es,
             textAlign: "center",
             fontSize: `${0.5625 * fs}rem`,
             color: "#9CA3AF",

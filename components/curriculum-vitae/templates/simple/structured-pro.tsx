@@ -7,6 +7,10 @@ import type { TemplateMeta } from "@/types/templates/types"
 export function StructuredProTemplate({ cv }: { cv: CvWithRelations }) {
   const fs = cv.fontScale || 1
   const ss = cv.spacingScale || 1
+  const lh = cv.lineHeight ?? ss
+  const es = cv.elementSpacing ?? ss
+  const mh = cv.marginHorizontal ?? ss
+  const mv = cv.marginVertical ?? ss
   const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
   const accentColor = cv.accentColor || "#1e3a5f"
@@ -22,11 +26,11 @@ export function StructuredProTemplate({ cv }: { cv: CvWithRelations }) {
       style={{
         fontFamily: fontCSS,
         fontSize: `${0.8125 * fs}rem`,
-        lineHeight: 1.45 * ss,
+        lineHeight: 1.45 * lh,
         color: "#111827",
         maxWidth,
         margin: "0 auto",
-        padding: `${28 * ss}px ${24 * ss}px`,
+        padding: `${28 * mv}px ${24 * mh}px`,
         background: "#fff",
         minHeight: "100%",
       }}
@@ -35,8 +39,8 @@ export function StructuredProTemplate({ cv }: { cv: CvWithRelations }) {
         style={{
           background: `${accentColor}08`,
           borderRadius: 4,
-          padding: `${20 * ss}px ${20 * ss}px ${16 * ss}px`,
-          marginBottom: `${20 * ss}px`,
+          padding: `${20 * mv}px ${20 * mh}px ${16 * mv}px`,
+          marginBottom: `${20 * es}px`,
           borderLeft: `4px solid ${accentColor}`,
         }}
       >
@@ -59,9 +63,9 @@ export function StructuredProTemplate({ cv }: { cv: CvWithRelations }) {
           style={{
             display: "grid",
             gridTemplateColumns: "200px 1fr",
-            gap: `${16 * ss}px`,
-            marginTop: `${4 * ss}px`,
-            padding: `${8 * ss}px 0`,
+            gap: `${16 * es}px`,
+            marginTop: `${4 * es}px`,
+            padding: `${8 * es}px 0`,
             borderBottom: `1px solid ${accentColor}15`,
           }}
         >
@@ -107,7 +111,7 @@ export function StructuredProTemplate({ cv }: { cv: CvWithRelations }) {
       {cv.footer && (
         <div
           style={{
-            marginTop: `${20 * ss}px`,
+            marginTop: `${20 * es}px`,
             textAlign: "center",
             fontSize: `${0.65 * fs}rem`,
             color: "#9CA3AF",

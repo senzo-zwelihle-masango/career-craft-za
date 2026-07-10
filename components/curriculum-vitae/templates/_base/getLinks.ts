@@ -10,7 +10,6 @@ export const linkTypeLabels: Record<string, string> = {
   website: "Website",
   portfolio: "Portfolio",
   figma: "Figma",
-  custom: "Link",
 }
 
 export function getLinks(pd: { links?: unknown } | null): LinkItem[] {

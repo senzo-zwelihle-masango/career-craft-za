@@ -5,20 +5,20 @@ import Logo from "../svg/icons/logo"
 const links = [
   {
     title: "Home",
-    href: "#",
+    href: "#home",
   },
   {
     title: "Features",
-    href: "#",
+    href: "#features",
   },
   {
     title: "Templates",
-    href: "#",
+    href: "#templates",
   },
 
   {
-    title: "About",
-    href: "#",
+    title: "Pricing",
+    href: "#pricing",
   },
 ]
 

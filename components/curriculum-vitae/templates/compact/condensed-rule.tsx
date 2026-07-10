@@ -32,6 +32,10 @@ export function CondensedRuleTemplate({ cv }: { cv: CvWithRelations }) {
   const pd = cv.personalDetails
   const fs = cv.fontScale || 1
   const ss = cv.spacingScale || 1
+  const lh = cv.lineHeight ?? ss
+  const es = cv.elementSpacing ?? ss
+  const mh = cv.marginHorizontal ?? ss
+  const mv = cv.marginVertical ?? ss
   const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
   const accentColor = cv.accentColor || "#111827"
@@ -65,19 +69,19 @@ export function CondensedRuleTemplate({ cv }: { cv: CvWithRelations }) {
             style={{
               border: "none",
               borderTop: "1px solid #D1D5DB",
-              margin: `${4 * ss}px 0 ${4 * ss}px`,
+              margin: `${4 * es}px 0 ${4 * es}px`,
             }}
           />
           <div
             className="prose prose-sm max-w-none text-[10px] leading-relaxed text-gray-700"
-            style={{ margin: `${4 * ss}px 0 ${8 * ss}px` }}
+            style={{ margin: `${4 * es}px 0 ${8 * es}px` }}
             dangerouslySetInnerHTML={{ __html: section.content }}
           />
           <hr
             style={{
               border: "none",
               borderTop: "1px solid #D1D5DB",
-              margin: `${4 * ss}px 0 ${4 * ss}px`,
+              margin: `${4 * es}px 0 ${4 * es}px`,
             }}
           />
         </div>
@@ -97,7 +101,7 @@ export function CondensedRuleTemplate({ cv }: { cv: CvWithRelations }) {
           style={{
             border: "none",
             borderTop: "1px solid #D1D5DB",
-            margin: `${4 * ss}px 0 ${4 * ss}px`,
+            margin: `${4 * es}px 0 ${4 * es}px`,
           }}
         />
 
@@ -154,7 +158,7 @@ export function CondensedRuleTemplate({ cv }: { cv: CvWithRelations }) {
                         style={{
                           border: "none",
                           borderTop: "1px solid #D1D5DB",
-                          margin: `${4 * ss}px 0 ${4 * ss}px`,
+                          margin: `${4 * es}px 0 ${4 * es}px`,
                         }}
                       />
                     )}
@@ -199,7 +203,7 @@ export function CondensedRuleTemplate({ cv }: { cv: CvWithRelations }) {
                         style={{
                           border: "none",
                           borderTop: "1px solid #D1D5DB",
-                          margin: `${4 * ss}px 0 ${4 * ss}px`,
+                          margin: `${4 * es}px 0 ${4 * es}px`,
                         }}
                       />
                     )}
@@ -234,7 +238,7 @@ export function CondensedRuleTemplate({ cv }: { cv: CvWithRelations }) {
                       style={{
                         border: "none",
                         borderTop: "1px solid #D1D5DB",
-                        margin: `${4 * ss}px 0 ${4 * ss}px`,
+                        margin: `${4 * es}px 0 ${4 * es}px`,
                       }}
                     />
                   )}
@@ -253,7 +257,7 @@ export function CondensedRuleTemplate({ cv }: { cv: CvWithRelations }) {
                 <p
                   key={group.id}
                   className="text-[9px] leading-relaxed text-gray-700"
-                  style={{ marginBottom: 1 * ss }}
+                  style={{ marginBottom: 1 * es }}
                 >
                   {group.label && (
                     <span className="font-semibold">{group.label}: </span>
@@ -309,7 +313,7 @@ export function CondensedRuleTemplate({ cv }: { cv: CvWithRelations }) {
                         style={{
                           border: "none",
                           borderTop: "1px solid #D1D5DB",
-                          margin: `${4 * ss}px 0 ${4 * ss}px`,
+                          margin: `${4 * es}px 0 ${4 * es}px`,
                         }}
                       />
                     )}
@@ -390,7 +394,7 @@ export function CondensedRuleTemplate({ cv }: { cv: CvWithRelations }) {
                         style={{
                           border: "none",
                           borderTop: "1px solid #D1D5DB",
-                          margin: `${4 * ss}px 0 ${4 * ss}px`,
+                          margin: `${4 * es}px 0 ${4 * es}px`,
                         }}
                       />
                     )}
@@ -402,7 +406,7 @@ export function CondensedRuleTemplate({ cv }: { cv: CvWithRelations }) {
         {section.type === "CUSTOM" && section.content && (
           <div
             className="prose prose-sm max-w-none text-[9px] leading-relaxed whitespace-pre-wrap text-gray-700"
-            style={{ margin: `${4 * ss}px 0` }}
+            style={{ margin: `${4 * es}px 0` }}
             dangerouslySetInnerHTML={{ __html: section.content }}
           />
         )}
@@ -412,7 +416,7 @@ export function CondensedRuleTemplate({ cv }: { cv: CvWithRelations }) {
             style={{
               border: "none",
               borderTop: "1px solid #D1D5DB",
-              margin: `${4 * ss}px 0 ${4 * ss}px`,
+              margin: `${4 * es}px 0 ${4 * es}px`,
             }}
           />
         )}
@@ -425,7 +429,7 @@ export function CondensedRuleTemplate({ cv }: { cv: CvWithRelations }) {
       style={{
         fontFamily: fontCSS,
         fontSize: `${fs}rem`,
-        lineHeight: `${1.2 * ss}`,
+        lineHeight: `${1.2 * lh}`,
         maxWidth,
         margin: "0 auto",
         padding: "8px 12px",
@@ -435,7 +439,7 @@ export function CondensedRuleTemplate({ cv }: { cv: CvWithRelations }) {
       }}
     >
       {/* Header */}
-      <div style={{ marginBottom: 6 * ss }}>
+      <div style={{ marginBottom: 6 * es }}>
         <h1
           style={{
             margin: 0,
@@ -459,7 +463,7 @@ export function CondensedRuleTemplate({ cv }: { cv: CvWithRelations }) {
         )}
         <div
           style={{
-            marginTop: 3 * ss,
+            marginTop: 3 * es,
             fontSize: `${0.5625 * fs}rem`,
             color: "#9CA3AF",
             display: "flex",
@@ -483,7 +487,7 @@ export function CondensedRuleTemplate({ cv }: { cv: CvWithRelations }) {
         style={{
           border: "none",
           borderTop: "1px solid #D1D5DB",
-          margin: `${4 * ss}px 0 ${4 * ss}px`,
+          margin: `${4 * es}px 0 ${4 * es}px`,
         }}
       />
 
@@ -494,7 +498,7 @@ export function CondensedRuleTemplate({ cv }: { cv: CvWithRelations }) {
       {cv.footer && (
         <div
           style={{
-            marginTop: 8 * ss,
+            marginTop: 8 * es,
             textAlign: "center",
             fontSize: `${0.5 * fs}rem`,
             color: "#9CA3AF",

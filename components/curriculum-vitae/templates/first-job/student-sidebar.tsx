@@ -11,6 +11,10 @@ interface StudentSidebarTemplateProps {
 export function StudentSidebarTemplate({ cv }: StudentSidebarTemplateProps) {
   const fs = cv.fontScale || 1
   const ss = cv.spacingScale || 1
+  const lh = cv.lineHeight ?? ss
+  const es = cv.elementSpacing ?? ss
+  const mh = cv.marginHorizontal ?? ss
+  const mv = cv.marginVertical ?? ss
   const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
   const accentColor = cv.accentColor || "#1f2937"
@@ -31,7 +35,7 @@ export function StudentSidebarTemplate({ cv }: StudentSidebarTemplateProps) {
       style={{
         fontFamily: fontCSS,
         fontSize: `${0.8125 * fs}rem`,
-        lineHeight: `${1.5 * ss}`,
+        lineHeight: `${1.5 * lh}`,
         maxWidth,
         margin: "0 auto",
         backgroundImage: "linear-gradient(to right, transparent 72%, #F3F4F6 72%)",
@@ -39,7 +43,7 @@ export function StudentSidebarTemplate({ cv }: StudentSidebarTemplateProps) {
       }}
     >
       {/* Main content */}
-      <div className="flex-1" style={{ padding: `${16 * ss}px ${18 * ss}px` }}>
+          <div className="flex-1" style={{ padding: `${16 * mv}px ${18 * mh}px` }}>
         <CvHeader
           pd={cv.personalDetails}
           cv={cv}
@@ -51,14 +55,14 @@ export function StudentSidebarTemplate({ cv }: StudentSidebarTemplateProps) {
             style={{
               border: "none",
               borderTop: `2px solid ${accentColor}`,
-              margin: `${10 * ss}px 0`,
+              margin: `${10 * es}px 0`,
             }}
           />
         )}
 
-        <div style={{ marginTop: `${10 * ss}px` }}>
+        <div style={{ marginTop: `${10 * es}px` }}>
           {mainSections.map((section) => (
-            <div key={section.id} style={{ marginBottom: `${14 * ss}px` }}>
+            <div key={section.id} style={{ marginBottom: `${14 * es}px` }}>
               <SectionRenderer
                 section={section}
                 cv={cv}
@@ -78,7 +82,7 @@ export function StudentSidebarTemplate({ cv }: StudentSidebarTemplateProps) {
         {cv.footer && (
           <div
             style={{
-              marginTop: `${14 * ss}px`,
+              marginTop: `${14 * es}px`,
               textAlign: "center",
               fontSize: `${0.7 * fs}rem`,
               color: "#9CA3AF",
@@ -93,11 +97,11 @@ export function StudentSidebarTemplate({ cv }: StudentSidebarTemplateProps) {
       <div
         className="w-[28%] shrink-0"
         style={{
-          padding: `${16 * ss}px ${14 * ss}px`,
+          padding: `${16 * mv}px ${14 * mh}px`,
         }}
       >
         {cv.personalDetails && (
-          <div style={{ marginBottom: `${12 * ss}px` }}>
+              <div style={{ marginBottom: `${12 * es}px` }}>
             <h3
               style={{
                 fontSize: `${0.65 * fs}rem`,
@@ -114,28 +118,28 @@ export function StudentSidebarTemplate({ cv }: StudentSidebarTemplateProps) {
               style={{
                 border: "none",
                 borderTop: "1px solid #D1D5DB",
-                margin: `${4 * ss}px 0`,
+                margin: `${4 * es}px 0`,
               }}
             />
             <div
               style={{
                 fontSize: `${0.75 * fs}rem`,
                 color: "#374151",
-                lineHeight: `${1.6 * ss}`,
+                lineHeight: `${1.6 * lh}`,
               }}
             >
               {cv.personalDetails.email && (
-                <p style={{ margin: `${2 * ss}px 0` }}>
+                <p style={{ margin: `${2 * es}px 0` }}>
                   {cv.personalDetails.email}
                 </p>
               )}
               {cv.personalDetails.phone && (
-                <p style={{ margin: `${2 * ss}px 0` }}>
+                <p style={{ margin: `${2 * es}px 0` }}>
                   {cv.personalDetails.phone}
                 </p>
               )}
               {cv.personalDetails.location && (
-                <p style={{ margin: `${2 * ss}px 0` }}>
+                <p style={{ margin: `${2 * es}px 0` }}>
                   {cv.personalDetails.location}
                 </p>
               )}
@@ -144,7 +148,7 @@ export function StudentSidebarTemplate({ cv }: StudentSidebarTemplateProps) {
         )}
 
         {sidebarSections.map((section) => (
-          <div key={section.id} style={{ marginBottom: `${12 * ss}px` }}>
+              <div key={section.id} style={{ marginBottom: `${12 * es}px` }}>
             <SectionRenderer
               section={section}
               cv={cv}

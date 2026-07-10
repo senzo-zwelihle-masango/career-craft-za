@@ -8,6 +8,10 @@ export function PhotoCentredTemplate({ cv }: { cv: CvWithRelations }) {
   const pd = cv.personalDetails
   const fs = cv.fontScale || 1
   const ss = cv.spacingScale || 1
+  const lh = cv.lineHeight ?? ss
+  const es = cv.elementSpacing ?? ss
+  const mh = cv.marginHorizontal ?? ss
+  const mv = cv.marginVertical ?? ss
   const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
   const accentColor = cv.accentColor || "#1f2937"
@@ -34,7 +38,7 @@ export function PhotoCentredTemplate({ cv }: { cv: CvWithRelations }) {
       style={{
         fontFamily: fontCSS,
         fontSize: `${0.8125 * fs}rem`,
-        lineHeight: ss,
+        lineHeight: lh,
         maxWidth,
         margin: "0 auto",
         display: "flex",
@@ -47,14 +51,14 @@ export function PhotoCentredTemplate({ cv }: { cv: CvWithRelations }) {
         style={{
           width: "25%",
           flexShrink: 0,
-          padding: `${24 * ss}px ${16 * ss}px`,
+          padding: `${24 * mv}px ${16 * mh}px`,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
         {pd?.photoUrl && cv.showPhoto && (
-          <div style={{ marginBottom: 16 * ss }}>
+            <div style={{ marginBottom: 16 * es }}>
             <img
               src={pd.photoUrl}
               alt=""
@@ -85,7 +89,7 @@ export function PhotoCentredTemplate({ cv }: { cv: CvWithRelations }) {
         {pd?.jobTitle && (
           <p
             style={{
-              margin: `${4 * ss}px 0 0`,
+              margin: `${4 * es}px 0 0`,
               fontSize: `${0.75 * fs}rem`,
               color: "#6B7280",
               textAlign: "center",
@@ -98,7 +102,7 @@ export function PhotoCentredTemplate({ cv }: { cv: CvWithRelations }) {
         {contactParts.length > 0 && (
           <div
             style={{
-              marginTop: 12 * ss,
+              marginTop: 12 * es,
               fontSize: `${0.7 * fs}rem`,
               color: "#6B7280",
               textAlign: "center",
@@ -113,7 +117,7 @@ export function PhotoCentredTemplate({ cv }: { cv: CvWithRelations }) {
         {links.length > 0 && (
           <div
             style={{
-              marginTop: 8 * ss,
+              marginTop: 8 * es,
               fontSize: `${0.7 * fs}rem`,
               color: "#6B7280",
               textAlign: "center",
@@ -128,9 +132,9 @@ export function PhotoCentredTemplate({ cv }: { cv: CvWithRelations }) {
           </div>
         )}
 
-        <div style={{ width: "100%", marginTop: 16 * ss }}>
+        <div style={{ width: "100%", marginTop: 16 * es }}>
           {sidebarSections.map((section) => (
-            <div key={section.id} style={{ marginBottom: 8 * ss }}>
+            <div key={section.id} style={{ marginBottom: 8 * es }}>
               <SectionRenderer
                 section={section}
                 cv={cv}
@@ -151,7 +155,7 @@ export function PhotoCentredTemplate({ cv }: { cv: CvWithRelations }) {
       <div
         style={{
           flex: 1,
-          padding: `${24 * ss}px ${20 * ss}px`,
+          padding: `${24 * mv}px ${20 * mh}px`,
         }}
       >
         {mainSections.map((section) => (
@@ -173,7 +177,7 @@ export function PhotoCentredTemplate({ cv }: { cv: CvWithRelations }) {
         {cv.footer && (
           <div
             style={{
-              marginTop: 16 * ss,
+              marginTop: 16 * es,
               textAlign: "center",
               fontSize: `${0.75 * fs}rem`,
               color: "#9CA3AF",

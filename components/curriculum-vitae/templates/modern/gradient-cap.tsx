@@ -28,6 +28,10 @@ export function GradientCapTemplate({ cv }: { cv: CvWithRelations }) {
   const pd = cv.personalDetails
   const fs = cv.fontScale || 1
   const ss = cv.spacingScale || 1
+  const lh = cv.lineHeight ?? ss
+  const es = cv.elementSpacing ?? ss
+  const mh = cv.marginHorizontal ?? ss
+  const mv = cv.marginVertical ?? ss
   const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
   const accentColor = cv.accentColor || "#4f46e5"
@@ -57,7 +61,7 @@ export function GradientCapTemplate({ cv }: { cv: CvWithRelations }) {
       <div
         style={{
           background: `linear-gradient(180deg, ${accentColor} 0%, #1e293b 100%)`,
-          padding: `${36 * ss}px ${32 * ss}px ${24 * ss}px`,
+          padding: `${36 * mv}px ${32 * mh}px ${24 * mv}px`,
           textAlign: "center",
         }}
       >
@@ -71,7 +75,7 @@ export function GradientCapTemplate({ cv }: { cv: CvWithRelations }) {
               objectFit: "cover",
               objectPosition: pd?.photoObjectPosition || "50% 50%",
               borderRadius: "50%",
-              margin: `0 auto ${10 * ss}px`,
+              margin: `0 auto ${10 * es}px`,
               display: "block",
               border: "3px solid rgba(255,255,255,0.25)",
             }}
@@ -92,7 +96,7 @@ export function GradientCapTemplate({ cv }: { cv: CvWithRelations }) {
           <p
             style={{
               fontSize: `${0.9375 * fs}rem`,
-              margin: `${6 * ss}px 0 0`,
+              margin: `${6 * es}px 0 0`,
               color: "rgba(255,255,255,0.7)",
               fontWeight: 400,
             }}
@@ -108,8 +112,8 @@ export function GradientCapTemplate({ cv }: { cv: CvWithRelations }) {
           display: "flex",
           justifyContent: "center",
           flexWrap: "wrap",
-          gap: `${12 * ss}px`,
-          padding: `${10 * ss}px ${24 * ss}px`,
+          gap: `${12 * es}px`,
+          padding: `${10 * mv}px ${24 * mh}px`,
           fontSize: `${0.7 * fs}rem`,
           color: "#475569",
           borderBottom: "1px solid #E2E8F0",
@@ -128,14 +132,14 @@ export function GradientCapTemplate({ cv }: { cv: CvWithRelations }) {
       </div>
 
       {/* Content */}
-      <div style={{ padding: `${20 * ss}px ${32 * ss}px` }}>
+      <div style={{ padding: `${20 * mv}px ${32 * mh}px` }}>
         {visibleSections.map((section) => (
           <div
             key={section.id}
             style={{
-              marginBottom: `${16 * ss}px`,
+              marginBottom: `${16 * es}px`,
               borderLeft: `3px solid ${accentColor}`,
-              paddingLeft: `${14 * ss}px`,
+              paddingLeft: `${14 * mh}px`,
             }}
           >
             <SectionRenderer
@@ -159,7 +163,7 @@ export function GradientCapTemplate({ cv }: { cv: CvWithRelations }) {
               textAlign: "center",
               fontSize: `${0.65 * fs}rem`,
               color: "#94A3B8",
-              marginTop: `${16 * ss}px`,
+              marginTop: `${16 * es}px`,
               borderLeft: "none",
               paddingLeft: 0,
             }}

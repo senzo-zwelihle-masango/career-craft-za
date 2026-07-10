@@ -23,7 +23,6 @@ const linkTypeLabels: Record<string, string> = {
   website: "Website",
   portfolio: "Portfolio",
   figma: "Figma",
-  custom: "Link",
 }
 
 interface RuledEditorialProps {
@@ -34,6 +33,10 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
   const pd = cv.personalDetails
   const fs = cv.fontScale || 1
   const ss = cv.spacingScale || 1
+  const lh = cv.lineHeight ?? ss
+  const es = cv.elementSpacing ?? ss
+  const mh = cv.marginHorizontal ?? ss
+  const mv = cv.marginVertical ?? ss
   const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
   const accentColor = cv.accentColor || "#1f2937"
@@ -52,16 +55,16 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
       style={{
         fontFamily: fontCSS,
         fontSize: `${fs}rem`,
-        lineHeight: `${1.4 * ss}`,
+        lineHeight: `${1.4 * lh}`,
         color: "#1f2937",
         background: "#fff",
         maxWidth,
         margin: "0 auto",
-        padding: `${40 * ss}px ${44 * ss}px`,
+        padding: `${40 * mv}px ${44 * mh}px`,
       }}
     >
       {/* Header */}
-      <div style={{ marginBottom: `${24 * ss}px` }}>
+      <div style={{ marginBottom: `${24 * es}px` }}>
         {pd?.fullName && (
           <h1
             style={{
@@ -78,7 +81,7 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
         {pd?.jobTitle && (
           <p
             style={{
-              margin: `${2 * ss}px 0 0`,
+              margin: `${2 * es}px 0 0`,
               fontSize: `${0.8125 * fs}rem`,
               fontWeight: 500,
               color: "#6B7280",
@@ -93,8 +96,8 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
           style={{
             display: "flex",
             flexWrap: "wrap",
-            gap: `0 ${16 * ss}px`,
-            marginTop: `${8 * ss}px`,
+            gap: `0 ${16 * es}px`,
+            marginTop: `${8 * es}px`,
             fontSize: `${0.6875 * fs}rem`,
             color: "#9CA3AF",
           }}
@@ -116,19 +119,19 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
           cv.showDividers !== false && idx < visibleSections.length - 1
 
         return (
-          <div key={section.id} style={{ marginBottom: `${18 * ss}px` }}>
+          <div key={section.id} style={{ marginBottom: `${18 * es}px` }}>
             {/* Heading with vertical accent bar + ruled line */}
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: `${10 * ss}px`,
+                gap: `${10 * es}px`,
               }}
             >
               <div
                 style={{
                   width: "3px",
-                  height: `${18 * ss}px`,
+                  height: `${18 * mv}px`,
                   backgroundColor: accentColor,
                   borderRadius: "2px",
                   flexShrink: 0,
@@ -151,13 +154,13 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
                   flex: 1,
                   height: "1px",
                   backgroundColor: "#E5E7EB",
-                  marginLeft: `${4 * ss}px`,
+                  marginLeft: `${4 * mh}px`,
                 }}
               />
             </div>
 
             {/* Content */}
-            <div style={{ paddingLeft: "13px", marginTop: `${6 * ss}px` }}>
+            <div style={{ paddingLeft: "13px", marginTop: `${6 * es}px` }}>
               {section.type === "SUMMARY" && section.content && (
                 <div
                   className="prose prose-sm max-w-none"
@@ -180,7 +183,7 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
                     <div
                       key={entry.id}
                       style={{
-                        marginBottom: `${10 * ss}px`,
+                        marginBottom: `${10 * es}px`,
                       }}
                     >
                       <div
@@ -224,7 +227,7 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
                       </div>
                       <p
                         style={{
-                          margin: `${1 * ss}px 0 0`,
+                          margin: `${1 * es}px 0 0`,
                           fontSize: `${0.75 * fs}rem`,
                           color: "#6B7280",
                         }}
@@ -238,7 +241,7 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
                         <div
                           className="prose prose-sm max-w-none"
                           style={{
-                            marginTop: `${3 * ss}px`,
+                            marginTop: `${3 * es}px`,
                             fontSize: `${0.8125 * fs}rem`,
                             lineHeight: 1.5,
                             color: "#4B5563",
@@ -252,8 +255,8 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
                         entry.bullets.length > 0 && (
                           <ul
                             style={{
-                              margin: `${3 * ss}px 0 0`,
-                              paddingLeft: `${16 * ss}px`,
+                               margin: `${3 * es}px 0 0`,
+                               paddingLeft: `${16 * mh}px`,
                               fontSize: `${0.8125 * fs}rem`,
                               color: "#4B5563",
                               lineHeight: 1.5,
@@ -277,7 +280,7 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
                     <div
                       key={entry.id}
                       style={{
-                        marginBottom: `${6 * ss}px`,
+                        marginBottom: `${6 * es}px`,
                       }}
                     >
                       <div
@@ -315,7 +318,7 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
                       </div>
                       <p
                         style={{
-                          margin: `${1 * ss}px 0 0`,
+                          margin: `${1 * es}px 0 0`,
                           fontSize: `${0.75 * fs}rem`,
                           color: "#6B7280",
                         }}
@@ -336,7 +339,7 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
                     <div
                       key={entry.id}
                       style={{
-                        marginBottom: `${6 * ss}px`,
+                        marginBottom: `${6 * es}px`,
                       }}
                     >
                       <span
@@ -351,7 +354,7 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
                         <div
                           className="prose prose-sm max-w-none"
                           style={{
-                            margin: `${2 * ss}px 0 0`,
+                            margin: `${2 * es}px 0 0`,
                             fontSize: `${0.8125 * fs}rem`,
                             color: "#4B5563",
                           }}
@@ -363,7 +366,7 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
                       {entry.technologies.length > 0 && (
                         <p
                           style={{
-                            margin: `${2 * ss}px 0 0`,
+                            margin: `${2 * es}px 0 0`,
                             fontSize: `${0.6875 * fs}rem`,
                             color: "#9CA3AF",
                           }}
@@ -375,14 +378,14 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
                   ))}
 
               {section.type === "SKILLS" && (
-                <div style={{ marginTop: `${2 * ss}px` }}>
+                <div style={{ marginTop: `${2 * es}px` }}>
                   {section.skillGroups
                     .filter((g) => g.visible !== false)
                     .sort((a, b) => a.order - b.order)
                     .map((group) => (
                       <div
                         key={group.id}
-                        style={{ marginBottom: `${3 * ss}px` }}
+                        style={{ marginBottom: `${3 * es}px` }}
                       >
                         {group.label && (
                           <span
@@ -416,7 +419,7 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
                     <div
                       key={cert.id}
                       style={{
-                        marginBottom: `${4 * ss}px`,
+                        marginBottom: `${4 * es}px`,
                         pageBreakInside: "avoid",
                       }}
                     >
@@ -446,7 +449,7 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
                       {cert.credentialUrl ? (
                         <p
                           style={{
-                            margin: `${1 * ss}px 0 0`,
+                            margin: `${1 * es}px 0 0`,
                             fontSize: `${0.6875 * fs}rem`,
                           }}
                         >
@@ -469,7 +472,7 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
                       ) : cert.credentialId ? (
                         <p
                           style={{
-                            margin: `${1 * ss}px 0 0`,
+                            margin: `${1 * es}px 0 0`,
                             fontSize: `${0.6875 * fs}rem`,
                             color: "#6B7280",
                           }}
@@ -489,8 +492,8 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
                       key={lang.id}
                       style={{
                         display: "flex",
-                        gap: `${8 * ss}px`,
-                        marginBottom: `${2 * ss}px`,
+                        gap: `${8 * es}px`,
+                        marginBottom: `${2 * es}px`,
                         fontSize: `${0.8125 * fs}rem`,
                       }}
                     >
@@ -511,7 +514,7 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
                     <div
                       key={award.id}
                       style={{
-                        marginBottom: `${4 * ss}px`,
+                        marginBottom: `${4 * es}px`,
                         pageBreakInside: "avoid",
                       }}
                     >
@@ -542,7 +545,7 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
                         <div
                           className="prose prose-sm max-w-none"
                           style={{
-                            margin: `${2 * ss}px 0 0`,
+                            margin: `${2 * es}px 0 0`,
                             fontSize: `${0.8125 * fs}rem`,
                             color: "#4B5563",
                           }}
@@ -562,7 +565,7 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
                     <div
                       key={ref.id}
                       style={{
-                        marginBottom: `${4 * ss}px`,
+                        marginBottom: `${4 * es}px`,
                       }}
                     >
                       <p
@@ -618,7 +621,7 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
             {showDivider && (
               <div
                 style={{
-                  marginTop: `${12 * ss}px`,
+                  marginTop: `${12 * es}px`,
                   height: "1px",
                   backgroundColor: "#F3F4F6",
                 }}
@@ -631,7 +634,7 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
       {cv.footer && (
         <p
           style={{
-            margin: `${20 * ss}px 0 0`,
+            margin: `${20 * es}px 0 0`,
             fontSize: `${0.625 * fs}rem`,
             color: "#D1D5DB",
             textAlign: "center",

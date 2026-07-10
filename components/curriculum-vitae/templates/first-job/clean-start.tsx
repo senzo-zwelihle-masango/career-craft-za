@@ -11,6 +11,10 @@ interface CleanStartTemplateProps {
 export function CleanStartTemplate({ cv }: CleanStartTemplateProps) {
   const fs = cv.fontScale || 1
   const ss = cv.spacingScale || 1
+  const lh = cv.lineHeight ?? ss
+  const es = cv.elementSpacing ?? ss
+  const mh = cv.marginHorizontal ?? ss
+  const mv = cv.marginVertical ?? ss
   const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
   const accentColor = cv.accentColor || "#1f2937"
@@ -27,7 +31,7 @@ export function CleanStartTemplate({ cv }: CleanStartTemplateProps) {
       style={{
         fontFamily: fontCSS,
         fontSize: `${0.9375 * fs}rem`,
-        lineHeight: `${1.6 * ss}`,
+        lineHeight: `${1.6 * lh}`,
         padding: "25mm 20mm",
         maxWidth,
         margin: "0 auto",
@@ -43,7 +47,7 @@ export function CleanStartTemplate({ cv }: CleanStartTemplateProps) {
         }}
       />
 
-      <div style={{ height: `${20 * ss}px` }} />
+            <div style={{ height: `${20 * es}px` }} />
 
       {sections.map((section, idx) => (
         <div key={section.id}>
@@ -52,7 +56,7 @@ export function CleanStartTemplate({ cv }: CleanStartTemplateProps) {
               style={{
                 border: "none",
                 borderTop: "1px solid #E5E7EB",
-                margin: `${20 * ss}px 0 ${16 * ss}px`,
+                margin: `${20 * es}px 0 ${16 * es}px`,
                 opacity: 0.6,
               }}
             />
@@ -75,7 +79,7 @@ export function CleanStartTemplate({ cv }: CleanStartTemplateProps) {
       {cv.footer && (
         <div
           style={{
-            marginTop: `${24 * ss}px`,
+            marginTop: `${24 * es}px`,
             textAlign: "center",
             fontSize: `${0.75 * fs}rem`,
             color: "#9CA3AF",

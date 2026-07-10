@@ -23,7 +23,6 @@ const linkTypeLabels: Record<string, string> = {
   website: "Website",
   portfolio: "Portfolio",
   figma: "Figma",
-  custom: "Link",
 }
 
 export const templateMeta: TemplateMeta = {
@@ -54,6 +53,10 @@ export function SidebarInk({ cv }: SidebarInkProps) {
   const pd = cv.personalDetails
   const fs = cv.fontScale || 1
   const ss = cv.spacingScale || 1
+  const lh = cv.lineHeight ?? ss
+  const es = cv.elementSpacing ?? ss
+  const mh = cv.marginHorizontal ?? ss
+  const mv = cv.marginVertical ?? ss
   const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
   const accentColor = cv.accentColor || "#1f2937"
@@ -81,14 +84,14 @@ export function SidebarInk({ cv }: SidebarInkProps) {
       style={{
         fontFamily: fontCSS,
         fontSize: `${fs}rem`,
-        lineHeight: `${1.4 * ss}`,
+        lineHeight: `${1.4 * lh}`,
         color: "#1f2937",
         background: `linear-gradient(to right, ${sidebarBg} 28%, #fff 28%)`,
         maxWidth,
         margin: "0 auto",
         display: "flex",
         height: "100%",
-        minHeight: `${1056 * ss}px`,
+        minHeight: `${1056 * mv}px`,
       }}
     >
       {/* Sidebar */}
@@ -96,7 +99,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
         style={{
           width: "28%",
           flexShrink: 0,
-          padding: `${32 * ss}px ${20 * ss}px`,
+          padding: `${32 * mv}px ${20 * mh}px`,
           display: "flex",
           flexDirection: "column",
           height: "100%",
@@ -109,23 +112,23 @@ export function SidebarInk({ cv }: SidebarInkProps) {
             height: "4px",
             backgroundColor: accentColor,
             borderRadius: "2px",
-            marginBottom: `${20 * ss}px`,
+            marginBottom: `${20 * es}px`,
           }}
         />
 
         {/* Sidebar header info */}
-        <div style={{ marginBottom: `${20 * ss}px` }}>
+          <div style={{ marginBottom: `${20 * es}px` }}>
           {pd?.photoUrl && cv.showPhoto && (
             <img
               src={pd.photoUrl}
               alt={pd?.fullName || ""}
               style={{
-                width: `${72 * ss}px`,
-                height: `${72 * ss}px`,
+                width: `${72 * mv}px`,
+                height: `${72 * mv}px`,
                 borderRadius: "50%",
                 objectFit: "cover",
                 objectPosition: pd?.photoObjectPosition || "50% 50%",
-                marginBottom: `${10 * ss}px`,
+                marginBottom: `${10 * es}px`,
                 border: `3px solid ${accentColor}30`,
               }}
             />
@@ -146,7 +149,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
           {pd?.jobTitle && (
             <p
               style={{
-                margin: `${2 * ss}px 0 0`,
+                margin: `${2 * es}px 0 0`,
                 fontSize: `${0.6875 * fs}rem`,
                 color: accentColor,
                 fontWeight: 600,
@@ -159,7 +162,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
           )}
           <div
             style={{
-              marginTop: `${10 * ss}px`,
+              marginTop: `${10 * es}px`,
               fontSize: `${0.625 * fs}rem`,
               color: "#6B7280",
               lineHeight: 1.6,
@@ -169,7 +172,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
             {pd?.phone && <div>{pd.phone}</div>}
             {pd?.location && <div>{pd.location}</div>}
             {getLinks(pd).length > 0 && (
-              <div style={{ marginTop: `${4 * ss}px` }}>
+              <div style={{ marginTop: `${4 * es}px` }}>
                 {getLinks(pd).map((link, i) => (
                   <div key={i}>
                     {linkTypeLabels[link.type] || link.label || link.url}
@@ -185,7 +188,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
           <div
             key={section.id}
             style={{
-              marginBottom: `${14 * ss}px`,
+              marginBottom: `${14 * es}px`,
             }}
           >
             <h2
@@ -196,14 +199,14 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                 textTransform: "uppercase",
                 letterSpacing: "0.1em",
                 color: accentColor,
-                paddingBottom: `${3 * ss}px`,
+                paddingBottom: `${3 * es}px`,
                 borderBottom: `2px solid ${accentColor}25`,
               }}
             >
               {section.title}
             </h2>
 
-            <div style={{ marginTop: `${5 * ss}px` }}>
+            <div style={{ marginTop: `${5 * es}px` }}>
               {section.type === "SKILLS" && (
                 <div>
                   {section.skillGroups
@@ -212,7 +215,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                     .map((group) => (
                       <div
                         key={group.id}
-                        style={{ marginBottom: `${5 * ss}px` }}
+                        style={{ marginBottom: `${5 * es}px` }}
                       >
                         {group.label && (
                           <p
@@ -230,8 +233,8 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                           style={{
                             display: "flex",
                             flexWrap: "wrap",
-                            gap: `${3 * ss}px`,
-                            marginTop: `${2 * ss}px`,
+                            gap: `${3 * es}px`,
+                            marginTop: `${2 * es}px`,
                           }}
                         >
                           {group.skills.map((skill) => (
@@ -266,7 +269,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                         display: "flex",
                         justifyContent: "space-between",
                         alignItems: "center",
-                        marginBottom: `${3 * ss}px`,
+                        marginBottom: `${3 * es}px`,
                         fontSize: `${0.6875 * fs}rem`,
                       }}
                     >
@@ -295,7 +298,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                     <div
                       key={cert.id}
                       style={{
-                        marginBottom: `${5 * ss}px`,
+                        marginBottom: `${5 * es}px`,
                         pageBreakInside: "avoid",
                       }}
                     >
@@ -340,7 +343,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                       {cert.credentialUrl ? (
                         <p
                           style={{
-                            margin: `${1 * ss}px 0 0`,
+                            margin: `${1 * es}px 0 0`,
                             fontSize: `${0.5625 * fs}rem`,
                           }}
                         >
@@ -363,7 +366,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                       ) : cert.credentialId ? (
                         <p
                           style={{
-                            margin: `${1 * ss}px 0 0`,
+                            margin: `${1 * es}px 0 0`,
                             fontSize: `${0.5625 * fs}rem`,
                             color: "#9CA3AF",
                           }}
@@ -382,7 +385,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                     <div
                       key={award.id}
                       style={{
-                        marginBottom: `${5 * ss}px`,
+                        marginBottom: `${5 * es}px`,
                         pageBreakInside: "avoid",
                       }}
                     >
@@ -442,7 +445,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
       <div
         style={{
           flex: 1,
-          padding: `${32 * ss}px ${28 * ss}px`,
+          padding: `${32 * mv}px ${28 * mh}px`,
         }}
       >
         {mainSections.map((section, idx) => {
@@ -450,7 +453,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
             cv.showDividers !== false && idx < mainSections.length - 1
 
           return (
-            <div key={section.id} style={{ marginBottom: `${16 * ss}px` }}>
+            <div key={section.id} style={{ marginBottom: `${16 * es}px` }}>
               <h2
                 style={{
                   margin: 0,
@@ -459,9 +462,9 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                   textTransform: headingTextTransform,
                   letterSpacing: "0.08em",
                   color: "#111827",
-                  paddingBottom: `${4 * ss}px`,
+                  paddingBottom: `${4 * es}px`,
                   borderBottom: `1px solid #E5E7EB`,
-                  marginBottom: `${6 * ss}px`,
+                  marginBottom: `${6 * es}px`,
                 }}
               >
                 {section.title}
@@ -488,7 +491,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                     <div
                       key={entry.id}
                       style={{
-                        marginBottom: `${10 * ss}px`,
+                        marginBottom: `${10 * es}px`,
                       }}
                     >
                       <div
@@ -534,7 +537,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                       </div>
                       <p
                         style={{
-                          margin: `${1 * ss}px 0 0`,
+                          margin: `${1 * es}px 0 0`,
                           fontSize: `${0.75 * fs}rem`,
                           color: "#6B7280",
                         }}
@@ -548,7 +551,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                         <div
                           className="prose prose-sm max-w-none"
                           style={{
-                            marginTop: `${3 * ss}px`,
+                            marginTop: `${3 * es}px`,
                             fontSize: `${0.8125 * fs}rem`,
                             lineHeight: 1.5,
                             color: "#4B5563",
@@ -562,8 +565,8 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                         entry.bullets.length > 0 && (
                           <ul
                             style={{
-                              margin: `${3 * ss}px 0 0`,
-                              paddingLeft: `${16 * ss}px`,
+                               margin: `${3 * es}px 0 0`,
+                               paddingLeft: `${16 * mh}px`,
                               fontSize: `${0.8125 * fs}rem`,
                               color: "#4B5563",
                               lineHeight: 1.5,
@@ -587,7 +590,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                     <div
                       key={entry.id}
                       style={{
-                        marginBottom: `${6 * ss}px`,
+                        marginBottom: `${6 * es}px`,
                       }}
                     >
                       <div
@@ -627,7 +630,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                       </div>
                       <p
                         style={{
-                          margin: `${1 * ss}px 0 0`,
+                          margin: `${1 * es}px 0 0`,
                           fontSize: `${0.75 * fs}rem`,
                           color: "#6B7280",
                         }}
@@ -648,7 +651,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                     <div
                       key={entry.id}
                       style={{
-                        marginBottom: `${6 * ss}px`,
+                        marginBottom: `${6 * es}px`,
                       }}
                     >
                       <span
@@ -665,7 +668,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                           style={{
                             fontSize: `${0.6875 * fs}rem`,
                             color: accentColor,
-                            marginLeft: `${4 * ss}px`,
+                            marginLeft: `${4 * mh}px`,
                           }}
                         >
                           {entry.link}
@@ -674,7 +677,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                       {entry.description && (
                         <div
                           style={{
-                            margin: `${2 * ss}px 0 0`,
+                            margin: `${2 * es}px 0 0`,
                             fontSize: `${0.8125 * fs}rem`,
                             color: "#4B5563",
                           }}
@@ -688,8 +691,8 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                           style={{
                             display: "flex",
                             flexWrap: "wrap",
-                            gap: `${3 * ss}px`,
-                            marginTop: `${3 * ss}px`,
+                            gap: `${3 * es}px`,
+                            marginTop: `${3 * es}px`,
                           }}
                         >
                           {entry.technologies.map((tech) => (
@@ -733,7 +736,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                     <div
                       key={ref.id}
                       style={{
-                        marginBottom: `${4 * ss}px`,
+                        marginBottom: `${4 * es}px`,
                       }}
                     >
                       <p
@@ -776,7 +779,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
               {showDivider && (
                 <div
                   style={{
-                    marginTop: `${12 * ss}px`,
+                    marginTop: `${12 * es}px`,
                     height: "1px",
                     backgroundColor: "#F3F4F6",
                   }}
@@ -789,7 +792,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
         {cv.footer && (
           <p
             style={{
-              margin: `${16 * ss}px 0 0`,
+              margin: `${16 * es}px 0 0`,
               fontSize: `${0.625 * fs}rem`,
               color: "#D1D5DB",
               textAlign: "center",

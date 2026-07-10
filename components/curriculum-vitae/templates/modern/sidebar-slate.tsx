@@ -29,6 +29,10 @@ export function SidebarSlateTemplate({ cv }: { cv: CvWithRelations }) {
   const pd = cv.personalDetails
   const fs = cv.fontScale || 1
   const ss = cv.spacingScale || 1
+  const lh = cv.lineHeight ?? ss
+  const es = cv.elementSpacing ?? ss
+  const mh = cv.marginHorizontal ?? ss
+  const mv = cv.marginVertical ?? ss
   const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
   const accentColor = cv.accentColor || "#1f2937"
@@ -74,13 +78,13 @@ export function SidebarSlateTemplate({ cv }: { cv: CvWithRelations }) {
           style={{
             width: "30%",
             color: "#fff",
-            padding: `${24 * ss}px`,
+            padding: `${24 * mv}px ${24 * mh}px`,
             display: "flex",
             flexDirection: "column",
-            gap: `${20 * ss}px`,
+            gap: `${20 * es}px`,
           }}
         >
-          <div style={{ marginBottom: `${12 * ss}px` }}>
+          <div style={{ marginBottom: `${12 * es}px` }}>
             {showPhoto && (
               <img
                 src={pd!.photoUrl!}
@@ -91,7 +95,7 @@ export function SidebarSlateTemplate({ cv }: { cv: CvWithRelations }) {
                   objectFit: "cover",
                   objectPosition: pd?.photoObjectPosition || "50% 50%",
                   borderRadius: 6,
-                  marginBottom: `${6 * ss}px`,
+                  marginBottom: `${6 * es}px`,
                 }}
               />
             )}
@@ -109,7 +113,7 @@ export function SidebarSlateTemplate({ cv }: { cv: CvWithRelations }) {
               <p
                 style={{
                   fontSize: `${0.8125 * fs}rem`,
-                  margin: `${2 * ss}px 0 0`,
+                  margin: `${2 * es}px 0 0`,
                   opacity: 0.8,
                 }}
               >
@@ -127,21 +131,21 @@ export function SidebarSlateTemplate({ cv }: { cv: CvWithRelations }) {
           >
             {pd?.email && <p style={{ margin: 0 }}>{pd.email}</p>}
             {pd?.phone && (
-              <p style={{ margin: `${2 * ss}px 0 0` }}>{pd.phone}</p>
+              <p style={{ margin: `${2 * es}px 0 0` }}>{pd.phone}</p>
             )}
             {pd?.location && (
-              <p style={{ margin: `${2 * ss}px 0 0` }}>{pd.location}</p>
+              <p style={{ margin: `${2 * es}px 0 0` }}>{pd.location}</p>
             )}
             {pd?.nationality && (
-              <p style={{ margin: `${2 * ss}px 0 0` }}>{pd.nationality}</p>
+              <p style={{ margin: `${2 * es}px 0 0` }}>{pd.nationality}</p>
             )}
             {links.length > 0 && (
-              <div style={{ marginTop: `${8 * ss}px` }}>
+              <div style={{ marginTop: `${8 * es}px` }}>
                 {links.map((link, i) => (
                   <p
                     key={i}
                     style={{
-                      margin: `${2 * ss}px 0 0`,
+                      margin: `${2 * es}px 0 0`,
                       wordBreak: "break-all",
                     }}
                   >
@@ -157,16 +161,19 @@ export function SidebarSlateTemplate({ cv }: { cv: CvWithRelations }) {
               key={section.id}
               section={section}
               fs={fs}
-              ss={ss}
+              lh={lh}
+              es={es}
+              mh={mh}
+              mv={mv}
               dateFormat={cv.dateFormat}
             />
           ))}
         </div>
 
         {/* Main content */}
-        <div style={{ flex: 1, padding: `${24 * ss}px` }}>
+        <div style={{ flex: 1, padding: `${24 * mv}px ${24 * mh}px` }}>
           {mainSections.map((section) => (
-            <div key={section.id} style={{ marginBottom: `${16 * ss}px` }}>
+            <div key={section.id} style={{ marginBottom: `${16 * es}px` }}>
               <SectionRenderer
                 section={section}
                 cv={cv}
@@ -187,7 +194,7 @@ export function SidebarSlateTemplate({ cv }: { cv: CvWithRelations }) {
                 textAlign: "center",
                 fontSize: `${0.65 * fs}rem`,
                 color: "#9CA3AF",
-                marginTop: `${16 * ss}px`,
+                marginTop: `${16 * es}px`,
               }}
             >
               {cv.footer}
@@ -202,12 +209,18 @@ export function SidebarSlateTemplate({ cv }: { cv: CvWithRelations }) {
 function SidebarSection({
   section,
   fs,
-  ss,
+  lh,
+  es,
+  mh,
+  mv,
   dateFormat,
 }: {
   section: CvWithRelations["sections"][0]
   fs: number
-  ss: number
+  lh: number
+  es: number
+  mh: number
+  mv: number
   dateFormat?: string | null
 }) {
   const heading = (
@@ -228,7 +241,7 @@ function SidebarSection({
   const divider = (
     <div
       style={{
-        marginTop: `${6 * ss}px`,
+        marginTop: `${6 * es}px`,
         borderTop: "1px solid rgba(255,255,255,0.2)",
       }}
     />
@@ -245,17 +258,17 @@ function SidebarSection({
         {divider}
         <div
           style={{
-            marginTop: `${8 * ss}px`,
+            marginTop: `${8 * es}px`,
             fontSize: `${0.75 * fs}rem`,
             opacity: 0.85,
           }}
         >
           {groups.map((group) => (
-            <div key={group.id} style={{ marginBottom: `${6 * ss}px` }}>
+            <div key={group.id} style={{ marginBottom: `${6 * es}px` }}>
               {group.label && (
                 <p style={{ fontWeight: 600, margin: 0 }}>{group.label}</p>
               )}
-              <p style={{ margin: `${2 * ss}px 0 0`, lineHeight: 1.4 }}>
+              <p style={{ margin: `${2 * es}px 0 0`, lineHeight: 1.4 }}>
                 {group.skills.join(", ")}
               </p>
             </div>
@@ -273,7 +286,7 @@ function SidebarSection({
         {divider}
         <div
           style={{
-            marginTop: `${8 * ss}px`,
+            marginTop: `${8 * es}px`,
             fontSize: `${0.75 * fs}rem`,
             opacity: 0.85,
           }}
@@ -287,7 +300,7 @@ function SidebarSection({
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
-                  marginBottom: `${4 * ss}px`,
+                  marginBottom: `${4 * es}px`,
                 }}
               >
                 <span>{entry.name}</span>
@@ -309,7 +322,7 @@ function SidebarSection({
         {divider}
         <div
           style={{
-            marginTop: `${8 * ss}px`,
+            marginTop: `${8 * es}px`,
             fontSize: `${0.75 * fs}rem`,
             opacity: 0.85,
           }}
@@ -318,17 +331,17 @@ function SidebarSection({
             .slice()
             .sort((a, b) => a.order - b.order)
             .map((entry) => (
-              <div key={entry.id} style={{ marginBottom: `${6 * ss}px` }}>
+              <div key={entry.id} style={{ marginBottom: `${6 * es}px` }}>
                 <p style={{ fontWeight: 600, margin: 0 }}>{entry.name}</p>
                 {entry.issuer && (
-                  <p style={{ margin: `${2 * ss}px 0 0`, opacity: 0.8 }}>
+                  <p style={{ margin: `${2 * es}px 0 0`, opacity: 0.8 }}>
                     {entry.issuer}
                   </p>
                 )}
                 {entry.issueDate && (
                   <p
                     style={{
-                      margin: `${2 * ss}px 0 0`,
+                      margin: `${2 * es}px 0 0`,
                       opacity: 0.7,
                       fontSize: `${0.7 * fs}rem`,
                     }}
@@ -339,7 +352,7 @@ function SidebarSection({
                 {entry.credentialUrl ? (
                   <p
                     style={{
-                      margin: `${1 * ss}px 0 0`,
+                      margin: `${1 * es}px 0 0`,
                       fontSize: `${0.65 * fs}rem`,
                     }}
                   >
@@ -362,7 +375,7 @@ function SidebarSection({
                 ) : entry.credentialId ? (
                   <p
                     style={{
-                      margin: `${1 * ss}px 0 0`,
+                      margin: `${1 * es}px 0 0`,
                       fontSize: `${0.65 * fs}rem`,
                       opacity: 0.6,
                     }}
@@ -385,7 +398,7 @@ function SidebarSection({
         {divider}
         <div
           style={{
-            marginTop: `${8 * ss}px`,
+            marginTop: `${8 * es}px`,
             fontSize: `${0.75 * fs}rem`,
             opacity: 0.85,
           }}
@@ -394,17 +407,17 @@ function SidebarSection({
             .slice()
             .sort((a, b) => a.order - b.order)
             .map((entry) => (
-              <div key={entry.id} style={{ marginBottom: `${6 * ss}px` }}>
+              <div key={entry.id} style={{ marginBottom: `${6 * es}px` }}>
                 <p style={{ fontWeight: 600, margin: 0 }}>{entry.title}</p>
                 {entry.issuer && (
-                  <p style={{ margin: `${2 * ss}px 0 0`, opacity: 0.8 }}>
+                  <p style={{ margin: `${2 * es}px 0 0`, opacity: 0.8 }}>
                     {entry.issuer}
                   </p>
                 )}
                 {entry.date && (
                   <p
                     style={{
-                      margin: `${2 * ss}px 0 0`,
+                      margin: `${2 * es}px 0 0`,
                       opacity: 0.7,
                       fontSize: `${0.7 * fs}rem`,
                     }}
@@ -427,7 +440,7 @@ function SidebarSection({
         <div
           className="prose prose-sm max-w-none"
           style={{
-            marginTop: `${8 * ss}px`,
+            marginTop: `${8 * es}px`,
             fontSize: `${0.75 * fs}rem`,
             opacity: 0.85,
             lineHeight: 1.4,

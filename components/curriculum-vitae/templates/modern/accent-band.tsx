@@ -28,6 +28,10 @@ export function AccentBandTemplate({ cv }: { cv: CvWithRelations }) {
   const pd = cv.personalDetails
   const fs = cv.fontScale || 1
   const ss = cv.spacingScale || 1
+  const lh = cv.lineHeight ?? ss
+  const es = cv.elementSpacing ?? ss
+  const mh = cv.marginHorizontal ?? ss
+  const mv = cv.marginVertical ?? ss
   const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
   const accentColor = cv.accentColor || "#2563eb"
@@ -56,7 +60,7 @@ export function AccentBandTemplate({ cv }: { cv: CvWithRelations }) {
       <div
         style={{
           backgroundColor: accentColor,
-          padding: `${24 * ss}px ${32 * ss}px`,
+          padding: `${24 * mv}px ${32 * mh}px`,
           textAlign: "center",
         }}
       >
@@ -75,7 +79,7 @@ export function AccentBandTemplate({ cv }: { cv: CvWithRelations }) {
           <p
             style={{
               fontSize: `${1 * fs}rem`,
-              margin: `${4 * ss}px 0 0`,
+              margin: `${4 * es}px 0 0`,
               color: "rgba(255,255,255,0.85)",
               fontWeight: 400,
             }}
@@ -91,8 +95,8 @@ export function AccentBandTemplate({ cv }: { cv: CvWithRelations }) {
           display: "flex",
           justifyContent: "center",
           flexWrap: "wrap",
-          gap: `${12 * ss}px`,
-          padding: `${10 * ss}px ${32 * ss}px`,
+          gap: `${12 * es}px`,
+          padding: `${10 * mv}px ${32 * mh}px`,
           fontSize: `${0.75 * fs}rem`,
           color: "#6B7280",
           borderBottom: "1px solid #E5E7EB",
@@ -111,9 +115,9 @@ export function AccentBandTemplate({ cv }: { cv: CvWithRelations }) {
       </div>
 
       {/* Content */}
-      <div style={{ padding: `${20 * ss}px ${32 * ss}px` }}>
+      <div style={{ padding: `${20 * mv}px ${32 * mh}px` }}>
         {visibleSections.map((section) => (
-          <div key={section.id} style={{ marginBottom: `${16 * ss}px` }}>
+          <div key={section.id} style={{ marginBottom: `${16 * es}px` }}>
             <SectionRenderer
               section={section}
               cv={cv}
@@ -135,7 +139,7 @@ export function AccentBandTemplate({ cv }: { cv: CvWithRelations }) {
               textAlign: "center",
               fontSize: `${0.65 * fs}rem`,
               color: "#9CA3AF",
-              marginTop: `${16 * ss}px`,
+              marginTop: `${16 * es}px`,
             }}
           >
             {cv.footer}

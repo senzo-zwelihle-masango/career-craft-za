@@ -31,6 +31,10 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
   const pd = cv.personalDetails
   const fs = cv.fontScale || 1
   const ss = cv.spacingScale || 1
+  const lh = cv.lineHeight ?? ss
+  const es = cv.elementSpacing ?? ss
+  const mh = cv.marginHorizontal ?? ss
+  const mv = cv.marginVertical ?? ss
   const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
   const accentColor = cv.accentColor || "#1e3a5f"
@@ -63,7 +67,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
           />
           <div
             className="prose prose-sm max-w-none text-[11px] leading-relaxed text-gray-800"
-            style={{ marginTop: 4 * ss, marginBottom: 2 * ss }}
+            style={{ marginTop: 4 * es, marginBottom: 2 * es }}
             dangerouslySetInnerHTML={{ __html: section.content }}
           />
         </div>
@@ -82,7 +86,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
 
         {section.type === "EXPERIENCE" &&
           section.experienceEntries.length > 0 && (
-            <div style={{ marginTop: 4 * ss }}>
+            <div style={{ marginTop: 4 * es }}>
               {section.experienceEntries
                 .slice()
                 .sort((a, b) => a.order - b.order)
@@ -90,7 +94,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
                   <div
                     key={entry.id}
                     className="break-inside-avoid"
-                    style={{ marginBottom: 8 * ss }}
+                    style={{ marginBottom: 8 * es }}
                   >
                     <div className="flex items-start justify-between">
                       <div>
@@ -139,7 +143,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
 
         {section.type === "EDUCATION" &&
           section.educationEntries.length > 0 && (
-            <div style={{ marginTop: 4 * ss }}>
+            <div style={{ marginTop: 4 * es }}>
               {section.educationEntries
                 .slice()
                 .sort((a, b) => a.order - b.order)
@@ -147,7 +151,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
                   <div
                     key={entry.id}
                     className="break-inside-avoid"
-                    style={{ marginBottom: 6 * ss }}
+                    style={{ marginBottom: 6 * es }}
                   >
                     <div className="flex items-start justify-between">
                       <div>
@@ -178,7 +182,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
           )}
 
         {section.type === "PROJECTS" && section.projectEntries.length > 0 && (
-          <div style={{ marginTop: 4 * ss }}>
+          <div style={{ marginTop: 4 * es }}>
             {section.projectEntries
               .slice()
               .sort((a, b) => a.order - b.order)
@@ -186,7 +190,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
                 <div
                   key={entry.id}
                   className="break-inside-avoid"
-                  style={{ marginBottom: 6 * ss }}
+                  style={{ marginBottom: 6 * es }}
                 >
                   <p className="text-[11px] font-semibold">
                     {entry.name}
@@ -214,7 +218,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
         )}
 
         {section.type === "SKILLS" && (
-          <div style={{ marginTop: 4 * ss }}>
+          <div style={{ marginTop: 4 * es }}>
             {section.skillGroups
               .filter((g) => g.visible !== false)
               .slice()
@@ -223,7 +227,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
                 <p
                   key={group.id}
                   className="text-[10px] text-gray-800"
-                  style={{ marginBottom: 2 * ss }}
+                  style={{ marginBottom: 2 * es }}
                 >
                   {group.label && (
                     <span className="font-semibold">{group.label}: </span>
@@ -236,7 +240,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
 
         {section.type === "CERTIFICATIONS" &&
           section.certificationEntries.length > 0 && (
-            <div style={{ marginTop: 4 * ss }}>
+            <div style={{ marginTop: 4 * es }}>
               {section.certificationEntries
                 .slice()
                 .sort((a, b) => a.order - b.order)
@@ -244,7 +248,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
                   <div
                     key={entry.id}
                     className="break-inside-avoid"
-                    style={{ marginBottom: 4 * ss }}
+style={{ marginBottom: 4 * es }}
                   >
                     <p className="text-[11px] font-semibold">{entry.name}</p>
                     {entry.issuer && (
@@ -285,7 +289,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
           )}
 
         {section.type === "LANGUAGES" && section.languageEntries.length > 0 && (
-          <div style={{ marginTop: 4 * ss }}>
+          <div style={{ marginTop: 4 * es }}>
             <div className="flex flex-wrap gap-x-4">
               {section.languageEntries
                 .slice()
@@ -306,7 +310,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
         )}
 
         {section.type === "AWARDS" && section.awardEntries.length > 0 && (
-          <div style={{ marginTop: 4 * ss }}>
+          <div style={{ marginTop: 4 * es }}>
             {section.awardEntries
               .slice()
               .sort((a, b) => a.order - b.order)
@@ -314,7 +318,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
                 <div
                   key={entry.id}
                   className="break-inside-avoid"
-                  style={{ marginBottom: 4 * ss }}
+                  style={{ marginBottom: 4 * es }}
                 >
                   <p className="text-[11px] font-semibold">{entry.title}</p>
                   {entry.issuer && (
@@ -338,7 +342,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
 
         {section.type === "REFERENCES" &&
           section.referenceEntries.length > 0 && (
-            <div style={{ marginTop: 4 * ss }}>
+            <div style={{ marginTop: 4 * es }}>
               {section.referenceEntries
                 .slice()
                 .sort((a, b) => a.order - b.order)
@@ -346,7 +350,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
                   <div
                     key={entry.id}
                     className="break-inside-avoid"
-                    style={{ marginBottom: 6 * ss }}
+                    style={{ marginBottom: 6 * es }}
                   >
                     <p className="text-[11px] font-semibold">{entry.name}</p>
                     {(entry.jobTitle || entry.company) && (
@@ -369,7 +373,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
         {section.type === "CUSTOM" && section.content && (
           <div
             className="prose prose-sm max-w-none text-[10px] leading-relaxed whitespace-pre-wrap text-gray-700"
-            style={{ marginTop: 4 * ss }}
+            style={{ marginTop: 4 * es }}
             dangerouslySetInnerHTML={{ __html: section.content }}
           />
         )}
@@ -382,7 +386,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
       style={{
         fontFamily: fontCSS,
         fontSize: `${fs}rem`,
-        lineHeight: `${1.3 * ss}`,
+        lineHeight: `${1.3 * lh}`,
         maxWidth,
         margin: "0 auto",
         padding: "12px 16px",
@@ -395,8 +399,8 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
       <div
         style={{
           borderBottom: showDividers ? `3px double ${accentColor}` : "none",
-          paddingBottom: 10 * ss,
-          marginBottom: 12 * ss,
+          paddingBottom: 10 * es,
+          marginBottom: 12 * es,
         }}
       >
         <h1
@@ -424,7 +428,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
         )}
         <div
           style={{
-            marginTop: 6 * ss,
+            marginTop: 6 * es,
             fontSize: `${0.6875 * fs}rem`,
             color: "#6B7280",
             display: "flex",
@@ -446,7 +450,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
       </div>
 
       {/* Sections */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 10 * ss }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 * es }}>
         {visibleSections.map((section) => (
           <div key={section.id}>
             {renderSection(section)}
@@ -455,7 +459,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
                 style={{
                   border: "none",
                   borderTop: `1px solid ${accentColor}40`,
-                  margin: `${8 * ss}px 0 0`,
+                  margin: `${8 * es}px 0 0`,
                 }}
               />
             )}
@@ -467,7 +471,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
       {cv.footer && (
         <div
           style={{
-            marginTop: 12 * ss,
+            marginTop: 12 * es,
             textAlign: "center",
             fontSize: `${0.625 * fs}rem`,
             color: "#9CA3AF",

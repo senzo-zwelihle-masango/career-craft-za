@@ -7,6 +7,10 @@ import type { TemplateMeta } from "@/types/templates/types"
 export function CleanLineTemplate({ cv }: { cv: CvWithRelations }) {
   const fs = cv.fontScale || 1
   const ss = cv.spacingScale || 1
+  const lh = cv.lineHeight ?? ss
+  const es = cv.elementSpacing ?? ss
+  const mh = cv.marginHorizontal ?? ss
+  const mv = cv.marginVertical ?? ss
   const pageFormat = cv.pageFormat || "A4"
   const maxWidth = pageFormat === "LETTER" ? "816px" : "794px"
   const accentColor = cv.accentColor || "#1f2937"
@@ -22,11 +26,11 @@ export function CleanLineTemplate({ cv }: { cv: CvWithRelations }) {
       style={{
         fontFamily: fontCSS,
         fontSize: `${0.8125 * fs}rem`,
-        lineHeight: 1.6 * ss,
+        lineHeight: 1.6 * lh,
         color: "#111827",
         maxWidth,
         margin: "0 auto",
-        padding: `${36 * ss}px ${32 * ss}px`,
+        padding: `${36 * mv}px ${32 * mh}px`,
         background: "#fff",
         minHeight: "100%",
       }}
@@ -48,7 +52,7 @@ export function CleanLineTemplate({ cv }: { cv: CvWithRelations }) {
         style={{
           height: 1,
           background: `${accentColor}18`,
-          margin: `${16 * ss}px 0`,
+          margin: `${16 * es}px 0`,
         }}
       />
 
@@ -59,7 +63,7 @@ export function CleanLineTemplate({ cv }: { cv: CvWithRelations }) {
               style={{
                 height: 1,
                 background: `${accentColor}18`,
-                margin: `${4 * ss}px 0 ${16 * ss}px`,
+                margin: `${4 * es}px 0 ${16 * es}px`,
               }}
             />
           )}
@@ -100,8 +104,8 @@ export function CleanLineTemplate({ cv }: { cv: CvWithRelations }) {
       {cv.footer && (
         <div
           style={{
-            marginTop: `${20 * ss}px`,
-            paddingTop: `${12 * ss}px`,
+            marginTop: `${20 * es}px`,
+            paddingTop: `${12 * es}px`,
             borderTop: "1px solid #E5E7EB",
             textAlign: "center",
             fontSize: `${0.65 * fs}rem`,
