@@ -66,6 +66,17 @@ ${context || input}
 
 JOB DESCRIPTION:
 ${input}`,
+    "cl-improve": `You are an expert cover letter writer. Rewrite the following cover letter text to be more impactful, confident, and engaging. Use strong action verbs, professional language, and tailor it to sound compelling. Return ONLY the rewritten text, no explanations, no markdown:\n\n${input}`,
+    "cl-grammar": `Proofread the following cover letter text. Fix all grammar, spelling, punctuation, and style issues. Improve sentence flow and professionalism. Return ONLY the corrected version with the changes applied, no explanations, no markdown:\n\n${input}`,
+    "cl-tone": `Analyze the tone of the following cover letter text and return a JSON object with exactly these fields — no markdown, no code fences:
+{
+  "tone": "the primary tone detected (e.g. professional, formal, enthusiastic, confident, humble)",
+  "analysis": "1-2 sentence analysis of the tone",
+  "suggestions": ["2-3 specific suggestions to improve tone"],
+  "rewritten": "a rewritten version with improved tone"
+}
+
+COVER LETTER TEXT:\n${input}`,
   }
 
   try {
