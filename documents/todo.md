@@ -1,1 +1,3 @@
-1.fix tabs styling - use defualt styling
+1. fix headings in dashboard routes have consistent headings
+2. fix dashboard tabs to default styling
+3. community, feedback, support routes 
