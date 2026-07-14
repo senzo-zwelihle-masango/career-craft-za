@@ -65,20 +65,13 @@ export function useDownloadActions(title: string, cvId: string) {
         toast.dismiss()
         return
       }
-      const res = await fetch(`/api/pdf/curriculum-vitae/${id}/html`)
+      const res = await fetch(`/api/docx/curriculum-vitae/${id}`)
       if (!res.ok) throw new Error("Failed")
-      const raw = await res.text()
-      const bodyMatch = raw.match(/<body[^>]*>([\s\S]*)<\/body>/i)
-      const content = bodyMatch ? bodyMatch[1] : raw
-      const wordHtml = `<!DOCTYPE html>
-<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
-<head><meta charset="utf-8"><title>${safeTitle}</title><style>body{margin:0;padding:0;font-family:Calibri,sans-serif}table{border-collapse:collapse}</style></head>
-<body>${content}</body></html>`
-      const blob = new Blob([wordHtml], { type: "application/msword" })
+      const blob = await res.blob()
       const url = URL.createObjectURL(blob)
       const a = window.document.createElement("a")
       a.href = url
-      a.download = `${safeTitle}.doc`
+      a.download = `${safeTitle}.docx`
       a.click()
       URL.revokeObjectURL(url)
       toast.dismiss()

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -8,15 +8,16 @@ import { toast } from "sonner"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { Loading03Icon } from "@hugeicons/core-free-icons"
 import { createPostSchema, type CreatePostSchemaType } from "@/schemas/community/post"
-import { createPost } from "@/lib/actions/community/community-posts"
+import { updatePost, getPost } from "@/lib/actions/community/community-posts"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ContentRichTextEditor } from "@/components/content/content-rich-text-editor"
 import { Field, FieldLabel, FieldError } from "@/components/ui/field"
 
-export function CreatePostForm() {
+export function EditPostForm({ postId }: { postId: string }) {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const form = useForm<CreatePostSchemaType>({
     resolver: zodResolver(createPostSchema),
@@ -33,9 +34,25 @@ export function CreatePostForm() {
     [form],
   )
 
+  useEffect(() => {
+    async function load() {
+      const { data, error } = await getPost(postId)
+      if (error || !data) {
+        toast.error(error || "Post not found")
+        router.push("/community")
+        return
+      }
+      const post = data as { title: string; body: string }
+      form.reset({ title: post.title, body: post.body })
+      setBodyContent(post.body)
+      setLoading(false)
+    }
+    load()
+  }, [postId, form, router])
+
   async function onSubmit(data: CreatePostSchemaType) {
     setIsSubmitting(true)
-    const { error, data: post } = await createPost(data)
+    const { error } = await updatePost(postId, data)
     setIsSubmitting(false)
 
     if (error) {
@@ -43,8 +60,16 @@ export function CreatePostForm() {
       return
     }
 
-    toast.success("Post created")
-    router.push(`/community/${(post as { id: string }).id}`)
+    toast.success("Post updated")
+    router.push(`/community/${postId}`)
+  }
+
+  if (loading) {
+    return (
+      <div className="flex justify-center py-12">
+        <HugeiconsIcon icon={Loading03Icon} className="size-5 animate-spin text-muted-foreground/30" />
+      </div>
+    )
   }
 
   return (
@@ -76,7 +101,7 @@ export function CreatePostForm() {
         </Button>
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting && <HugeiconsIcon icon={Loading03Icon} className="size-4 animate-spin" />}
-          Post
+          Save changes
         </Button>
       </div>
     </form>

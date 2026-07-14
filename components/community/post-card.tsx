@@ -12,6 +12,7 @@ interface PostCardProps {
     title: string
     body: string
     createdAt: string
+    updatedAt: string
     user: { id: string; name: string; image: string | null }
     _count: { comments: number; votes: number }
     votes?: { value: number }[]
@@ -46,7 +47,7 @@ export function PostCard({ post }: PostCardProps) {
           </h3>
         </Link>
         <p className="mt-0.5 line-clamp-2 text-xs text-muted-foreground/70">
-          {post.body}
+          {post.body.replace(/<[^>]*>/g, "")}
         </p>
         <div className="mt-1.5 flex items-center gap-3 text-[11px] text-muted-foreground/50">
           <span className="flex items-center gap-1">
@@ -57,6 +58,9 @@ export function PostCard({ post }: PostCardProps) {
             <span className="text-muted-foreground/60">{post.user.name}</span>
           </span>
           <span>{timeAgo(post.createdAt)}</span>
+          {new Date(post.updatedAt).getTime() - new Date(post.createdAt).getTime() > 1000 && (
+            <span className="text-[10px] italic text-muted-foreground/40">(edited)</span>
+          )}
           <Link
             href={`/community/${post.id}`}
             className="flex items-center gap-1 hover:text-foreground/60 transition-colors"

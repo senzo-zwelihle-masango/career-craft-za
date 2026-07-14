@@ -130,7 +130,7 @@ const Pricing = () => {
                   variant={plan.highlighted ? "default" : "outline"}
                   className="mt-8 w-full"
                 >
-                  <Link href="#link">{plan.cta}</Link>
+                  <Link href="/overview">{plan.cta}</Link>
                 </Button>
               </Card>
             ))}

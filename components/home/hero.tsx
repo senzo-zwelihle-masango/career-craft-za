@@ -107,13 +107,13 @@ const Hero = () => {
               >
                 <div>
                   <Button size="lg">
-                    <Link href="#link">
+                    <Link href="/overview">
                       <span className="text-nowrap">Start Building</span>
                     </Link>
                   </Button>
                   <Button key={2} size="lg" variant="ghost">
-                    <Link href="#link">
-                      <span className="text-nowrap">Request a demo</span>
+                    <Link href="/signup">
+                      <span className="text-nowrap">Sign Up</span>
                     </Link>
                   </Button>
                 </div>

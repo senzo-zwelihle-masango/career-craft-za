@@ -4,7 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { toast } from "sonner"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { Loading03Icon, ArrowLeft01Icon } from "@hugeicons/core-free-icons"
+import { Loading03Icon, ArrowLeft01Icon, PencilEdit02Icon } from "@hugeicons/core-free-icons"
 import { createComment, deleteComment } from "@/lib/actions/community/community-comments"
 import { deletePost } from "@/lib/actions/community/community-posts"
 import { VoteButton } from "./vote-button"
@@ -32,6 +32,7 @@ export interface PostDetailClientProps {
     title: string
     body: string
     createdAt: string
+    updatedAt: string
     user: { id: string; name: string; image: string | null }
     _count: { comments: number; votes: number }
     votes?: { value: number }[]
@@ -110,24 +111,34 @@ export function PostDetailClient({ post, comments, currentUserId }: PostDetailCl
             <span className="text-muted-foreground/60">{post.user.name}</span>
             <span>&middot;</span>
             <span>{timeAgo(post.createdAt)}</span>
+            {new Date(post.updatedAt).getTime() - new Date(post.createdAt).getTime() > 1000 && (
+              <span className="text-[10px] italic text-muted-foreground/40">(edited)</span>
+            )}
           </div>
-          <div className="mt-4 text-sm text-foreground/80 whitespace-pre-wrap leading-relaxed">
-            {post.body}
-          </div>
+          <div
+            className="post-body mt-4 text-sm leading-relaxed text-foreground/80"
+            dangerouslySetInnerHTML={{ __html: post.body }}
+          />
           <div className="mt-4 flex items-center gap-4 text-xs text-muted-foreground/50">
             <span className="flex items-center gap-1">
               <span>{post._count.comments} comment{post._count.comments !== 1 ? "s" : ""}</span>
             </span>
             {isOwn && (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-auto px-0 text-xs font-normal hover:text-destructive"
-                onClick={handleDelete}
-                disabled={deleting}
-              >
-                {deleting ? "Deleting..." : "Delete"}
-              </Button>
+              <>
+                <Link href={`/community/${post.id}/edit`} className="inline-flex items-center gap-1 hover:text-foreground/60 transition-colors">
+                  <HugeiconsIcon icon={PencilEdit02Icon} className="size-3.5" />
+                  Edit
+                </Link>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-auto px-0 text-xs font-normal hover:text-destructive"
+                  onClick={handleDelete}
+                  disabled={deleting}
+                >
+                  {deleting ? "Deleting..." : "Delete"}
+                </Button>
+              </>
             )}
             <ReportDialog postId={post.id}>
               <Button
@@ -162,6 +173,74 @@ export function PostDetailClient({ post, comments, currentUserId }: PostDetailCl
           <CommentTree comments={comments} currentUserId={currentUserId} postId={post.id} />
         </div>
       </div>
+      <style jsx global>{`
+        .post-body ul {
+          list-style-type: disc;
+          padding-left: 1.5em;
+          margin: 0.5em 0;
+        }
+        .post-body ol {
+          list-style-type: decimal;
+          padding-left: 1.5em;
+          margin: 0.5em 0;
+        }
+        .post-body li {
+          display: list-item;
+          margin: 0.25em 0;
+        }
+        .post-body ul[data-type="taskList"] {
+          list-style: none;
+          padding-left: 0;
+        }
+        .post-body ul[data-type="taskList"] li {
+          display: flex;
+          align-items: flex-start;
+          gap: 0.5rem;
+        }
+        .post-body ul[data-type="taskList"] li > label {
+          flex-shrink: 0;
+          margin-top: 0.25rem;
+        }
+        .post-body ul[data-type="taskList"] li > div {
+          flex: 1;
+        }
+        .post-body h1 { font-size: 1.5rem; font-weight: 700; margin: 0.75em 0 0.5em; }
+        .post-body h2 { font-size: 1.25rem; font-weight: 600; margin: 0.75em 0 0.5em; }
+        .post-body h3 { font-size: 1.125rem; font-weight: 600; margin: 0.75em 0 0.5em; }
+        .post-body h4 { font-size: 1rem; font-weight: 600; margin: 0.75em 0 0.5em; }
+        .post-body p { margin: 0.5em 0; }
+        .post-body blockquote {
+          border-left: 3px solid hsl(var(--border));
+          padding-left: 1em;
+          margin: 0.5em 0;
+          color: hsl(var(--muted-foreground));
+        }
+        .post-body pre {
+          background: hsl(var(--muted));
+          border-radius: 0.375rem;
+          padding: 0.75em 1em;
+          overflow-x: auto;
+          margin: 0.5em 0;
+        }
+        .post-body code {
+          font-size: 0.875em;
+          background: hsl(var(--muted));
+          padding: 0.125em 0.25em;
+          border-radius: 0.25rem;
+        }
+        .post-body pre code {
+          background: none;
+          padding: 0;
+        }
+        .post-body a {
+          color: hsl(var(--primary));
+          text-decoration: underline;
+          text-underline-offset: 2px;
+        }
+        .post-body a:hover {
+          opacity: 0.8;
+        }
+      `}</style>
     </div>
   )
 }
