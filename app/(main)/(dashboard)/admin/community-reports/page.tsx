@@ -3,7 +3,7 @@ import { ShieldBanIcon } from "@hugeicons/core-free-icons"
 import { Container } from "@/components/ui/container"
 import { Heading } from "@/components/ui/heading"
 import { getAllReports } from "@/lib/actions/admin/community-reports"
-import { ReportTable } from "@/components/admin/community-reports/report-table"
+import { ReportTable, type Report } from "@/components/admin/community-reports/report-table"
 
 const AdminReportsPage = async () => {
   const { data: reports } = await getAllReports()
@@ -43,7 +43,7 @@ const AdminReportsPage = async () => {
           <HugeiconsIcon icon={ShieldBanIcon} className="size-20 text-muted-foreground" />
         </div>
       ) : (
-        <ReportTable reports={reports as any[]} />
+        <ReportTable reports={reports as unknown as Report[]} />
       )}
     </Container>
   )

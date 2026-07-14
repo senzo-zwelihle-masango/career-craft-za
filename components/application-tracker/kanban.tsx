@@ -158,7 +158,7 @@ function Column({
   const cfg = STATUS_CONFIG[id as keyof typeof STATUS_CONFIG]
 
   return (
-    <div className="flex max-w-[300px] min-w-[260px] flex-1 flex-col">
+    <div className="flex w-full md:max-w-[300px] md:min-w-[260px] md:flex-1 flex-col">
       <div className="mb-2 flex items-center justify-between px-1">
         <div className="flex items-center gap-1.5">
           <span className={cn("h-2 w-2 rounded-full", cfg?.dot)} />
@@ -244,7 +244,7 @@ const Kanban = ({ jobs, onStatusChange, onRowClick }: Props) => {
       collisionDetection={closestCorners}
       onDragEnd={handleDragEnd}
     >
-      <div className="flex h-full gap-3 overflow-x-auto pb-4">
+      <div className="flex h-full gap-3 overflow-x-auto pb-4 flex-col md:flex-row">
         {COLUMNS.map((col) => (
           <Column
             key={col.id}

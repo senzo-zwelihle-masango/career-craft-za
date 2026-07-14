@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect, useState, useMemo } from "react"
+import { useEffect, useState, useMemo, useRef, useCallback } from "react"
+import { PageHeading } from "@/components/ui/page-heading"
 import { HugeiconsIcon } from "@hugeicons/react"
 import {
   BubbleChatSpark01Icon,
@@ -78,6 +79,8 @@ const INITIAL_MANUAL: ManualForm = {
 }
 
 export default function InterviewPrepPage() {
+  const SIDEBAR_WIDTH_KEY = "interview-prep-sidebar-width"
+  const DEFAULT_SIDEBAR_WIDTH = 30
   const [jobs, setJobs] = useState<JobWithRelations[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedId, setSelectedId] = useState<string | null>(null)
@@ -86,6 +89,16 @@ export default function InterviewPrepPage() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [manualForm, setManualForm] = useState<ManualForm>(INITIAL_MANUAL)
   const [manualSkillsInput, setManualSkillsInput] = useState("")
+  const [sidebarWidth, setSidebarWidth] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem(SIDEBAR_WIDTH_KEY)
+      return saved ? Number(saved) : DEFAULT_SIDEBAR_WIDTH
+    }
+    return DEFAULT_SIDEBAR_WIDTH
+  })
+  const [isDesktop, setIsDesktop] = useState(true)
+  const isDragging = useRef(false)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     getJobApplications().then((res) => {
@@ -114,6 +127,46 @@ export default function InterviewPrepPage() {
     if (selectedId === "manual") return null
     return jobs.find((j) => j.id === selectedId) ?? null
   }, [jobs, selectedId])
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)")
+    setIsDesktop(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches)
+    mq.addEventListener("change", handler)
+    return () => mq.removeEventListener("change", handler)
+  }, [])
+
+  const handleMouseDown = useCallback(() => {
+    isDragging.current = true
+    document.body.style.cursor = "col-resize"
+    document.body.style.userSelect = "none"
+  }, [])
+
+  useEffect(() => {
+    function handleMouseMove(e: MouseEvent) {
+      if (!isDragging.current || !containerRef.current) return
+      const rect = containerRef.current.getBoundingClientRect()
+      const pct = ((e.clientX - rect.left) / rect.width) * 100
+      setSidebarWidth(Math.max(20, Math.min(50, pct)))
+    }
+    function handleMouseUp() {
+      if (isDragging.current) {
+        isDragging.current = false
+        document.body.style.cursor = ""
+        document.body.style.userSelect = ""
+        setSidebarWidth((prev) => {
+          localStorage.setItem(SIDEBAR_WIDTH_KEY, String(prev))
+          return prev
+        })
+      }
+    }
+    window.addEventListener("mousemove", handleMouseMove)
+    window.addEventListener("mouseup", handleMouseUp)
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove)
+      window.removeEventListener("mouseup", handleMouseUp)
+    }
+  }, [])
 
   const handleManualSubmit = () => {
     if (!manualForm.title.trim()) {
@@ -161,27 +214,19 @@ export default function InterviewPrepPage() {
 
   return (
     <div className="flex h-full flex-col">
-      {/* ── Header ── */}
-      <div className="flex items-center justify-between border-b px-6 py-3">
-        <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
-            <HugeiconsIcon
-              icon={BubbleChatSpark01Icon}
-              className="h-4 w-4 text-primary"
-            />
-          </div>
-          <div>
-            <h1 className="text-sm font-semibold">AI Interview Prep</h1>
-            <p className="text-xs text-muted-foreground">
-              Practice questions tailored to each job
-            </p>
-          </div>
-        </div>
+      <div className="border-b px-6 py-3">
+        <PageHeading
+          title="AI Interview Prep"
+          subtitle="Practice questions tailored to each job"
+        />
       </div>
 
-      <div className="grid flex-1 grid-cols-[300px_1fr] overflow-hidden">
+      <div ref={containerRef} className="flex flex-1 overflow-hidden">
         {/* ── Sidebar ── */}
-        <div className="flex flex-col border-r bg-muted/20">
+        <div
+          className="flex flex-col bg-muted/20"
+          style={isDesktop ? { width: `${sidebarWidth}%` } : { width: 300 }}
+        >
           <div className="border-b p-3 space-y-2">
             <div className="relative">
               <HugeiconsIcon
@@ -288,8 +333,18 @@ export default function InterviewPrepPage() {
           </ScrollArea>
         </div>
 
+        {/* ── Resizable divider ── */}
+        {isDesktop && (
+          <div
+            className="relative w-1.5 shrink-0 cursor-col-resize transition-colors hover:bg-primary/20 active:bg-primary/30"
+            onMouseDown={handleMouseDown}
+          >
+            <div className="absolute inset-y-0 left-1/2 w-4 -translate-x-1/2" />
+          </div>
+        )}
+
         {/* ── Main Content ── */}
-        <div className="flex flex-col overflow-hidden">
+        <div className="flex flex-1 flex-col overflow-hidden">
           {selectedId && selectedJob ? (
             <ScrollArea className="flex-1">
               <div className="mx-auto max-w-2xl p-6">

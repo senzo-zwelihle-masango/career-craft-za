@@ -42,8 +42,8 @@ const CustomizeEditor = () => {
   const [activePanel, setActivePanel] = useState("Document")
   const PanelComponent = panelComponents[activePanel]
   return (
-    <div className="flex min-h-0">
-      <nav className="flex w-full shrink-0 items-center justify-start gap-0.5 overflow-x-auto border-b bg-background px-1 py-1 md:w-[76px] md:flex-col md:justify-start md:overflow-y-auto md:border-r md:border-b-0 md:px-2 md:py-3">
+    <div className="flex min-h-0 flex-col md:flex-row">
+      <nav className="flex w-full shrink-0 items-center gap-1 overflow-x-auto scrollbar-hidden border-b bg-background px-3 py-2 md:w-[76px] md:flex-col md:gap-0.5 md:overflow-y-auto md:border-r md:border-b-0 md:px-2 md:py-3">
         {railItems.map((item) => {
           const iconData = item.icon
           return (
@@ -51,23 +51,22 @@ const CustomizeEditor = () => {
               key={item.label}
               onClick={() => setActivePanel(item.label)}
               className={cn(
-                "flex h-11 w-11 shrink-0 flex-col items-center justify-center gap-0.5 rounded-xl text-[10px] font-medium transition-colors md:h-[56px] md:w-full",
+                "flex shrink-0 flex-col items-center justify-center gap-0.5 rounded-xl text-[11px] md:text-[10px] font-medium transition-colors",
+                "h-14 min-w-[60px] px-1 md:h-[56px] md:w-full",
                 activePanel === item.label
                   ? "bg-primary text-primary-foreground shadow-sm"
                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
               )}
               title={item.label}
             >
-              {/* 2. FIX: RENDER THE ICON VIA THE WRAPPER COMPONENT */}
-              <HugeiconsIcon icon={iconData} className="h-4 w-4" />
-
+              <HugeiconsIcon icon={iconData} className="h-5 w-5 md:h-4 md:w-4" />
               <span className="leading-tight">{item.label}</span>
             </button>
           )
         })}
       </nav>
 
-      <div className="flex-1 overflow-x-hidden overflow-y-auto p-3 md:p-6 lg:p-8">
+      <div className="flex-1 overflow-y-auto p-3 md:p-6 lg:p-8">
         <div className="max-w-xl">
           <h2 className="mb-4 text-sm font-semibold">{activePanel}</h2>
           {PanelComponent && <PanelComponent />}

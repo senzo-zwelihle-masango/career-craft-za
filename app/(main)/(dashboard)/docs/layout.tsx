@@ -1,20 +1,27 @@
-import React from "react"
-import Link from "next/link"
-import { Container } from "@/components/ui/container"
-import { Heading } from "@/components/ui/heading"
+"use client"
 
-const docsNav = [
-  { title: "Introduction", href: "/docs" },
-  { title: "Get Started", href: "/docs/getting-started" },
-  { title: "Tutorials", href: "/docs/tutorials" },
-  { title: "Changelog", href: "/docs/changelog" },
+import { usePathname, useRouter } from "next/navigation"
+import { Container } from "@/components/ui/container"
+import { PageHeading } from "@/components/ui/page-heading"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+
+const docsTabs = [
+  { value: "introduction", label: "Introduction", href: "/docs" },
+  { value: "get-started", label: "Get Started", href: "/docs/getting-started" },
+  { value: "tutorials", label: "Tutorials", href: "/docs/tutorials" },
+  { value: "changelog", label: "Changelog", href: "/docs/changelog" },
 ]
 
-export default async function DocsLayout({
+export default function DocsLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const pathname = usePathname()
+  const router = useRouter()
+
+  const currentTab = docsTabs.find((t) => pathname === t.href)?.value ?? "introduction"
+
   return (
     <Container
       size="2xl"
@@ -25,24 +32,28 @@ export default async function DocsLayout({
       flow="none"
       bleed="none"
       centered={false}
+      className="overflow-x-hidden"
     >
-      <div className="mb-6">
-        <Heading as="h1" size="4xl" weight="semibold" margin="none">
-          Documentation
-        </Heading>
-      </div>
-      <nav className="mb-8 flex gap-1 border-b">
-        {docsNav.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className="relative inline-flex h-9 items-center px-4 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:after:absolute aria-[current=page]:after:inset-x-0 aria-[current=page]:after:bottom-0 aria-[current=page]:after:h-0.5 aria-[current=page]:after:bg-foreground"
-          >
-            {item.title}
-          </Link>
-        ))}
-      </nav>
-      {children}
+      <PageHeading title="Documentation" />
+
+      <Tabs
+        value={currentTab}
+        onValueChange={(value) => {
+          const tab = docsTabs.find((t) => t.value === value)
+          if (tab) router.push(tab.href)
+        }}
+      >
+        <TabsList className="overflow-x-auto max-md:justify-start">
+          {docsTabs.map((tab) => (
+            <TabsTrigger key={tab.value} value={tab.value}>
+              {tab.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+        <TabsContent value={currentTab} className="pt-6">
+          {children}
+        </TabsContent>
+      </Tabs>
     </Container>
   )
 }

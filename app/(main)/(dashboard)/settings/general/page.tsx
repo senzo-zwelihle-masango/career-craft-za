@@ -27,6 +27,7 @@ import {
 import { toast } from "sonner"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { AlertCircleIcon, Logout01Icon } from "@hugeicons/core-free-icons"
+import { UploadButton } from "@/utils/upload/uploadthing"
 import { Spinner } from "@/components/ui/spinner"
 import {
   updateProfileAction,
@@ -163,14 +164,29 @@ export default function GeneralPage() {
             </FieldContent>
           </Field>
           <Field orientation="horizontal">
-            <FieldLabel className="w-28">Avatar URL</FieldLabel>
+            <FieldLabel className="w-28">Photo</FieldLabel>
             <FieldContent>
-              <Input
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-                placeholder="https://avatar.vercel.sh/..."
-                className="h-9"
-              />
+              <div className="flex flex-wrap items-center gap-3">
+                <UploadButton
+                  endpoint="imageUploader"
+                  onClientUploadComplete={(res) => {
+                    const url = res?.[0]?.ufsUrl ?? res?.[0]?.url
+                    if (url) {
+                      setImage(url)
+                      toast.success("Photo uploaded")
+                    }
+                  }}
+                  onUploadError={(error) => {
+                    toast.error(error.message || "Failed to upload photo")
+                  }}
+                  className="ut-button:rounded-full ut-button:bg-primary ut-button:text-primary-foreground ut-button:text-xs ut-button:font-medium ut-button:h-8 ut-allowed-content:text-muted-foreground ut-allowed-content:text-xs"
+                />
+                {image && (
+                  <span className="text-xs text-muted-foreground truncate max-w-[200px]">
+                    {image.split("/").pop()}
+                  </span>
+                )}
+              </div>
             </FieldContent>
           </Field>
           <div className="flex justify-end">

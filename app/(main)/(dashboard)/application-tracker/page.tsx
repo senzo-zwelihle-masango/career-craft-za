@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback, useMemo } from "react"
 import { Container } from "@/components/ui/container"
-import { Heading } from "@/components/ui/heading"
+import { PageHeading } from "@/components/ui/page-heading"
 import { HugeiconsIcon } from "@hugeicons/react"
 import {
   Building02Icon,
@@ -18,12 +18,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { toast } from "sonner"
@@ -60,23 +55,9 @@ const JobTrackerPage = () => {
     { id: string; title: string }[]
   >([])
   const [addSheetOpen, setAddSheetOpen] = useState(false)
-  const [isMobile, setIsMobile] = useState(
-    typeof window !== "undefined"
-      ? window.matchMedia("(max-width: 1023px)").matches
-      : false
-  )
-  const [panelWidth, setPanelWidth] = useState(420)
-
   const [deleteConfirm, setDeleteConfirm] = useState<JobWithRelations | null>(
     null
   )
-
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 1023px)")
-    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
-    mq.addEventListener("change", handler)
-    return () => mq.removeEventListener("change", handler)
-  }, [])
 
   useEffect(() => {
     Promise.all([getJobApplications(), getCvs(), getCoverLetters()])
@@ -208,7 +189,7 @@ const JobTrackerPage = () => {
 
   return (
     <Container
-      size={"2xl"}
+      size={"full"}
       alignment={"none"}
       height={"full"}
       padding={"px-xs"}
@@ -222,22 +203,10 @@ const JobTrackerPage = () => {
       <div className="shrink-0 space-y-3 pt-4 pb-3 md:pt-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <Heading
-              as="h1"
-              font="none"
-              size="3xl"
-              weight="normal"
-              tracking="normal"
-              leading="none"
-              transform="normal"
-              italic={false}
-              margin={"md"}
-            >
-              Application Tracker
-            </Heading>
-            <p className="text-xs text-muted-foreground md:text-sm">
-              Manage your job search with table and kanban views.
-            </p>
+            <PageHeading
+              title="Application Tracker"
+              subtitle="Manage your job search with table and kanban views."
+            />
           </div>
           <div className="flex items-center gap-2">
             <ToggleGroup
@@ -297,7 +266,7 @@ const JobTrackerPage = () => {
 
       {/* main */}
       {/* Main content */}
-      <div className="flex min-h-0 flex-1">
+      <div className="flex min-h-0 min-w-0 flex-1 overflow-x-hidden">
         {loading ? (
           <div className="flex-1 pb-4 md:pb-6">
             {view === "table" ? (
@@ -309,7 +278,7 @@ const JobTrackerPage = () => {
                 </div>
               </div>
             ) : (
-              <div className="flex h-full gap-4">
+              <div className="flex h-full gap-4 flex-col md:flex-row">
                 {[
                   "WISHLIST",
                   "APPLIED",
@@ -346,11 +315,9 @@ const JobTrackerPage = () => {
             </Button>
           </div>
         ) : (
-          <div className="flex min-h-0 flex-1">
+          <div className="flex min-h-0 min-w-0 flex-1">
             {/* Main content area */}
-            <div
-              className={`flex-1 overflow-auto pb-4 md:pb-6 ${showDetails ? "hidden lg:block" : ""}`}
-            >
+            <div className="min-w-0 flex-1 overflow-auto pb-4 md:pb-6">
               {view === "table" ? (
                 <JobDataTable
                   data={filteredJobs}
@@ -376,46 +343,12 @@ const JobTrackerPage = () => {
               )}
             </div>
 
-            {/* Details panel */}
+            {/* Details dialog */}
             {showDetails && selectedJob && view === "table" && (
-              <div
-                className="relative hidden shrink-0 flex-col lg:flex"
-                style={{ width: panelWidth, minWidth: 340, maxWidth: 420 }}
-              >
-                <div
-                  onMouseDown={(e) => {
-                    e.preventDefault()
-                    const handle = (ev: MouseEvent) => {
-                      const newWidth = window.innerWidth - ev.clientX
-                      setPanelWidth(Math.min(420, Math.max(340, newWidth)))
-                    }
-                    const up = () => {
-                      document.removeEventListener("mousemove", handle)
-                      document.removeEventListener("mouseup", up)
-                    }
-                    document.addEventListener("mousemove", handle)
-                    document.addEventListener("mouseup", up)
-                  }}
-                  className="absolute top-0 bottom-0 left-0 z-10 w-1 cursor-col-resize transition-colors hover:bg-primary/20 active:bg-primary/30"
-                />
-                <Panel
-                  job={selectedJob}
-                  onClose={() => setShowDetails(false)}
-                  onUpdate={fetchJobs}
-                  onDelete={() => handleDelete(selectedJob.id)}
-                />
-              </div>
-            )}
-
-            {/* Mobile details overlay */}
-            {isMobile && showDetails && selectedJob && view === "table" && (
-              <div
-                className="fixed inset-0 z-50 flex items-end justify-center bg-black/10 p-0 sm:items-center sm:p-4"
-                onClick={() => setShowDetails(false)}
-              >
-                <div
-                  className="relative max-h-[85vh] w-full overflow-hidden rounded-t-xl bg-popover shadow-lg ring-1 ring-foreground/10 sm:max-w-lg sm:rounded-xl"
-                  onClick={(e) => e.stopPropagation()}
+              <Dialog open={showDetails} onOpenChange={(o) => { if (!o) setShowDetails(false) }}>
+                <DialogContent
+                  className="flex max-h-[85vh] flex-col gap-0 overflow-hidden p-0 sm:max-w-3xl"
+                  showCloseButton={false}
                 >
                   <Panel
                     job={selectedJob}
@@ -423,8 +356,8 @@ const JobTrackerPage = () => {
                     onUpdate={fetchJobs}
                     onDelete={() => handleDelete(selectedJob.id)}
                   />
-                </div>
-              </div>
+                </DialogContent>
+              </Dialog>
             )}
           </div>
         )}

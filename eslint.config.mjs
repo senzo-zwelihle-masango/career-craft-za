@@ -15,6 +15,7 @@ const eslintConfig = defineConfig([
     "hooks/**",
     "lib/generated/**",
     "components/ui/**",
+    "components/ai-elements/**",
   ]),
 ])
 

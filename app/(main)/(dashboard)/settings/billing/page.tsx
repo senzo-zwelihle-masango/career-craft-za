@@ -1,4 +1,5 @@
 import { headers } from "next/headers"
+import Link from "next/link"
 import { auth } from "@/lib/auth"
 import prisma from "@/lib/prisma/db"
 import {
@@ -87,10 +88,12 @@ export default async function BillingPage() {
           )}
           <Separator />
           <div className="flex justify-end">
-            <Button variant="outline" size="sm" className="h-8">
-              <HugeiconsIcon icon={SparklesIcon} />
-              {currentPlan === "FREE" ? "Upgrade" : "Manage"} Plan
-            </Button>
+            <Link href="/pricing">
+              <Button variant="outline" size="sm" className="h-8">
+                <HugeiconsIcon icon={SparklesIcon} />
+                {currentPlan === "FREE" ? "Upgrade" : "Manage"} Plan
+              </Button>
+            </Link>
           </div>
         </CardContent>
       </Card>

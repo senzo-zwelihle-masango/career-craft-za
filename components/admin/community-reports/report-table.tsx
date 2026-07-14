@@ -13,7 +13,7 @@ import {
   adminDeleteComment,
 } from "@/lib/actions/admin/community-reports"
 
-interface Report {
+export interface Report {
   id: string
   reason: string
   description: string | null

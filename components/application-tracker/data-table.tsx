@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState, useCallback } from "react"
+import { useMemo, useState, useCallback, useEffect } from "react"
 import { formatDistanceToNow } from "date-fns"
 import {
   flexRender,
@@ -44,8 +44,11 @@ import {
   ArrowLeft01Icon,
   ArrowRight01Icon,
   ArrowUp01Icon,
+  Building02Icon,
+  Calendar01Icon,
   CheckmarkCircle02Icon,
   Delete02Icon,
+  MapsLocation01Icon,
   MoreHorizontalIcon,
   ViewIcon,
   ViewOffSlashIcon,
@@ -77,6 +80,15 @@ export function JobDataTable({
   onDelete,
   selectedJobId,
 }: Props) {
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)")
+    setIsMobile(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener("change", handler)
+    return () => mq.removeEventListener("change", handler)
+  }, [])
+
   const [sorting, setSorting] = useState<SortingState>([
     { id: "appliedAt", desc: true },
   ])
@@ -155,7 +167,7 @@ export function JobDataTable({
             )}
           </button>
         ),
-        cell: ({ getValue }) => <span className="text-sm">{getValue()}</span>,
+        cell: ({ getValue }) => <div className="truncate text-sm">{getValue()}</div>,
         enableSorting: true,
       }),
       helper.accessor("location", {
@@ -172,9 +184,9 @@ export function JobDataTable({
           </button>
         ),
         cell: ({ getValue }) => (
-          <span className="text-sm text-muted-foreground">
+          <div className="truncate text-sm text-muted-foreground">
             {getValue() || "–"}
-          </span>
+          </div>
         ),
         enableSorting: true,
       }),
@@ -194,9 +206,9 @@ export function JobDataTable({
                 row.original.workModel
             )
           return (
-            <span className="text-sm text-muted-foreground">
+            <div className="truncate text-sm text-muted-foreground">
               {parts.join(", ") || "–"}
-            </span>
+            </div>
           )
         },
         enableSorting: false,
@@ -232,9 +244,9 @@ export function JobDataTable({
         id: "source",
         header: "Source",
         cell: ({ getValue }) => (
-          <span className="text-sm text-muted-foreground">
+          <div className="truncate text-sm text-muted-foreground">
             {getValue() || "–"}
-          </span>
+          </div>
         ),
         enableSorting: false,
       }),
@@ -255,7 +267,7 @@ export function JobDataTable({
           const cfg =
             STATUS_CONFIG[row.original.status as keyof typeof STATUS_CONFIG]
           return (
-            <span className="inline-flex items-center gap-1.5 text-sm whitespace-nowrap">
+            <span className="inline-flex items-center gap-1.5 text-sm truncate">
               <span className={cn("h-2 w-2 rounded-full", cfg?.dot)} />
               {cfg?.label}
             </span>
@@ -280,7 +292,7 @@ export function JobDataTable({
         cell: ({ row }) => {
           const date = row.original.appliedAt || row.original.createdAt
           return (
-            <span className="text-sm whitespace-nowrap text-muted-foreground">
+            <span className="text-sm truncate text-muted-foreground">
               {formatDistanceToNow(new Date(date), { addSuffix: true })}
             </span>
           )
@@ -373,10 +385,134 @@ export function JobDataTable({
     [onRowClick]
   )
 
+  if (isMobile) {
+    return (
+      <div className="flex h-full flex-col gap-2 pb-4">
+        {data.length === 0 ? (
+          <p className="py-16 text-center text-sm text-muted-foreground">
+            No applications found
+          </p>
+        ) : (
+          data.map((job) => {
+            const cfg =
+              STATUS_CONFIG[job.status as keyof typeof STATUS_CONFIG]
+            const date = job.appliedAt || job.createdAt
+            return (
+              <button
+                key={job.id}
+                onClick={() => onRowClick(job)}
+                className="flex w-full items-start gap-3 rounded-xl border bg-card p-4 text-left transition-colors hover:bg-muted/30"
+              >
+                <Checkbox
+                  checked={selected.has(job.id)}
+                  onCheckedChange={() => {
+                    const next = new Set(selected)
+                    if (next.has(job.id)) next.delete(job.id)
+                    else next.add(job.id)
+                    onSelectChange(next)
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                  className="mt-0.5"
+                />
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <p className="truncate text-sm font-medium">{job.title}</p>
+                    <span
+                      className={cn(
+                        "inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium",
+                        cfg?.dot?.replace("bg-", "bg-").replace("from ", ""),
+                        "bg-muted text-muted-foreground"
+                      )}
+                    >
+                      <span className={cn("h-1.5 w-1.5 rounded-full", cfg?.dot)} />
+                      {cfg?.label}
+                    </span>
+                  </div>
+                  <p className="mt-0.5 truncate text-sm text-muted-foreground">
+                    {job.company}
+                  </p>
+                  <div className="mt-1.5 flex flex-wrap items-center gap-2 text-[11px] text-muted-foreground/70">
+                    {job.location && (
+                      <>
+                        <HugeiconsIcon icon={MapsLocation01Icon} className="size-3" />
+                        <span>{job.location}</span>
+                      </>
+                    )}
+                    <HugeiconsIcon icon={Calendar01Icon} className="size-3" />
+                    <span>
+                      {formatDistanceToNow(new Date(date), {
+                        addSuffix: true,
+                      })}
+                    </span>
+                  </div>
+                </div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger
+                    render={
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 shrink-0"
+                      />
+                    }
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <HugeiconsIcon icon={MoreHorizontalIcon} className="size-4" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-44">
+                    {Object.entries(STATUS_CONFIG).map(([key, scfg]) => (
+                      <DropdownMenuItem
+                        key={key}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          onStatusChange(job.id, key)
+                        }}
+                      >
+                        <span className={cn("mr-2 h-2 w-2 rounded-full", scfg.dot)} />
+                        {scfg.label}
+                      </DropdownMenuItem>
+                    ))}
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        onArchive(job.id)
+                      }}
+                    >
+                      {job.archived ? (
+                        <>
+                          <HugeiconsIcon icon={CheckmarkCircle02Icon} /> Restore
+                        </>
+                      ) : (
+                        <>
+                          <HugeiconsIcon icon={ArchiveIcon} /> Archive
+                        </>
+                      )}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        onDelete(job.id)
+                      }}
+                      className="text-destructive"
+                    >
+                      <HugeiconsIcon icon={Delete02Icon} />
+                      Delete
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </button>
+            )
+          })
+        )}
+      </div>
+    )
+  }
+
   return (
     <div className="flex h-full flex-col">
       <div className="flex-1 overflow-auto rounded-xl border">
-        <table className="w-full">
+        <table className="w-full table-fixed">
           <thead className="sticky top-0 z-10 bg-muted/30">
             {table.getHeaderGroups().map((hg) => (
               <tr key={hg.id}>

@@ -37,10 +37,11 @@ export type CheckpointIconProps = HugeiconsIconProps
 export const CheckpointIcon = ({
   className,
   children,
+  icon,
   ...props
 }: CheckpointIconProps) =>
   children ?? (
-    <HugeiconsIcon icon={BookmarkIcon} className={cn("size-4 shrink-0", className)} {...props} />
+    <HugeiconsIcon icon={icon ?? BookmarkIcon} className={cn("size-4 shrink-0", className)} {...props} />
   )
 
 export type CheckpointTriggerProps = ComponentProps<typeof Button> & {

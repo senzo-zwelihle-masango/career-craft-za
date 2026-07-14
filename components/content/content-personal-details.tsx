@@ -270,7 +270,7 @@ const ContentPersonalDetails = ({
                             ]
                             newLinks[i] = {
                               ...newLinks[i],
-                              type: v,
+                              type: v ?? "custom",
                               label: v !== "custom" ? undefined : newLinks[i].label,
                             }
                             setDetails({ ...details, links: newLinks })

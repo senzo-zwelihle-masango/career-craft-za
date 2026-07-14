@@ -112,7 +112,7 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => (window.location.href = "/pricing")}>
                 <HugeiconsIcon icon={SparklesIcon} />
                 Upgrade to Pro
               </DropdownMenuItem>

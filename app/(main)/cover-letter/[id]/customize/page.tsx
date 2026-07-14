@@ -262,22 +262,23 @@ export default function CoverLetterCustomizePage() {
           className="flex min-w-0 flex-col"
           style={isDesktop ? { width: `${sidebarWidth}%` } : undefined}
         >
-          <div className="flex min-h-0 flex-1">
+          <div className="flex min-h-0 flex-1 flex-col md:flex-row">
             {/* Rail */}
-            <nav className="flex w-full shrink-0 items-center justify-start gap-0.5 overflow-x-auto border-b bg-background px-1 py-1 md:w-[76px] md:flex-col md:justify-start md:overflow-y-auto md:border-r md:border-b-0 md:px-2 md:py-3">
+            <nav className="flex w-full shrink-0 items-center gap-1 overflow-x-auto scrollbar-hidden border-b bg-background px-3 py-2 md:w-[76px] md:flex-col md:gap-0.5 md:overflow-y-auto md:border-r md:border-b-0 md:px-2 md:py-3">
               {railItems.map((item) => (
                 <button
                   key={item.label}
                   onClick={() => setActivePanel(item.label)}
                   className={cn(
-                    "flex h-11 w-11 shrink-0 flex-col items-center justify-center gap-0.5 rounded-xl text-[10px] font-medium transition-colors md:h-[56px] md:w-full",
+                    "flex shrink-0 flex-col items-center justify-center gap-0.5 rounded-xl text-[11px] md:text-[10px] font-medium transition-colors",
+                    "h-14 min-w-[60px] px-1 md:h-[56px] md:w-full",
                     activePanel === item.label
                       ? "bg-primary text-primary-foreground shadow-sm"
                       : "text-muted-foreground hover:bg-muted hover:text-foreground"
                   )}
                   title={item.label}
                 >
-                  <HugeiconsIcon icon={item.icon} className="h-4 w-4" />
+                  <HugeiconsIcon icon={item.icon} className="h-5 w-5 md:h-4 md:w-4" />
                   <span className="leading-tight">{item.label}</span>
                 </button>
               ))}
@@ -465,7 +466,7 @@ export default function CoverLetterCustomizePage() {
               <Button
                 onClick={handleFullscreen}
                 size="sm"
-                variant="outline"
+                variant="default"
                 className="absolute top-6 right-6 z-10"
               >
                 <HugeiconsIcon icon={Maximize02Icon} className="h-3.5 w-3.5" />

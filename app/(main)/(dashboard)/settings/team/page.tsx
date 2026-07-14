@@ -17,6 +17,7 @@ import { Building03Icon, PlusSignIcon } from "@hugeicons/core-free-icons"
 import { Spinner } from "@/components/ui/spinner"
 
 export default function TeamPage() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [orgs, setOrgs] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -93,7 +94,7 @@ export default function TeamPage() {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    {org.members.map((member: any) => (
+                    {org.members.map((member: { id: string; role: string; user: { id: string; name: string; email: string; image: string | null } }) => (
                       <div
                         key={member.id}
                         className="flex items-center justify-between rounded-2xl bg-muted/50 px-3 py-2"

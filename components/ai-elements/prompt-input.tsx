@@ -414,7 +414,7 @@ export const PromptInputActionAddAttachments = ({
   const attachments = usePromptInputAttachments()
 
   const handleSelect = useCallback(
-    (e: Event) => {
+    (e: { preventDefault: () => void }) => {
       e.preventDefault()
       attachments.openFileDialog()
     },
@@ -442,8 +442,9 @@ export const PromptInputActionAddScreenshot = ({
   const attachments = usePromptInputAttachments()
 
   const handleSelect = useCallback(
-    async (event: Event) => {
-      onSelect?.(event)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    async (event: any) => {
+      onSelect?.(event as any)
       if (event.defaultPrevented) {
         return
       }
@@ -1229,7 +1230,8 @@ export const PromptInputSubmit = ({
         onStop()
         return
       }
-      onClick?.(e)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      onClick?.(e as any)
     },
     [isGenerating, onStop, onClick]
   )
@@ -1300,12 +1302,8 @@ export const PromptInputSelectValue = ({
 
 export type PromptInputHoverCardProps = ComponentProps<typeof HoverCard>
 
-export const PromptInputHoverCard = ({
-  openDelay = 0,
-  closeDelay = 0,
-  ...props
-}: PromptInputHoverCardProps) => (
-  <HoverCard closeDelay={closeDelay} openDelay={openDelay} {...props} />
+export const PromptInputHoverCard = (props: PromptInputHoverCardProps) => (
+  <HoverCard {...props} />
 )
 
 export type PromptInputHoverCardTriggerProps = ComponentProps<

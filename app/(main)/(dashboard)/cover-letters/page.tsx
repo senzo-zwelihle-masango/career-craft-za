@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { PageHeading } from "@/components/ui/page-heading"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -98,12 +99,10 @@ export default function CoverLettersPage() {
     <div className="p-4 md:p-8">
       <div className="mb-6 flex flex-col gap-4 md:mb-8 md:flex-row md:items-start md:justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
-            Cover Letters
-          </h1>
-          <p className="mt-1 text-sm text-muted-foreground md:text-base">
-            Write cover letters paired with your CVs.
-          </p>
+          <PageHeading
+            title="Cover Letters"
+            subtitle="Write cover letters paired with your CVs."
+          />
         </div>
       </div>
 

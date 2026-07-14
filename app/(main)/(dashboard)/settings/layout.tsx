@@ -1,20 +1,30 @@
-import React from "react"
-import Link from "next/link"
-import { Container } from "@/components/ui/container"
-import { Heading } from "@/components/ui/heading"
+"use client"
 
-const settingsNav = [
-  { title: "General", href: "/settings/general" },
-  { title: "Team", href: "/settings/team" },
-  { title: "Billing", href: "/settings/billing" },
-  { title: "Limits", href: "/settings/limits" },
+import { usePathname, useRouter } from "next/navigation"
+import { Container } from "@/components/ui/container"
+import { PageHeading } from "@/components/ui/page-heading"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import { HugeiconsIcon } from "@hugeicons/react"
+import {
+  Settings01Icon,
+  UserGroupIcon,
+  CreditCardIcon,
+  Chart01Icon,
+} from "@hugeicons/core-free-icons"
+
+const settingsTabs = [
+  { value: "general", label: "General", icon: Settings01Icon, href: "/settings/general" },
+  { value: "team", label: "Team", icon: UserGroupIcon, href: "/settings/team" },
+  { value: "billing", label: "Billing", icon: CreditCardIcon, href: "/settings/billing" },
+  { value: "limits", label: "Limits", icon: Chart01Icon, href: "/settings/limits" },
 ]
 
-export default async function SettingsLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function SettingsLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+  const router = useRouter()
+
+  const currentTab = settingsTabs.find((t) => pathname.startsWith(t.href))?.value ?? "general"
+
   return (
     <Container
       size="2xl"
@@ -25,24 +35,29 @@ export default async function SettingsLayout({
       flow="none"
       bleed="none"
       centered={false}
+      className="overflow-x-hidden"
     >
-      <div className="mb-6">
-        <Heading as="h1" size="4xl" weight="semibold" margin="none">
-          Settings
-        </Heading>
-      </div>
-      <nav className="mb-8 flex gap-1 border-b">
-        {settingsNav.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className="relative inline-flex h-9 items-center px-4 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:after:absolute aria-[current=page]:after:inset-x-0 aria-[current=page]:after:bottom-0 aria-[current=page]:after:h-0.5 aria-[current=page]:after:bg-foreground"
-          >
-            {item.title}
-          </Link>
-        ))}
-      </nav>
-      {children}
+      <PageHeading title="Settings" />
+
+      <Tabs
+        value={currentTab}
+        onValueChange={(value) => {
+          const tab = settingsTabs.find((t) => t.value === value)
+          if (tab) router.push(tab.href)
+        }}
+      >
+        <TabsList className="overflow-x-auto max-md:justify-start">
+          {settingsTabs.map((tab) => (
+            <TabsTrigger key={tab.value} value={tab.value}>
+              <HugeiconsIcon icon={tab.icon} />
+              {tab.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+        <TabsContent value={currentTab} className="pt-6">
+          {children}
+        </TabsContent>
+      </Tabs>
     </Container>
   )
 }

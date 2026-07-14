@@ -40,7 +40,7 @@ const Panel = ({ job, onClose, onUpdate, onDelete }: Props) => {
   const cfg = STATUS_CONFIG[job.status as keyof typeof STATUS_CONFIG]
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex flex-1 flex-col">
       <Card>
         {/* ── Header ── */}
         <div className="flex shrink-0 items-start justify-between gap-3 px-6 pt-5 pb-3">
@@ -73,13 +73,13 @@ const Panel = ({ job, onClose, onUpdate, onDelete }: Props) => {
             onValueChange={setTab}
             className="flex min-h-0 flex-1 flex-col"
           >
-            <TabsList className="h-auto shrink-0 gap-0 rounded-none border-b border-border/50 bg-transparent px-3">
+            <TabsList className="w-full justify-center overflow-x-auto max-md:justify-start">
               {["overview", "timeline", "notes", "contacts", "interviews", "ai-prep"].map(
                 (t) => (
                   <TabsTrigger
                     key={t}
                     value={t}
-                    className="rounded-none border-b-2 border-transparent bg-transparent px-2.5 py-2 text-xs data-[state=active]:border-foreground data-[state=active]:text-foreground data-[state=active]:shadow-none"
+           
                   >
                     {t === "overview"
                       ? "Overview"

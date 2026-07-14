@@ -28,7 +28,7 @@ const plans = [
   {
     name: "Basic",
     description: "For active job seekers",
-    price: "R5",
+    price: "R10",
     period: "/month",
     features: [
       "Unlimited CVs",
@@ -44,7 +44,7 @@ const plans = [
   {
     name: "Pro",
     description: "For serious career growth",
-    price: "R50",
+    price: "R20",
     period: "",
     features: [
       "Everything in Basic",

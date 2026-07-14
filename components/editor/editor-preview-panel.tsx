@@ -42,7 +42,7 @@ export function EditorPreviewPanel() {
     if (!el) return
 
     function measure() {
-      const h = el.scrollHeight
+      const h = el!.scrollHeight
       if (h > 0) {
         setPages(Math.max(1, Math.ceil(h / PAGE_HEIGHT_PX)))
       }
@@ -61,7 +61,7 @@ export function EditorPreviewPanel() {
     if (!el || pages <= 1) return
 
     function updatePage() {
-      const scrollTop = el.scrollTop
+      const scrollTop = el!.scrollTop
       const page = Math.min(Math.floor(scrollTop / (pageHeight + 24)), pages - 1)
       setCurrentPage(page)
     }

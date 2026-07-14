@@ -3,7 +3,7 @@ import Link from "next/link"
 import { headers } from "next/headers"
 import { redirect } from "next/navigation"
 import { Container } from "@/components/ui/container"
-import { Heading } from "@/components/ui/heading"
+import { PageHeading } from "@/components/ui/page-heading"
 import { auth } from "@/lib/auth"
 import prisma from "@/lib/prisma/db"
 import CurriculumVitaeGrid from "@/components/curriculum-vitae/templates/cv-grid"
@@ -60,28 +60,17 @@ export default async function CurriculumVitaesPage() {
       className=""
       id="curriculum-vitaes"
     >
-      {/* header */}
-      <Heading
-        as="h1"
-        font={"none"}
-        size={"4xl"}
-        weight={"medium"}
-        tracking={"normal"}
-        leading={"normal"}
-        transform={"normal"}
-        italic={false}
-        margin={"none"}
-      >
-        Manage your CVs.
-      </Heading>
-      <div className="mb-4 md:mb-6">
-        <p className="text-muted-foreground md:text-sm">
-          Your first cv is free forever. Need more than one?
-          <Link href="/pricing" className="underline underline-offset-2">
-            Upgrade your plan
-          </Link>
-        </p>
-      </div>
+      <PageHeading
+        title="Manage your CVs."
+        subtitle={
+          <>
+            Your first cv is free forever. Need more than one?{" "}
+            <Link href="/pricing" className="underline underline-offset-2">
+              Upgrade your plan
+            </Link>
+          </>
+        }
+      />
 
       {/* content */}
       <CurriculumVitaeGrid
