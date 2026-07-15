@@ -17,7 +17,8 @@ export async function vote(input: {
 }) {
   const userId = await getUserId()
   if (!userId) return { error: "You must be signed in to vote" }
-  if (input.value !== 1 && input.value !== -1) return { error: "Invalid vote value" }
+  if (input.value !== 1 && input.value !== -1)
+    return { error: "Invalid vote value" }
   if (!input.postId && !input.commentId) return { error: "Missing target" }
 
   const existing = await prisma.communityVote.findFirst({

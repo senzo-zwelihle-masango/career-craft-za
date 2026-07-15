@@ -111,8 +111,7 @@ const EditorNavigationBar = ({
   const avatarFallback = displayName.charAt(0).toUpperCase()
 
   const avatarSrc =
-    user?.image ??
-    `https://avatar.vercel.sh/${user?.email ?? ""}`
+    user?.image ?? `https://avatar.vercel.sh/${user?.email ?? ""}`
 
   return (
     <header>

@@ -117,7 +117,7 @@ export function SidebarInk({ cv }: SidebarInkProps) {
         />
 
         {/* Sidebar header info */}
-          <div style={{ marginBottom: `${20 * es}px` }}>
+        <div style={{ marginBottom: `${20 * es}px` }}>
           {pd?.photoUrl && cv.showPhoto && (
             <img
               src={pd.photoUrl}
@@ -565,8 +565,8 @@ export function SidebarInk({ cv }: SidebarInkProps) {
                         entry.bullets.length > 0 && (
                           <ul
                             style={{
-                               margin: `${3 * es}px 0 0`,
-                               paddingLeft: `${16 * mh}px`,
+                              margin: `${3 * es}px 0 0`,
+                              paddingLeft: `${16 * mh}px`,
                               fontSize: `${0.8125 * fs}rem`,
                               color: "#4B5563",
                               lineHeight: 1.5,

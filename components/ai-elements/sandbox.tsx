@@ -51,7 +51,10 @@ export const SandboxHeader = ({
       <span className="text-sm font-medium">{title}</span>
       {getStatusBadge(state)}
     </div>
-    <HugeiconsIcon icon={ChevronDownIcon} className="size-4 text-muted-foreground transition-transform group-data-[state=open]:rotate-180" />
+    <HugeiconsIcon
+      icon={ChevronDownIcon}
+      className="size-4 text-muted-foreground transition-transform group-data-[state=open]:rotate-180"
+    />
   </CollapsibleTrigger>
 )
 

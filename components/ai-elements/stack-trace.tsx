@@ -9,7 +9,12 @@ import {
 } from "@/components/ui/collapsible"
 import { cn } from "@/lib/utils"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { Alert02Icon, CheckIcon, ChevronDownIcon, CopyIcon } from "@hugeicons/core-free-icons"
+import {
+  Alert02Icon,
+  CheckIcon,
+  ChevronDownIcon,
+  CopyIcon,
+} from "@hugeicons/core-free-icons"
 import type { ComponentProps } from "react"
 import {
   createContext,
@@ -241,7 +246,10 @@ export const StackTraceError = memo(
       )}
       {...props}
     >
-      <HugeiconsIcon icon={Alert02Icon} className="size-4 shrink-0 text-destructive" />
+      <HugeiconsIcon
+        icon={Alert02Icon}
+        className="size-4 shrink-0 text-destructive"
+      />
       {children}
     </div>
   )

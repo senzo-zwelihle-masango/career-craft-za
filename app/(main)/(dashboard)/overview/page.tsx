@@ -382,9 +382,9 @@ export default async function OverviewPage() {
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-2">
             <div className="flex size-24 items-center justify-center">
-            <span className="text-4xl font-bold tabular-nums text-primary">
-              {offerRate}%
-            </span>
+              <span className="text-4xl font-bold text-primary tabular-nums">
+                {offerRate}%
+              </span>
             </div>
             <p className="text-xs text-muted-foreground">
               {statusCounts["OFFER"] || 0} offer
@@ -421,7 +421,7 @@ export default async function OverviewPage() {
                   max={maxLetters === Infinity ? 999 : maxLetters}
                   size={72}
                 />
-                <div className="flex items-center gap-1.5 text-xs ">
+                <div className="flex items-center gap-1.5 text-xs">
                   <HugeiconsIcon icon={File02Icon} className="size-3" />
                   Cover Letters
                 </div>
@@ -444,21 +444,21 @@ export default async function OverviewPage() {
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-2">
             <div className="flex size-24 items-center justify-center">
-            <span className="text-4xl font-bold tabular-nums text-primary">
-              {communityPostCount}
-            </span>
+              <span className="text-4xl font-bold text-primary tabular-nums">
+                {communityPostCount}
+              </span>
             </div>
             <p className="text-xs text-muted-foreground">
               {communityPostCount === 1 ? "post" : "posts"} shared with the
               community
             </p>
             {communityPostCount > 0 && (
-              <a
+              <Link
                 href="/community"
                 className="mt-2 text-xs text-primary hover:underline"
               >
                 View your posts &rarr;
-              </a>
+              </Link>
             )}
           </CardContent>
         </Card>
@@ -480,7 +480,7 @@ export default async function OverviewPage() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-3">
-              <a
+              <Link
                 href="/curriculum-vitae"
                 className="flex items-center gap-3 rounded-lg border bg-transparent px-4 py-3 text-sm font-medium transition-colors hover:bg-muted"
               >
@@ -493,8 +493,8 @@ export default async function OverviewPage() {
                   icon={ArrowRight01Icon}
                   className="size-4 shrink-0 text-muted-foreground"
                 />
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/cover-letters"
                 className="flex items-center gap-3 rounded-lg border bg-transparent px-4 py-3 text-sm font-medium transition-colors hover:bg-muted"
               >
@@ -502,13 +502,15 @@ export default async function OverviewPage() {
                   icon={File02Icon}
                   className="size-4 shrink-0 text-primary"
                 />
-                <span className="flex-1 text-foreground">Write Cover Letter</span>
+                <span className="flex-1 text-foreground">
+                  Write Cover Letter
+                </span>
                 <HugeiconsIcon
                   icon={ArrowRight01Icon}
                   className="size-4 shrink-0 text-muted-foreground"
                 />
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/application-tracker"
                 className="flex items-center gap-3 rounded-lg border bg-transparent px-4 py-3 text-sm font-medium transition-colors hover:bg-muted"
               >
@@ -516,13 +518,15 @@ export default async function OverviewPage() {
                   icon={BriefcaseIcon}
                   className="size-4 shrink-0 text-primary"
                 />
-                <span className="flex-1 text-foreground">Track Application</span>
+                <span className="flex-1 text-foreground">
+                  Track Application
+                </span>
                 <HugeiconsIcon
                   icon={ArrowRight01Icon}
                   className="size-4 shrink-0 text-muted-foreground"
                 />
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/community"
                 className="flex items-center gap-3 rounded-lg border bg-transparent px-4 py-3 text-sm font-medium transition-colors hover:bg-muted"
               >
@@ -535,7 +539,7 @@ export default async function OverviewPage() {
                   icon={ArrowRight01Icon}
                   className="size-4 shrink-0 text-muted-foreground"
                 />
-              </a>
+              </Link>
               <Link
                 href="/pricing"
                 className="flex items-center gap-3 rounded-lg border bg-transparent px-4 py-3 text-sm font-medium transition-colors hover:bg-muted"

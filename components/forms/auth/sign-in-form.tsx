@@ -219,12 +219,17 @@ const SigninForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                 {/* google */}
                 <div className="relative w-full">
                   {lastLoginMethod === "google" && (
-                    <Badge variant="secondary" className="absolute -top-2 left-1/2 z-10 -translate-x-1/2 px-1.5 py-0 text-[10px] leading-none">
+                    <Badge
+                      variant="secondary"
+                      className="absolute -top-2 left-1/2 z-10 -translate-x-1/2 px-1.5 py-0 text-[10px] leading-none"
+                    >
                       Recent
                     </Badge>
                   )}
                   <Button
-                    variant={lastLoginMethod === "google" ? "default" : "outline"}
+                    variant={
+                      lastLoginMethod === "google" ? "default" : "outline"
+                    }
                     type="button"
                     onClick={signInWithGoogle}
                     disabled={
@@ -272,12 +277,17 @@ const SigninForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                 {/* microsoft */}
                 <div className="relative w-full">
                   {lastLoginMethod === "microsoft" && (
-                    <Badge variant="secondary" className="absolute -top-2 left-1/2 z-10 -translate-x-1/2 px-1.5 py-0 text-[10px] leading-none">
+                    <Badge
+                      variant="secondary"
+                      className="absolute -top-2 left-1/2 z-10 -translate-x-1/2 px-1.5 py-0 text-[10px] leading-none"
+                    >
                       Recent
                     </Badge>
                   )}
                   <Button
-                    variant={lastLoginMethod === "microsoft" ? "default" : "outline"}
+                    variant={
+                      lastLoginMethod === "microsoft" ? "default" : "outline"
+                    }
                     type="button"
                     onClick={signInWithMicrosoft}
                     disabled={
@@ -285,7 +295,9 @@ const SigninForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                     }
                     className={cn(
                       "w-full",
-                      lastLoginMethod === "microsoft" ? "pointer-events-auto" : ""
+                      lastLoginMethod === "microsoft"
+                        ? "pointer-events-auto"
+                        : ""
                     )}
                   >
                     {socialLoading === "microsoft" ? (
@@ -301,19 +313,19 @@ const SigninForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                           <path
                             fill="#f1511b"
                             d="M121.666 121.666H0V0h121.666z"
-                        ></path>
+                          ></path>
                           <path
                             fill="#80cc28"
                             d="M256 121.666H134.335V0H256z"
-                        ></path>
+                          ></path>
                           <path
                             fill="#00adef"
                             d="M121.663 256.002H0V134.336h121.663z"
-                        ></path>
+                          ></path>
                           <path
                             fill="#fbbc09"
                             d="M256 256.002H134.335V134.336H256z"
-                        ></path>
+                          ></path>
                         </svg>
                       </>
                     )}
@@ -323,12 +335,17 @@ const SigninForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                 </div>
                 <div className="relative w-full">
                   {lastLoginMethod === "github" && (
-                    <Badge variant="secondary" className="absolute -top-2 left-1/2 z-10 -translate-x-1/2 px-1.5 py-0 text-[10px] leading-none">
+                    <Badge
+                      variant="secondary"
+                      className="absolute -top-2 left-1/2 z-10 -translate-x-1/2 px-1.5 py-0 text-[10px] leading-none"
+                    >
                       Recent
                     </Badge>
                   )}
                   <Button
-                    variant={lastLoginMethod === "github" ? "default" : "outline"}
+                    variant={
+                      lastLoginMethod === "github" ? "default" : "outline"
+                    }
                     type="button"
                     onClick={signInWithGitHub}
                     disabled={

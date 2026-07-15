@@ -167,7 +167,9 @@ export function JobDataTable({
             )}
           </button>
         ),
-        cell: ({ getValue }) => <div className="truncate text-sm">{getValue()}</div>,
+        cell: ({ getValue }) => (
+          <div className="truncate text-sm">{getValue()}</div>
+        ),
         enableSorting: true,
       }),
       helper.accessor("location", {
@@ -267,7 +269,7 @@ export function JobDataTable({
           const cfg =
             STATUS_CONFIG[row.original.status as keyof typeof STATUS_CONFIG]
           return (
-            <span className="inline-flex items-center gap-1.5 text-sm truncate">
+            <span className="inline-flex items-center gap-1.5 truncate text-sm">
               <span className={cn("h-2 w-2 rounded-full", cfg?.dot)} />
               {cfg?.label}
             </span>
@@ -292,7 +294,7 @@ export function JobDataTable({
         cell: ({ row }) => {
           const date = row.original.appliedAt || row.original.createdAt
           return (
-            <span className="text-sm truncate text-muted-foreground">
+            <span className="truncate text-sm text-muted-foreground">
               {formatDistanceToNow(new Date(date), { addSuffix: true })}
             </span>
           )
@@ -394,8 +396,7 @@ export function JobDataTable({
           </p>
         ) : (
           data.map((job) => {
-            const cfg =
-              STATUS_CONFIG[job.status as keyof typeof STATUS_CONFIG]
+            const cfg = STATUS_CONFIG[job.status as keyof typeof STATUS_CONFIG]
             const date = job.appliedAt || job.createdAt
             return (
               <button
@@ -420,11 +421,13 @@ export function JobDataTable({
                     <span
                       className={cn(
                         "inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium",
-                        cfg?.dot?.replace("bg-", "bg-").replace("from ", ""),
+                        cfg?.dot?.replace("bg-", "bg-").replace("from", ""),
                         "bg-muted text-muted-foreground"
                       )}
                     >
-                      <span className={cn("h-1.5 w-1.5 rounded-full", cfg?.dot)} />
+                      <span
+                        className={cn("h-1.5 w-1.5 rounded-full", cfg?.dot)}
+                      />
                       {cfg?.label}
                     </span>
                   </div>
@@ -434,7 +437,10 @@ export function JobDataTable({
                   <div className="mt-1.5 flex flex-wrap items-center gap-2 text-[11px] text-muted-foreground/70">
                     {job.location && (
                       <>
-                        <HugeiconsIcon icon={MapsLocation01Icon} className="size-3" />
+                        <HugeiconsIcon
+                          icon={MapsLocation01Icon}
+                          className="size-3"
+                        />
                         <span>{job.location}</span>
                       </>
                     )}
@@ -457,7 +463,10 @@ export function JobDataTable({
                     }
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <HugeiconsIcon icon={MoreHorizontalIcon} className="size-4" />
+                    <HugeiconsIcon
+                      icon={MoreHorizontalIcon}
+                      className="size-4"
+                    />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-44">
                     {Object.entries(STATUS_CONFIG).map(([key, scfg]) => (
@@ -468,7 +477,9 @@ export function JobDataTable({
                           onStatusChange(job.id, key)
                         }}
                       >
-                        <span className={cn("mr-2 h-2 w-2 rounded-full", scfg.dot)} />
+                        <span
+                          className={cn("mr-2 h-2 w-2 rounded-full", scfg.dot)}
+                        />
                         {scfg.label}
                       </DropdownMenuItem>
                     ))}

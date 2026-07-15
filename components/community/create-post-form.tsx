@@ -7,7 +7,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { Loading03Icon } from "@hugeicons/core-free-icons"
-import { createPostSchema, type CreatePostSchemaType } from "@/schemas/community/post"
+import {
+  createPostSchema,
+  type CreatePostSchemaType,
+} from "@/schemas/community/post"
 import { createPost } from "@/lib/actions/community/community-posts"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -30,7 +33,7 @@ export function CreatePostForm() {
       setBodyContent(html)
       form.setValue("body", html, { shouldValidate: true })
     },
-    [form],
+    [form]
   )
 
   async function onSubmit(data: CreatePostSchemaType) {
@@ -51,9 +54,15 @@ export function CreatePostForm() {
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
       <Field>
         <FieldLabel htmlFor="title">Title</FieldLabel>
-        <Input id="title" {...form.register("title")} placeholder="What's on your mind?" />
+        <Input
+          id="title"
+          {...form.register("title")}
+          placeholder="What's on your mind?"
+        />
         {form.formState.errors.title && (
-          <FieldError errors={[{ message: form.formState.errors.title.message }]} />
+          <FieldError
+            errors={[{ message: form.formState.errors.title.message }]}
+          />
         )}
       </Field>
 
@@ -66,7 +75,9 @@ export function CreatePostForm() {
           minHeight={300}
         />
         {form.formState.errors.body && (
-          <FieldError errors={[{ message: form.formState.errors.body.message }]} />
+          <FieldError
+            errors={[{ message: form.formState.errors.body.message }]}
+          />
         )}
       </Field>
 
@@ -75,7 +86,12 @@ export function CreatePostForm() {
           Cancel
         </Button>
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting && <HugeiconsIcon icon={Loading03Icon} className="size-4 animate-spin" />}
+          {isSubmitting && (
+            <HugeiconsIcon
+              icon={Loading03Icon}
+              className="size-4 animate-spin"
+            />
+          )}
           Post
         </Button>
       </div>

@@ -4,7 +4,10 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { Loading03Icon } from "@hugeicons/core-free-icons"
-import { createComment, deleteComment } from "@/lib/actions/community/community-comments"
+import {
+  createComment,
+  deleteComment,
+} from "@/lib/actions/community/community-comments"
 import { VoteButton } from "./vote-button"
 import { ReportDialog } from "./report-dialog"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -65,7 +68,11 @@ function CommentItem({
   async function handleReply() {
     if (!replyText.trim()) return
     setSubmitting(true)
-    const { error } = await createComment({ body: replyText, postId, parentId: comment.id })
+    const { error } = await createComment({
+      body: replyText,
+      postId,
+      parentId: comment.id,
+    })
     setSubmitting(false)
     if (error) {
       toast.error(error)
@@ -92,21 +99,33 @@ function CommentItem({
     <div className={`${depth > 0 ? "ml-2" : ""}`}>
       <div className="relative flex gap-2 py-2">
         {depth > 0 && (
-          <div className="absolute left-0 top-0 bottom-0 w-px bg-border/40" />
+          <div className="absolute top-0 bottom-0 left-0 w-px bg-border/40" />
         )}
         <div className={`flex shrink-0 pt-0.5 ${depth > 0 ? "ml-[13px]" : ""}`}>
-          <VoteButton commentId={comment.id} score={score} userVote={userVote} />
+          <VoteButton
+            commentId={comment.id}
+            score={score}
+            userVote={userVote}
+          />
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 text-xs">
             <Avatar className="size-4">
               <AvatarImage src={comment.user.image ?? undefined} />
-              <AvatarFallback className="text-[6px] font-medium">{comment.user.name.charAt(0)}</AvatarFallback>
+              <AvatarFallback className="text-[6px] font-medium">
+                {comment.user.name.charAt(0)}
+              </AvatarFallback>
             </Avatar>
-            <span className="font-medium text-foreground text-[11px]">{comment.user.name}</span>
-            <span className="text-muted-foreground/50 text-[11px]">{timeAgo(comment.createdAt)}</span>
+            <span className="text-[11px] font-medium text-foreground">
+              {comment.user.name}
+            </span>
+            <span className="text-[11px] text-muted-foreground/50">
+              {timeAgo(comment.createdAt)}
+            </span>
           </div>
-          <div className="mt-0.5 text-sm text-foreground/80 whitespace-pre-wrap">{comment.body}</div>
+          <div className="mt-0.5 text-sm whitespace-pre-wrap text-foreground/80">
+            {comment.body}
+          </div>
           <div className="mt-1 flex items-center gap-3">
             {hasReplies && (
               <Button
@@ -156,11 +175,24 @@ function CommentItem({
                 placeholder="Write a reply..."
               />
               <div className="flex gap-2">
-                <Button size="sm" onClick={handleReply} disabled={submitting || !replyText.trim()}>
-                  {submitting && <HugeiconsIcon icon={Loading03Icon} className="size-3.5 animate-spin" />}
+                <Button
+                  size="sm"
+                  onClick={handleReply}
+                  disabled={submitting || !replyText.trim()}
+                >
+                  {submitting && (
+                    <HugeiconsIcon
+                      icon={Loading03Icon}
+                      className="size-3.5 animate-spin"
+                    />
+                  )}
                   Reply
                 </Button>
-                <Button size="sm" variant="ghost" onClick={() => setReplying(false)}>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => setReplying(false)}
+                >
                   Cancel
                 </Button>
               </div>
@@ -186,7 +218,11 @@ function CommentItem({
   )
 }
 
-export function CommentTree({ comments, currentUserId, postId }: CommentTreeProps) {
+export function CommentTree({
+  comments,
+  currentUserId,
+  postId,
+}: CommentTreeProps) {
   if (comments.length === 0) {
     return (
       <p className="py-8 text-center text-xs text-muted-foreground/50">
@@ -198,7 +234,12 @@ export function CommentTree({ comments, currentUserId, postId }: CommentTreeProp
   return (
     <div className="divide-y divide-border/20">
       {comments.map((comment) => (
-        <CommentItem key={comment.id} comment={comment} currentUserId={currentUserId} postId={postId} />
+        <CommentItem
+          key={comment.id}
+          comment={comment}
+          currentUserId={currentUserId}
+          postId={postId}
+        />
       ))}
     </div>
   )

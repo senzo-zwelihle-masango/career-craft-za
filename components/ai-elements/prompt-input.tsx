@@ -42,7 +42,14 @@ import {
 import { cn } from "@/lib/utils"
 import type { ChatStatus, FileUIPart, SourceDocumentUIPart } from "ai"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { Cancel01Icon, CornerDownLeftIcon, ImageIcon, Monitor, PlusSignIcon, SquareIcon } from "@hugeicons/core-free-icons"
+import {
+  Cancel01Icon,
+  CornerDownLeftIcon,
+  ImageIcon,
+  Monitor,
+  PlusSignIcon,
+  SquareIcon,
+} from "@hugeicons/core-free-icons"
 import { nanoid } from "nanoid"
 import type {
   ChangeEvent,

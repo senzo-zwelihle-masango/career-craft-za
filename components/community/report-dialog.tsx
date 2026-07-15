@@ -31,7 +31,11 @@ interface ReportDialogProps {
   children: React.ReactElement
 }
 
-export function ReportDialog({ postId, commentId, children }: ReportDialogProps) {
+export function ReportDialog({
+  postId,
+  commentId,
+  children,
+}: ReportDialogProps) {
   const [open, setOpen] = useState(false)
   const [reason, setReason] = useState<string | null>(null)
   const [description, setDescription] = useState("")
@@ -43,7 +47,12 @@ export function ReportDialog({ postId, commentId, children }: ReportDialogProps)
       return
     }
     setSubmitting(true)
-    const { error } = await reportContent({ reason, description: description || undefined, postId, commentId })
+    const { error } = await reportContent({
+      reason,
+      description: description || undefined,
+      postId,
+      commentId,
+    })
     setSubmitting(false)
 
     if (error) {
@@ -81,7 +90,9 @@ export function ReportDialog({ postId, commentId, children }: ReportDialogProps)
             </Select>
           </Field>
           <Field>
-            <FieldLabel htmlFor="desc">Additional details (optional)</FieldLabel>
+            <FieldLabel htmlFor="desc">
+              Additional details (optional)
+            </FieldLabel>
             <Textarea
               id="desc"
               rows={3}
@@ -96,7 +107,12 @@ export function ReportDialog({ postId, commentId, children }: ReportDialogProps)
             Cancel
           </Button>
           <Button onClick={handleSubmit} disabled={submitting}>
-            {submitting && <HugeiconsIcon icon={Loading03Icon} className="size-4 animate-spin" />}
+            {submitting && (
+              <HugeiconsIcon
+                icon={Loading03Icon}
+                className="size-4 animate-spin"
+              />
+            )}
             Submit report
           </Button>
         </DialogFooter>

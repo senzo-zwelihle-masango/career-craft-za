@@ -199,9 +199,15 @@ export const FileTreeFolder = ({
             >
               <FileTreeIcon>
                 {isExpanded ? (
-                  <HugeiconsIcon icon={FolderOpenIcon} className="size-4 text-blue-500" />
+                  <HugeiconsIcon
+                    icon={FolderOpenIcon}
+                    className="size-4 text-blue-500"
+                  />
                 ) : (
-                  <HugeiconsIcon icon={FolderIcon} className="size-4 text-blue-500" />
+                  <HugeiconsIcon
+                    icon={FolderIcon}
+                    className="size-4 text-blue-500"
+                  />
                 )}
               </FileTreeIcon>
               <FileTreeName>{name}</FileTreeName>
@@ -277,7 +283,12 @@ export const FileTreeFile = ({
             {/* Spacer for alignment */}
             <span className="size-4 shrink-0" />
             <FileTreeIcon>
-              {icon ?? <HugeiconsIcon icon={FileIcon} className="size-4 text-muted-foreground" />}
+              {icon ?? (
+                <HugeiconsIcon
+                  icon={FileIcon}
+                  className="size-4 text-muted-foreground"
+                />
+              )}
             </FileTreeIcon>
             <FileTreeName>{name}</FileTreeName>
           </>

@@ -107,7 +107,10 @@ const FAQs = () => {
                   <AccordionItem key={item.id} value={item.id}>
                     <AccordionTrigger className="cursor-pointer text-base hover:no-underline">
                       <div className="flex items-center gap-2">
-                        <HugeiconsIcon icon={HelpCircleIcon} className="size-4 text-primary" />
+                        <HugeiconsIcon
+                          icon={HelpCircleIcon}
+                          className="size-4 text-primary"
+                        />
                         {item.question}
                       </div>
                     </AccordionTrigger>

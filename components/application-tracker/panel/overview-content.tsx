@@ -283,7 +283,9 @@ export function OverviewContent({
   const meta: { label: string; value: string; href?: string }[] = []
   if (job.location) meta.push({ label: "Location", value: job.location })
   if (job.salaryMin || job.salaryMax) {
-    const period = job.salaryPeriod ? ` ${SALARY_PERIOD_LABELS[job.salaryPeriod] || job.salaryPeriod}` : ""
+    const period = job.salaryPeriod
+      ? ` ${SALARY_PERIOD_LABELS[job.salaryPeriod] || job.salaryPeriod}`
+      : ""
     meta.push({
       label: "Salary",
       value: `${job.salaryCurrency || "ZAR"}${job.salaryMin ? ` ${job.salaryMin.toLocaleString()}` : ""}${job.salaryMin && job.salaryMax ? " – " : ""}${job.salaryMax ? `${job.salaryMax.toLocaleString()}` : ""}${period}`,
@@ -379,7 +381,9 @@ export function OverviewContent({
             <>
               <span className="font-medium">Overdue by</span>
               <span className="text-muted-foreground">
-                {formatDistanceToNow(new Date(job.followUpAt), { addSuffix: false })}
+                {formatDistanceToNow(new Date(job.followUpAt), {
+                  addSuffix: false,
+                })}
               </span>
             </>
           ) : (

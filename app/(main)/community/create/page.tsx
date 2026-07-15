@@ -3,7 +3,7 @@ import { PageHeading } from "@/components/ui/page-heading"
 
 export default function CreatePostPage() {
   return (
-    <div className="px-3 py-4 max-w-2xl">
+    <div className="max-w-2xl px-3 py-4">
       <PageHeading
         title="Create a post"
         subtitle="Share advice, ask questions, or post a job opening"

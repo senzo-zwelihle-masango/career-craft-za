@@ -579,7 +579,7 @@ const drNalediKhumalo: CvWithRelations = base("minimal", {
     phone: "+27 83 345 6789",
     location: "Durban, KwaZulu-Natal",
     photoUrl:
-          "https://images.unsplash.com/photo-1678695972687-033fa0bdbac9?w=400&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1678695972687-033fa0bdbac9?w=400&h=500&fit=crop",
     photoObjectPosition: null,
     photoCrop: null,
     nationality: null,
@@ -1757,7 +1757,8 @@ const amaraOkafor: CvWithRelations = base("gradient-cap", {
           title: "Africa Data Scientist of the Year",
           issuer: "Africa Tech Summit",
           date: "06/2022",
-          description: "Recognised for contributions to financial inclusion through ML",
+          description:
+            "Recognised for contributions to financial inclusion through ML",
           order: 1,
         },
       ],
@@ -2000,7 +2001,8 @@ const kwameAsante: CvWithRelations = base("bold-stamp", {
           title: "Rising Star in Corporate Law",
           issuer: "Chambers Africa Awards",
           date: "05/2023",
-          description: "Recognised for excellence in cross-border M&A and fintech regulation",
+          description:
+            "Recognised for excellence in cross-border M&A and fintech regulation",
           order: 0,
         },
         {
@@ -2009,7 +2011,8 @@ const kwameAsante: CvWithRelations = base("bold-stamp", {
           title: "Pro Bono Lawyer of the Year",
           issuer: "Ghana Bar Association",
           date: "11/2021",
-          description: "For outstanding pro bono contributions to small business legal access",
+          description:
+            "For outstanding pro bono contributions to small business legal access",
           order: 1,
         },
       ],
@@ -2252,7 +2255,8 @@ const tumiMoshesh: CvWithRelations = base("sidebar-ink", {
           title: "Supply Chain Leader of the Year",
           issuer: "Botswana Logistics Awards",
           date: "11/2023",
-          description: "For transformative impact on regional logistics operations",
+          description:
+            "For transformative impact on regional logistics operations",
           order: 0,
         },
         {
@@ -2261,7 +2265,8 @@ const tumiMoshesh: CvWithRelations = base("sidebar-ink", {
           title: "CEO Award for Operational Excellence",
           issuer: "DHL Supply Chain SSA",
           date: "09/2022",
-          description: "Recognised for outstanding cost reduction and service improvement",
+          description:
+            "Recognised for outstanding cost reduction and service improvement",
           order: 1,
         },
       ],
@@ -2507,7 +2512,8 @@ const thaboMokoena: CvWithRelations = base("structured-pro", {
           title: "Exceptional Auditing Award",
           issuer: "PwC South Africa",
           date: "12/2023",
-          description: "For outstanding leadership in complex audit engagements",
+          description:
+            "For outstanding leadership in complex audit engagements",
           order: 0,
         },
         {
@@ -2516,7 +2522,8 @@ const thaboMokoena: CvWithRelations = base("structured-pro", {
           title: "SAICA Top 50 Young CA",
           issuer: "SAICA",
           date: "06/2018",
-          description: "Recognised as one of South Africa's top young Chartered Accountants",
+          description:
+            "Recognised as one of South Africa's top young Chartered Accountants",
           order: 1,
         },
       ],
@@ -2688,11 +2695,7 @@ const nosiphoGqibitole: CvWithRelations = base("photo-header-float", {
           link: null,
           description:
             "Led the strategic overhaul of the M&G digital presence, including site redesign, CMS migration, and audience development roadmap.",
-          technologies: [
-            "SEO Strategy",
-            "CMS Migration",
-            "Audience Analytics",
-          ],
+          technologies: ["SEO Strategy", "CMS Migration", "Audience Analytics"],
           order: 0,
         },
       ],
@@ -2763,7 +2766,8 @@ const nosiphoGqibitole: CvWithRelations = base("photo-header-float", {
           title: "Standard Bank Sikuvile Journalism Award",
           issuer: "Standard Bank",
           date: "10/2023",
-          description: "For outstanding digital feature writing on South Africa's water crisis",
+          description:
+            "For outstanding digital feature writing on South Africa's water crisis",
           order: 0,
         },
         {
@@ -2772,7 +2776,8 @@ const nosiphoGqibitole: CvWithRelations = base("photo-header-float", {
           title: "Vodacom Journalist of the Year – Digital",
           issuer: "Vodacom",
           date: "11/2022",
-          description: "Recognised for innovative digital storytelling and audience engagement",
+          description:
+            "Recognised for innovative digital storytelling and audience engagement",
           order: 1,
         },
       ],
@@ -2863,51 +2868,44 @@ const kylePetersen: CvWithRelations = base("student-sidebar", {
         },
       ],
     }),
-    section(
-      "dummy-experience",
-      "dummy",
-      "EXPERIENCE",
-      "Experience",
-      2,
-      {
-        experienceEntries: [
-          {
-            id: "dummy-exp1",
-            sectionId: "dummy-experience",
-            company: "Old Mutual",
-            role: "Graduate Trainee, Finance",
-            location: "Cape Town, Western Cape",
-            startDate: "02/2025",
-            endDate: "",
-            current: true,
-            description: "",
-            bullets: [
-              "Rotating through Corporate Finance, Asset Management, and Risk divisions as part of a 12-month structured graduate programme",
-              "Assisted in preparing financial models and valuation reports for a R500M infrastructure investment proposal",
-              "Presented weekly market update briefings to the investment committee, analysing macroeconomic trends and sector performance",
-            ],
-            order: 0,
-          },
-          {
-            id: "dummy-exp2",
-            sectionId: "dummy-experience",
-            company: "Shoprite Group",
-            role: "Finance Intern",
-            location: "Cape Town, Western Cape",
-            startDate: "06/2024",
-            endDate: "12/2024",
-            current: false,
-            description: "",
-            bullets: [
-              "Supported the accounts payable team in processing 2,000+ supplier invoices monthly, achieving 99% accuracy rate",
-              "Reconciled general ledger accounts and assisted with month-end close procedures",
-              "Created Power BI dashboards tracking procurement spend that identified R2M in cost-saving opportunities",
-            ],
-            order: 1,
-          },
-        ],
-      }
-    ),
+    section("dummy-experience", "dummy", "EXPERIENCE", "Experience", 2, {
+      experienceEntries: [
+        {
+          id: "dummy-exp1",
+          sectionId: "dummy-experience",
+          company: "Old Mutual",
+          role: "Graduate Trainee, Finance",
+          location: "Cape Town, Western Cape",
+          startDate: "02/2025",
+          endDate: "",
+          current: true,
+          description: "",
+          bullets: [
+            "Rotating through Corporate Finance, Asset Management, and Risk divisions as part of a 12-month structured graduate programme",
+            "Assisted in preparing financial models and valuation reports for a R500M infrastructure investment proposal",
+            "Presented weekly market update briefings to the investment committee, analysing macroeconomic trends and sector performance",
+          ],
+          order: 0,
+        },
+        {
+          id: "dummy-exp2",
+          sectionId: "dummy-experience",
+          company: "Shoprite Group",
+          role: "Finance Intern",
+          location: "Cape Town, Western Cape",
+          startDate: "06/2024",
+          endDate: "12/2024",
+          current: false,
+          description: "",
+          bullets: [
+            "Supported the accounts payable team in processing 2,000+ supplier invoices monthly, achieving 99% accuracy rate",
+            "Reconciled general ledger accounts and assisted with month-end close procedures",
+            "Created Power BI dashboards tracking procurement spend that identified R2M in cost-saving opportunities",
+          ],
+          order: 1,
+        },
+      ],
+    }),
     section("dummy-education", "dummy", "EDUCATION", "Education", 3, {
       educationEntries: [
         {
@@ -2934,30 +2932,41 @@ const kylePetersen: CvWithRelations = base("student-sidebar", {
         },
       ],
     }),
-    section("dummy-projects", "dummy", "PROJECTS", "Leadership & Activities", 4, {
-      projectEntries: [
-        {
-          id: "dummy-prj1",
-          sectionId: "dummy-projects",
-          name: "UCT Investment Society – Portfolio Manager",
-          link: null,
-          description:
-            "Managed a simulated R10M equity portfolio for the society's annual investment challenge, achieving a 18% return — top 5 out of 40 teams.",
-          technologies: ["Financial Modelling", "Portfolio Management", "Bloomberg"],
-          order: 0,
-        },
-        {
-          id: "dummy-prj2",
-          sectionId: "dummy-projects",
-          name: "Shackville Tutoring Programme",
-          link: null,
-          description:
-            "Volunteered weekly as a maths tutor for 20 high school students from underserved communities in Cape Town.",
-          technologies: ["Mentoring", "Community Outreach"],
-          order: 1,
-        },
-      ],
-    }),
+    section(
+      "dummy-projects",
+      "dummy",
+      "PROJECTS",
+      "Leadership & Activities",
+      4,
+      {
+        projectEntries: [
+          {
+            id: "dummy-prj1",
+            sectionId: "dummy-projects",
+            name: "UCT Investment Society – Portfolio Manager",
+            link: null,
+            description:
+              "Managed a simulated R10M equity portfolio for the society's annual investment challenge, achieving a 18% return — top 5 out of 40 teams.",
+            technologies: [
+              "Financial Modelling",
+              "Portfolio Management",
+              "Bloomberg",
+            ],
+            order: 0,
+          },
+          {
+            id: "dummy-prj2",
+            sectionId: "dummy-projects",
+            name: "Shackville Tutoring Programme",
+            link: null,
+            description:
+              "Volunteered weekly as a maths tutor for 20 high school students from underserved communities in Cape Town.",
+            technologies: ["Mentoring", "Community Outreach"],
+            order: 1,
+          },
+        ],
+      }
+    ),
     section(
       "dummy-certifications",
       "dummy",
@@ -3033,7 +3042,8 @@ const kylePetersen: CvWithRelations = base("student-sidebar", {
           title: "Golden Key International Honour Society",
           issuer: "Golden Key Society",
           date: "03/2023",
-          description: "Inducted for academic excellence in the top 15% of faculty",
+          description:
+            "Inducted for academic excellence in the top 15% of faculty",
           order: 1,
         },
       ],
@@ -3276,7 +3286,8 @@ const nomvulaZulu: CvWithRelations = base("accent-band", {
           title: "Top Regional Manager 2023",
           issuer: "Unilever South Africa",
           date: "12/2023",
-          description: "For exceeding revenue targets by 9% and expanding distribution",
+          description:
+            "For exceeding revenue targets by 9% and expanding distribution",
           order: 0,
         },
         {
@@ -3285,7 +3296,8 @@ const nomvulaZulu: CvWithRelations = base("accent-band", {
           title: "MD's Award for Excellence",
           issuer: "Tiger Brands",
           date: "11/2018",
-          description: "Recognised for outstanding account management and portfolio growth",
+          description:
+            "Recognised for outstanding account management and portfolio growth",
           order: 1,
         },
       ],

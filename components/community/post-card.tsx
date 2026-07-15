@@ -42,7 +42,7 @@ export function PostCard({ post }: PostCardProps) {
       </div>
       <div className="min-w-0 flex-1">
         <Link href={`/community/${post.id}`} className="block">
-          <h3 className="text-sm font-medium leading-snug text-foreground group-hover:text-primary transition-colors">
+          <h3 className="text-sm leading-snug font-medium text-foreground transition-colors group-hover:text-primary">
             {post.title}
           </h3>
         </Link>
@@ -53,17 +53,23 @@ export function PostCard({ post }: PostCardProps) {
           <span className="flex items-center gap-1">
             <Avatar className="size-4">
               <AvatarImage src={post.user.image ?? undefined} />
-              <AvatarFallback className="text-[6px] font-medium">{post.user.name.charAt(0)}</AvatarFallback>
+              <AvatarFallback className="text-[6px] font-medium">
+                {post.user.name.charAt(0)}
+              </AvatarFallback>
             </Avatar>
             <span className="text-muted-foreground/60">{post.user.name}</span>
           </span>
           <span>{timeAgo(post.createdAt)}</span>
-          {new Date(post.updatedAt).getTime() - new Date(post.createdAt).getTime() > 1000 && (
-            <span className="text-[10px] italic text-muted-foreground/40">(edited)</span>
+          {new Date(post.updatedAt).getTime() -
+            new Date(post.createdAt).getTime() >
+            1000 && (
+            <span className="text-[10px] text-muted-foreground/40 italic">
+              (edited)
+            </span>
           )}
           <Link
             href={`/community/${post.id}`}
-            className="flex items-center gap-1 hover:text-foreground/60 transition-colors"
+            className="flex items-center gap-1 transition-colors hover:text-foreground/60"
           >
             <HugeiconsIcon icon={Message01Icon} className="size-3.5" />
             {post._count.comments}

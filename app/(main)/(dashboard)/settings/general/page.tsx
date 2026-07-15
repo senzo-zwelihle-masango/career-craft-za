@@ -179,10 +179,10 @@ export default function GeneralPage() {
                   onUploadError={(error) => {
                     toast.error(error.message || "Failed to upload photo")
                   }}
-                  className="ut-button:rounded-full ut-button:bg-primary ut-button:text-primary-foreground ut-button:text-xs ut-button:font-medium ut-button:h-8 ut-allowed-content:text-muted-foreground ut-allowed-content:text-xs"
+                  className="ut-button:h-8 ut-button:rounded-full ut-button:bg-primary ut-button:text-xs ut-button:font-medium ut-button:text-primary-foreground ut-allowed-content:text-xs ut-allowed-content:text-muted-foreground"
                 />
                 {image && (
-                  <span className="text-xs text-muted-foreground truncate max-w-[200px]">
+                  <span className="max-w-[200px] truncate text-xs text-muted-foreground">
                     {image.split("/").pop()}
                   </span>
                 )}

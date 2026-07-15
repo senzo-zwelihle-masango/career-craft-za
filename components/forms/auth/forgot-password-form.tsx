@@ -47,7 +47,7 @@ const ForgotPasswordForm = ({
           onError: (ctx) => {
             setServerError(ctx.error.message)
           },
-        },
+        }
       )
     } catch {
       setServerError("Something went wrong. Please try again.")
@@ -106,9 +106,7 @@ const ForgotPasswordForm = ({
                 placeholder="m@example.com"
                 autoComplete="email"
               />
-              {fieldState.invalid && (
-                <FieldError errors={[fieldState.error]} />
-              )}
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />

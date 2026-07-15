@@ -24,7 +24,10 @@ export function AtsScoreCard({
 }) {
   let parsed: AtsResult | null = null
   try {
-    const raw = result.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim()
+    const raw = result
+      .replace(/```json\n?/g, "")
+      .replace(/```\n?/g, "")
+      .trim()
     const obj = JSON.parse(raw)
     if (typeof obj.score === "number") {
       parsed = {
@@ -77,7 +80,10 @@ export function AtsScoreCard({
       {parsed.matchedKeywords.length > 0 && (
         <div className="space-y-1.5">
           <p className="flex items-center gap-1.5 text-xs font-medium text-green-600">
-            <HugeiconsIcon icon={CheckmarkCircle01Icon} className="h-3.5 w-3.5" />
+            <HugeiconsIcon
+              icon={CheckmarkCircle01Icon}
+              className="h-3.5 w-3.5"
+            />
             Matched Keywords
           </p>
           <div className="flex flex-wrap gap-1.5">

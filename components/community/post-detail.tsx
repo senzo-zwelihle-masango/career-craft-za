@@ -2,7 +2,10 @@ import { getPost } from "@/lib/actions/community/community-posts"
 import { getComments } from "@/lib/actions/community/community-comments"
 import { auth } from "@/lib/auth"
 import { headers } from "next/headers"
-import { PostDetailClient, type PostDetailClientProps } from "./post-detail-client"
+import {
+  PostDetailClient,
+  type PostDetailClientProps,
+} from "./post-detail-client"
 
 interface PostDetailProps {
   postId: string
@@ -28,7 +31,10 @@ export async function PostDetail({ postId }: PostDetailProps) {
   return (
     <PostDetailClient
       post={postResult.data! as unknown as PostDetailClientProps["post"]}
-      comments={(commentsResult.data ?? []) as unknown as PostDetailClientProps["comments"]}
+      comments={
+        (commentsResult.data ??
+          []) as unknown as PostDetailClientProps["comments"]
+      }
       currentUserId={currentUserId}
     />
   )

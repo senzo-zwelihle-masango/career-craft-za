@@ -8,7 +8,13 @@ import {
 } from "@/components/ui/collapsible"
 import { cn } from "@/lib/utils"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { CheckmarkCircle01Icon, ChevronRightIcon, CircleDotIcon, CircleIcon, CancelCircleIcon } from "@hugeicons/core-free-icons"
+import {
+  CheckmarkCircle01Icon,
+  ChevronRightIcon,
+  CircleDotIcon,
+  CircleIcon,
+  CancelCircleIcon,
+} from "@hugeicons/core-free-icons"
 import type { ComponentProps, HTMLAttributes } from "react"
 import { createContext, useContext, useMemo } from "react"
 
@@ -225,7 +231,9 @@ const statusStyles: Record<TestStatus, string> = {
 const statusIcons: Record<TestStatus, React.ReactNode> = {
   failed: <HugeiconsIcon icon={CancelCircleIcon} className="size-4" />,
   passed: <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />,
-  running: <HugeiconsIcon icon={CircleDotIcon} className="size-4 animate-pulse" />,
+  running: (
+    <HugeiconsIcon icon={CircleDotIcon} className="size-4 animate-pulse" />
+  ),
   skipped: <HugeiconsIcon icon={CircleIcon} className="size-4" />,
 }
 
@@ -275,7 +283,10 @@ export const TestSuiteName = ({
       )}
       {...props}
     >
-      <HugeiconsIcon icon={ChevronRightIcon} className="size-4 shrink-0 text-muted-foreground transition-transform group-data-[state=open]:rotate-90" />
+      <HugeiconsIcon
+        icon={ChevronRightIcon}
+        className="size-4 shrink-0 text-muted-foreground transition-transform group-data-[state=open]:rotate-90"
+      />
       <TestStatusIcon status={status} />
       <span className="text-sm font-medium">{children ?? name}</span>
     </CollapsibleTrigger>

@@ -1,6 +1,7 @@
 import type { NextConfig } from "next"
 
-const nextConfig: NextConfig = {  // image domains
+const nextConfig: NextConfig = {
+  // image domains
   images: {
     remotePatterns: [
       {
@@ -22,6 +23,7 @@ const nextConfig: NextConfig = {  // image domains
         pathname: "/**",
       },
     ],
-  },}
+  },
+}
 
 export default nextConfig

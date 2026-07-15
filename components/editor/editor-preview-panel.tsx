@@ -62,7 +62,10 @@ export function EditorPreviewPanel() {
 
     function updatePage() {
       const scrollTop = el!.scrollTop
-      const page = Math.min(Math.floor(scrollTop / (pageHeight + 24)), pages - 1)
+      const page = Math.min(
+        Math.floor(scrollTop / (pageHeight + 24)),
+        pages - 1
+      )
       setCurrentPage(page)
     }
 
@@ -128,10 +131,14 @@ export function EditorPreviewPanel() {
           {pages > 1 && (
             <div className="sticky bottom-4 mt-4 flex items-center justify-center gap-2">
               <div className="flex items-center gap-1 rounded-full border bg-background/80 px-3 py-1.5 text-xs text-muted-foreground backdrop-blur-sm">
-                <span className="font-medium text-foreground">{currentPage + 1}</span>
+                <span className="font-medium text-foreground">
+                  {currentPage + 1}
+                </span>
                 <span>/</span>
                 <span>{pages}</span>
-                <span className="ml-1 text-[10px]">{pages > 1 ? "pages" : "page"}</span>
+                <span className="ml-1 text-[10px]">
+                  {pages > 1 ? "pages" : "page"}
+                </span>
               </div>
             </div>
           )}

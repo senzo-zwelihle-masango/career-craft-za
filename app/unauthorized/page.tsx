@@ -42,7 +42,9 @@ export default async function UnauthorizedPage(props: {
               className="mx-auto mb-2 size-12 text-destructive"
             />
           )}
-          <EmptyTitle>{isBanned ? "Account Suspended" : "401 - Unauthorized"}</EmptyTitle>
+          <EmptyTitle>
+            {isBanned ? "Account Suspended" : "401 - Unauthorized"}
+          </EmptyTitle>
           <EmptyDescription>
             {isBanned
               ? "Your account has been suspended. You no longer have access to this application."
@@ -75,7 +77,8 @@ export default async function UnauthorizedPage(props: {
               </InputGroupAddon>
             </InputGroup>
             <EmptyDescription>
-              Need help? <a href="mailto:support@careercraftza.com">Contact support</a>
+              Need help?{" "}
+              <a href="mailto:support@careercraftza.com">Contact support</a>
             </EmptyDescription>
           </EmptyContent>
         )}

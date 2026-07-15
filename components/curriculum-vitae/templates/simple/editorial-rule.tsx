@@ -76,7 +76,7 @@ export function EditorialRuleTemplate({ cv }: { cv: CvWithRelations }) {
           color: `${accentColor}40`,
           fontSize: `${0.5 * fs}rem`,
           letterSpacing: 12,
-            margin: `${10 * es}px 0 ${6 * es}px`,
+          margin: `${10 * es}px 0 ${6 * es}px`,
         }}
       >
         ❧

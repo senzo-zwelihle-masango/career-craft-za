@@ -51,7 +51,7 @@ export function GraduateFirstTemplate({ cv }: GraduateFirstTemplateProps) {
           style={{
             border: "none",
             borderTop: `2px solid ${accentColor}`,
-              margin: `${12 * es}px 0`,
+            margin: `${12 * es}px 0`,
           }}
         />
       )}

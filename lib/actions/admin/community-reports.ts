@@ -20,11 +20,18 @@ export async function getAllReports() {
     include: {
       user: { select: { id: true, name: true } },
       post: {
-        select: { id: true, title: true, userId: true, user: { select: { id: true, name: true } } },
+        select: {
+          id: true,
+          title: true,
+          userId: true,
+          user: { select: { id: true, name: true } },
+        },
       },
       comment: {
         select: {
-          id: true, body: true, userId: true,
+          id: true,
+          body: true,
+          userId: true,
           user: { select: { id: true, name: true } },
           post: { select: { id: true, title: true } },
         },
@@ -48,7 +55,10 @@ export async function resolveReport(reportId: string) {
   return { data: true }
 }
 
-export async function dismissReportsForContent(postId?: string, commentId?: string) {
+export async function dismissReportsForContent(
+  postId?: string,
+  commentId?: string
+) {
   const adminId = await getAdminId()
   if (!adminId) return { error: "Unauthorized" }
   if (!postId && !commentId) return { error: "Missing target" }

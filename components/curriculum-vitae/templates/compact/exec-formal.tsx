@@ -248,7 +248,7 @@ export function ExecFormalTemplate({ cv }: { cv: CvWithRelations }) {
                   <div
                     key={entry.id}
                     className="break-inside-avoid"
-style={{ marginBottom: 4 * es }}
+                    style={{ marginBottom: 4 * es }}
                   >
                     <p className="text-[11px] font-semibold">{entry.name}</p>
                     {entry.issuer && (

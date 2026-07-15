@@ -94,36 +94,50 @@ export default function TeamPage() {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    {org.members.map((member: { id: string; role: string; user: { id: string; name: string; email: string; image: string | null } }) => (
-                      <div
-                        key={member.id}
-                        className="flex items-center justify-between rounded-2xl bg-muted/50 px-3 py-2"
-                      >
-                        <div className="flex items-center gap-2">
-                          <Avatar size="sm">
-                            <AvatarImage
-                              src={
-                                member.user.image ||
-                                `https://avatar.vercel.sh/${member.user.email}`
-                              }
-                              alt={member.user.name}
-                            />
-                            <AvatarFallback>
-                              {member.user.name.charAt(0).toUpperCase()}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div className="text-sm">
-                            <p className="font-medium">{member.user.name}</p>
-                            <p className="text-xs text-muted-foreground">
-                              {member.user.email}
-                            </p>
+                    {org.members.map(
+                      (member: {
+                        id: string
+                        role: string
+                        user: {
+                          id: string
+                          name: string
+                          email: string
+                          image: string | null
+                        }
+                      }) => (
+                        <div
+                          key={member.id}
+                          className="flex items-center justify-between rounded-2xl bg-muted/50 px-3 py-2"
+                        >
+                          <div className="flex items-center gap-2">
+                            <Avatar size="sm">
+                              <AvatarImage
+                                src={
+                                  member.user.image ||
+                                  `https://avatar.vercel.sh/${member.user.email}`
+                                }
+                                alt={member.user.name}
+                              />
+                              <AvatarFallback>
+                                {member.user.name.charAt(0).toUpperCase()}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className="text-sm">
+                              <p className="font-medium">{member.user.name}</p>
+                              <p className="text-xs text-muted-foreground">
+                                {member.user.email}
+                              </p>
+                            </div>
                           </div>
+                          <Badge
+                            variant="secondary"
+                            className="h-5 text-[10px]"
+                          >
+                            {member.role}
+                          </Badge>
                         </div>
-                        <Badge variant="secondary" className="h-5 text-[10px]">
-                          {member.role}
-                        </Badge>
-                      </div>
-                    ))}
+                      )
+                    )}
                   </div>
                 </div>
               ))}

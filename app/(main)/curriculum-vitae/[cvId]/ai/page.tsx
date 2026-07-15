@@ -26,10 +26,7 @@ import {
   MessageAction,
   MessageResponse,
 } from "@/components/ai-elements/message"
-import {
-  Suggestions,
-  Suggestion,
-} from "@/components/ai-elements/suggestion"
+import { Suggestions, Suggestion } from "@/components/ai-elements/suggestion"
 import { AtsScoreCard } from "@/components/ai-elements/ats-score-card"
 import {
   Conversation,
@@ -193,15 +190,12 @@ export default function AiToolsPage() {
     })
   }, [])
 
-  const addEntry = useCallback(
-    (toolId: string, entry: HistoryEntry) => {
-      setHistory((prev) => ({
-        ...prev,
-        [toolId]: [...(prev[toolId] || []), entry],
-      }))
-    },
-    []
-  )
+  const addEntry = useCallback((toolId: string, entry: HistoryEntry) => {
+    setHistory((prev) => ({
+      ...prev,
+      [toolId]: [...(prev[toolId] || []), entry],
+    }))
+  }, [])
 
   const handleSubmit = useCallback(async () => {
     if (!activeTool || !input.trim()) {
@@ -312,10 +306,15 @@ export default function AiToolsPage() {
               </span>
             </div>
           )}
-          <ModelSelector open={modelDialogOpen} onOpenChange={setModelDialogOpen}>
+          <ModelSelector
+            open={modelDialogOpen}
+            onOpenChange={setModelDialogOpen}
+          >
             <ModelSelectorTrigger>
               <div className="flex h-7 cursor-pointer items-center gap-1.5 rounded-md border bg-background px-2 text-xs hover:bg-accent">
-                <span className="hidden sm:inline">{MODELS.find((m) => m.value === modelName)?.label}</span>
+                <span className="hidden sm:inline">
+                  {MODELS.find((m) => m.value === modelName)?.label}
+                </span>
                 <span className="sm:hidden">Model</span>
               </div>
             </ModelSelectorTrigger>
@@ -395,7 +394,7 @@ export default function AiToolsPage() {
                 <Message key={entry.id} from={entry.role}>
                   <MessageContent>
                     {entry.role === "user" ? (
-                      <div className="whitespace-pre-wrap text-sm">
+                      <div className="text-sm whitespace-pre-wrap">
                         {entry.content}
                       </div>
                     ) : entry.content.startsWith("Error:") ? (
@@ -413,53 +412,59 @@ export default function AiToolsPage() {
                       <MessageResponse>{entry.content}</MessageResponse>
                     )}
 
-                    {entry.role === "assistant" && !entry.content.startsWith("Error:") && (
-                      <MessageActions>
-                        <MessageAction
-                          variant="ghost"
-                          size="sm"
-                          tooltip={copiedId === entry.id ? "Copied" : "Copy"}
-                          onClick={() => copyResult(entry.id, entry.content)}
-                        >
-                          <HugeiconsIcon
-                            icon={copiedId === entry.id ? CheckmarkCircle01Icon : Copy01Icon}
-                            className="h-3.5 w-3.5"
-                          />
-                          {copiedId === entry.id ? "Copied" : "Copy"}
-                        </MessageAction>
-                        {activeToolDef.id === "summary" && (
+                    {entry.role === "assistant" &&
+                      !entry.content.startsWith("Error:") && (
+                        <MessageActions>
                           <MessageAction
                             variant="ghost"
                             size="sm"
-                            tooltip="Apply to CV"
-                            onClick={() => applySummary(entry.content)}
+                            tooltip={copiedId === entry.id ? "Copied" : "Copy"}
+                            onClick={() => copyResult(entry.id, entry.content)}
                           >
                             <HugeiconsIcon
-                              icon={File02Icon}
+                              icon={
+                                copiedId === entry.id
+                                  ? CheckmarkCircle01Icon
+                                  : Copy01Icon
+                              }
                               className="h-3.5 w-3.5"
                             />
-                            Apply to CV
+                            {copiedId === entry.id ? "Copied" : "Copy"}
                           </MessageAction>
-                        )}
-                        {(activeToolDef.id === "improve" || activeToolDef.id === "grammar") && (
-                          <MessageAction
-                            variant="ghost"
-                            size="sm"
-                            tooltip="Use as input"
-                            onClick={() => {
-                              setInput(entry.content)
-                              toast.success("Result set as input")
-                            }}
-                          >
-                            <HugeiconsIcon
-                              icon={File02Icon}
-                              className="h-3.5 w-3.5"
-                            />
-                            Use as Input
-                          </MessageAction>
-                        )}
-                      </MessageActions>
-                    )}
+                          {activeToolDef.id === "summary" && (
+                            <MessageAction
+                              variant="ghost"
+                              size="sm"
+                              tooltip="Apply to CV"
+                              onClick={() => applySummary(entry.content)}
+                            >
+                              <HugeiconsIcon
+                                icon={File02Icon}
+                                className="h-3.5 w-3.5"
+                              />
+                              Apply to CV
+                            </MessageAction>
+                          )}
+                          {(activeToolDef.id === "improve" ||
+                            activeToolDef.id === "grammar") && (
+                            <MessageAction
+                              variant="ghost"
+                              size="sm"
+                              tooltip="Use as input"
+                              onClick={() => {
+                                setInput(entry.content)
+                                toast.success("Result set as input")
+                              }}
+                            >
+                              <HugeiconsIcon
+                                icon={File02Icon}
+                                className="h-3.5 w-3.5"
+                              />
+                              Use as Input
+                            </MessageAction>
+                          )}
+                        </MessageActions>
+                      )}
                   </MessageContent>
                 </Message>
               ))}
@@ -518,7 +523,10 @@ export default function AiToolsPage() {
                         disabled={!input.trim()}
                         title="Send"
                       >
-                        <HugeiconsIcon icon={ArrowRight01Icon} className="size-3.5" />
+                        <HugeiconsIcon
+                          icon={ArrowRight01Icon}
+                          className="size-3.5"
+                        />
                       </InputGroupButton>
                     )}
                   </InputGroupAddon>

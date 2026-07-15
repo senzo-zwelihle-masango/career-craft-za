@@ -74,7 +74,9 @@ export async function GET(
     const { FONT_FAMILY_MAP } =
       await import("@/components/curriculum-vitae/templates/_base/font-map")
     const fontFamily =
-      FONT_FAMILY_MAP[cv.fontFamily]?.css || cv.fontFamily || "Inter, sans-serif"
+      FONT_FAMILY_MAP[cv.fontFamily]?.css ||
+      cv.fontFamily ||
+      "Inter, sans-serif"
     const fontUrl = FONT_FAMILY_MAP[cv.fontFamily]?.googleFontsUrl || ""
     const fs = cv.fontScale || 1
 

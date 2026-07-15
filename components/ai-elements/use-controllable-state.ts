@@ -13,7 +13,10 @@ export function useControllableState<T>({
   prop,
   defaultProp,
   onChange,
-}: UseControllableStateProps<T>): [T, (newValue: T | ((prev: T) => T)) => void] {
+}: UseControllableStateProps<T>): [
+  T,
+  (newValue: T | ((prev: T) => T)) => void,
+] {
   const [value, setValue] = useControlled({
     controlled: prop,
     default: defaultProp,
@@ -37,5 +40,8 @@ export function useControllableState<T>({
     [setValue, value]
   )
 
-  return [value, handleSetValue] as [T, (newValue: T | ((prev: T) => T)) => void]
+  return [value, handleSetValue] as [
+    T,
+    (newValue: T | ((prev: T) => T)) => void,
+  ]
 }

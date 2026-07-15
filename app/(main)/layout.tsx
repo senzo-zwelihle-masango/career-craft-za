@@ -19,7 +19,14 @@ export default async function MainLayout({
   const { user } = session
 
   return (
-    <AuthProvider user={{ name: user.name, email: user.email, image: user.image, role: user.role }}>
+    <AuthProvider
+      user={{
+        name: user.name,
+        email: user.email,
+        image: user.image,
+        role: user.role,
+      }}
+    >
       <main>{children}</main>
     </AuthProvider>
   )

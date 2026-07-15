@@ -6,7 +6,7 @@ import { Loading03Icon } from "@hugeicons/core-free-icons"
 
 export default function CommunityPage() {
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex h-full flex-col">
       <div className="border-b border-border/20 px-3 py-3">
         <PageHeading
           title="Community"
@@ -16,7 +16,10 @@ export default function CommunityPage() {
       <Suspense
         fallback={
           <div className="flex flex-1 items-center justify-center">
-            <HugeiconsIcon icon={Loading03Icon} className="size-5 animate-spin text-muted-foreground/30" />
+            <HugeiconsIcon
+              icon={Loading03Icon}
+              className="size-5 animate-spin text-muted-foreground/30"
+            />
           </div>
         }
       >

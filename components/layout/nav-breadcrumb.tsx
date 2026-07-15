@@ -61,9 +61,7 @@ export default function NavBreadcrumb() {
                     {isLast ? (
                       <BreadcrumbPage>{label}</BreadcrumbPage>
                     ) : (
-                      <BreadcrumbLink href={href}>
-                        {label}
-                      </BreadcrumbLink>
+                      <BreadcrumbLink href={href}>{label}</BreadcrumbLink>
                     )}
                   </BreadcrumbItem>
                 </span>
@@ -72,7 +70,7 @@ export default function NavBreadcrumb() {
           </BreadcrumbList>
         </Breadcrumb>
         <div className="ml-auto flex items-center gap-2">
-      <ThemeSwitcher/>
+          <ThemeSwitcher />
         </div>
       </div>
     </header>

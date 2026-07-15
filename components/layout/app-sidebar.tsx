@@ -92,7 +92,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: FolderKanbanIcon,
         items: [
           { title: "Board", url: "/application-tracker" },
-          { title: "Interview Prep", url: "/application-tracker/interview-prep" },
+          {
+            title: "Interview Prep",
+            url: "/application-tracker/interview-prep",
+          },
         ],
       },
       {

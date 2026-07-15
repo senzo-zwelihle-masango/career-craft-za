@@ -37,7 +37,9 @@ export async function banUserAction(
         userId,
         banReason: validation.data.banReason,
         banExpiresIn: validation.data.banExpires
-          ? Math.floor((validation.data.banExpires.getTime() - Date.now()) / 1000)
+          ? Math.floor(
+              (validation.data.banExpires.getTime() - Date.now()) / 1000
+            )
           : undefined,
       },
     })

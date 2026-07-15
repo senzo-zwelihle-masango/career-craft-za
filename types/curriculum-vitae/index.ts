@@ -1,8 +1,3 @@
-export type {
-  CvWithRelations,
-} from "./types"
+export type { CvWithRelations } from "./types"
 
-export {
-  SECTION_ICONS,
-  SECTION_LABELS,
-} from "./types"
+export { SECTION_ICONS, SECTION_LABELS } from "./types"

@@ -26,7 +26,10 @@ export async function createPost(data: { title: string; body: string }) {
   return { data: JSON.parse(JSON.stringify(post)) }
 }
 
-export async function updatePost(postId: string, data: { title: string; body: string }) {
+export async function updatePost(
+  postId: string,
+  data: { title: string; body: string }
+) {
   const userId = await getUserId()
   if (!userId) return { error: "You must be signed in to update a post" }
 
@@ -36,7 +39,8 @@ export async function updatePost(postId: string, data: { title: string; body: st
   })
 
   if (!post) return { error: "Post not found" }
-  if (post.userId !== userId) return { error: "You can only edit your own posts" }
+  if (post.userId !== userId)
+    return { error: "You can only edit your own posts" }
 
   const parsed = createPostSchema.safeParse(data)
   if (!parsed.success) return { error: parsed.error.issues[0].message }
@@ -55,7 +59,8 @@ export async function getPosts(sort: "newest" | "top" = "newest") {
   const userId = await getUserId()
 
   const posts = await prisma.communityPost.findMany({
-    orderBy: sort === "top" ? { votes: { _count: "desc" } } : { createdAt: "desc" },
+    orderBy:
+      sort === "top" ? { votes: { _count: "desc" } } : { createdAt: "desc" },
     select: {
       id: true,
       title: true,
@@ -104,7 +109,8 @@ export async function deletePost(postId: string) {
   })
 
   if (!post) return { error: "Post not found" }
-  if (post.userId !== userId) return { error: "You can only delete your own posts" }
+  if (post.userId !== userId)
+    return { error: "You can only delete your own posts" }
 
   await prisma.communityPost.delete({ where: { id: postId } })
 

@@ -3,10 +3,7 @@
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { HugeiconsIcon } from "@hugeicons/react"
-import {
-  CheckmarkCircle01Icon,
-  Delete02Icon,
-} from "@hugeicons/core-free-icons"
+import { CheckmarkCircle01Icon, Delete02Icon } from "@hugeicons/core-free-icons"
 import {
   resolveReport,
   adminDeletePost,
@@ -41,19 +38,28 @@ export function ReportTable({ reports }: { reports: Report[] }) {
   async function handleResolve(id: string) {
     const { error } = await resolveReport(id)
     if (error) toast.error(error)
-    else { toast.success("Report resolved"); router.refresh() }
+    else {
+      toast.success("Report resolved")
+      router.refresh()
+    }
   }
 
   async function handleDeletePost(postId: string) {
     const { error } = await adminDeletePost(postId)
     if (error) toast.error(error)
-    else { toast.success("Post removed"); router.refresh() }
+    else {
+      toast.success("Post removed")
+      router.refresh()
+    }
   }
 
   async function handleDeleteComment(commentId: string) {
     const { error } = await adminDeleteComment(commentId)
     if (error) toast.error(error)
-    else { toast.success("Comment removed"); router.refresh() }
+    else {
+      toast.success("Comment removed")
+      router.refresh()
+    }
   }
 
   const pending = reports.filter((r) => !r.resolved)
@@ -132,7 +138,9 @@ function ReportRow({
       : "Unknown"
 
   return (
-    <div className={`rounded-lg border p-4 ${report.resolved ? "opacity-50" : ""}`}>
+    <div
+      className={`rounded-lg border p-4 ${report.resolved ? "opacity-50" : ""}`}
+    >
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0 flex-1 space-y-1">
           <div className="flex items-center gap-2 text-sm">
@@ -143,9 +151,9 @@ function ReportRow({
               {new Date(report.createdAt).toLocaleDateString()}
             </span>
           </div>
-          <p className="text-sm font-medium truncate">{targetLabel}</p>
+          <p className="truncate text-sm font-medium">{targetLabel}</p>
           {report.description && (
-            <p className="text-xs text-muted-foreground line-clamp-2">
+            <p className="line-clamp-2 text-xs text-muted-foreground">
               {report.description}
             </p>
           )}
@@ -159,7 +167,7 @@ function ReportRow({
           <div className="flex shrink-0 items-center gap-1">
             <button
               onClick={() => onResolve(report.id)}
-              className="rounded p-1.5 text-xs text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
+              className="rounded p-1.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
               title="Dismiss report"
             >
               <HugeiconsIcon icon={CheckmarkCircle01Icon} className="size-4" />
@@ -167,7 +175,7 @@ function ReportRow({
             {report.post && (
               <button
                 onClick={() => onDeletePost(report.post!.id)}
-                className="rounded p-1.5 text-xs text-destructive hover:bg-destructive/10 transition-colors"
+                className="rounded p-1.5 text-xs text-destructive transition-colors hover:bg-destructive/10"
                 title="Delete post"
               >
                 <HugeiconsIcon icon={Delete02Icon} className="size-4" />
@@ -176,7 +184,7 @@ function ReportRow({
             {report.comment && (
               <button
                 onClick={() => onDeleteComment(report.comment!.id)}
-                className="rounded p-1.5 text-xs text-destructive hover:bg-destructive/10 transition-colors"
+                className="rounded p-1.5 text-xs text-destructive transition-colors hover:bg-destructive/10"
                 title="Delete comment"
               >
                 <HugeiconsIcon icon={Delete02Icon} className="size-4" />

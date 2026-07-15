@@ -255,8 +255,8 @@ export function RuledEditorial({ cv }: RuledEditorialProps) {
                         entry.bullets.length > 0 && (
                           <ul
                             style={{
-                               margin: `${3 * es}px 0 0`,
-                               paddingLeft: `${16 * mh}px`,
+                              margin: `${3 * es}px 0 0`,
+                              paddingLeft: `${16 * mh}px`,
                               fontSize: `${0.8125 * fs}rem`,
                               color: "#4B5563",
                               lineHeight: 1.5,

@@ -1,4 +1,1 @@
-export type {
-  JobWithRelations,
-  FilterState,
-} from "./types"
+export type { JobWithRelations, FilterState } from "./types"

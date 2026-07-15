@@ -31,7 +31,7 @@ export const auth = betterAuth({
 
     sendResetPassword: async ({ user, url }) => {
       const html = await render(
-        createElement(ResetPasswordEmail, { name: user.name, url }),
+        createElement(ResetPasswordEmail, { name: user.name, url })
       )
       const { error } = await resend.emails.send({
         from: "Career Craft <onboarding@resend.dev>",

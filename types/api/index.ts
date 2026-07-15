@@ -1,4 +1,1 @@
-export type {
-  ApiResponse,
-  ApiResponseWithData,
-} from "./response"
+export type { ApiResponse, ApiResponseWithData } from "./response"

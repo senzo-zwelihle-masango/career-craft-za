@@ -14,28 +14,36 @@ interface VoteButtonProps {
   userVote: number | null
 }
 
-export function VoteButton({ postId, commentId, score, userVote }: VoteButtonProps) {
+export function VoteButton({
+  postId,
+  commentId,
+  score,
+  userVote,
+}: VoteButtonProps) {
   const [optimisticScore, setOptimisticScore] = useState(score)
   const [optimisticVote, setOptimisticVote] = useState(userVote)
 
-  const handleVote = useCallback(async (value: number) => {
-    const prevVote = optimisticVote
-    const prevScore = optimisticScore
+  const handleVote = useCallback(
+    async (value: number) => {
+      const prevVote = optimisticVote
+      const prevScore = optimisticScore
 
-    if (optimisticVote === value) {
-      setOptimisticVote(null)
-      setOptimisticScore(optimisticScore - value)
-    } else {
-      setOptimisticVote(value)
-      setOptimisticScore(optimisticScore - (prevVote ?? 0) + value)
-    }
+      if (optimisticVote === value) {
+        setOptimisticVote(null)
+        setOptimisticScore(optimisticScore - value)
+      } else {
+        setOptimisticVote(value)
+        setOptimisticScore(optimisticScore - (prevVote ?? 0) + value)
+      }
 
-    const { error } = await vote({ postId, commentId, value })
-    if (error) {
-      setOptimisticVote(prevVote)
-      setOptimisticScore(prevScore)
-    }
-  }, [optimisticVote, optimisticScore, postId, commentId])
+      const { error } = await vote({ postId, commentId, value })
+      if (error) {
+        setOptimisticVote(prevVote)
+        setOptimisticScore(prevScore)
+      }
+    },
+    [optimisticVote, optimisticScore, postId, commentId]
+  )
 
   return (
     <div className="flex flex-col items-center gap-px">
@@ -52,8 +60,12 @@ export function VoteButton({ postId, commentId, score, userVote }: VoteButtonPro
       </Button>
       <span
         className={cn(
-          "min-w-[2ch] text-center text-[11px] font-semibold tabular-nums leading-none py-0.5",
-          optimisticVote === 1 ? "text-blue-500" : optimisticVote === -1 ? "text-red-500" : "text-muted-foreground/60"
+          "min-w-[2ch] py-0.5 text-center text-[11px] leading-none font-semibold tabular-nums",
+          optimisticVote === 1
+            ? "text-blue-500"
+            : optimisticVote === -1
+              ? "text-red-500"
+              : "text-muted-foreground/60"
         )}
       >
         {optimisticScore}

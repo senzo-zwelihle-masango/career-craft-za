@@ -58,7 +58,7 @@ export function PhotoCentredTemplate({ cv }: { cv: CvWithRelations }) {
         }}
       >
         {pd?.photoUrl && cv.showPhoto && (
-            <div style={{ marginBottom: 16 * es }}>
+          <div style={{ marginBottom: 16 * es }}>
             <img
               src={pd.photoUrl}
               alt=""

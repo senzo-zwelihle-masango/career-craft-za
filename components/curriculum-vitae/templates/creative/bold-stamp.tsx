@@ -142,7 +142,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
             style={{
               display: "flex",
               flexWrap: "wrap",
-               gap: `0 ${16 * es}px`,
+              gap: `0 ${16 * es}px`,
               marginTop: `${10 * es}px`,
               fontSize: `${0.6875 * fs}rem`,
               color: "#6B7280",
@@ -295,8 +295,8 @@ export function BoldStamp({ cv }: BoldStampProps) {
                         entry.bullets.length > 0 && (
                           <ul
                             style={{
-                               margin: `${3 * es}px 0 0`,
-                               paddingLeft: `${16 * mh}px`,
+                              margin: `${3 * es}px 0 0`,
+                              paddingLeft: `${16 * mh}px`,
                               fontSize: `${0.8125 * fs}rem`,
                               color: "#4B5563",
                               lineHeight: 1.5,
@@ -373,7 +373,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
                     </div>
                   ))}
 
-                {section.type === "PROJECTS" &&
+              {section.type === "PROJECTS" &&
                 section.projectEntries
                   .slice()
                   .sort((a, b) => a.order - b.order)
@@ -651,7 +651,7 @@ export function BoldStamp({ cv }: BoldStampProps) {
                     </div>
                   ))}
 
-                {section.type === "REFERENCES" &&
+              {section.type === "REFERENCES" &&
                 section.referenceEntries
                   .slice()
                   .sort((a, b) => a.order - b.order)

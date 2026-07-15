@@ -13,17 +13,37 @@ import {
 } from "@hugeicons/core-free-icons"
 
 const settingsTabs = [
-  { value: "general", label: "General", icon: Settings01Icon, href: "/settings/general" },
+  {
+    value: "general",
+    label: "General",
+    icon: Settings01Icon,
+    href: "/settings/general",
+  },
   { value: "team", label: "Team", icon: UserGroupIcon, href: "/settings/team" },
-  { value: "billing", label: "Billing", icon: CreditCardIcon, href: "/settings/billing" },
-  { value: "limits", label: "Limits", icon: Chart01Icon, href: "/settings/limits" },
+  {
+    value: "billing",
+    label: "Billing",
+    icon: CreditCardIcon,
+    href: "/settings/billing",
+  },
+  {
+    value: "limits",
+    label: "Limits",
+    icon: Chart01Icon,
+    href: "/settings/limits",
+  },
 ]
 
-export default function SettingsLayout({ children }: { children: React.ReactNode }) {
+export default function SettingsLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const pathname = usePathname()
   const router = useRouter()
 
-  const currentTab = settingsTabs.find((t) => pathname.startsWith(t.href))?.value ?? "general"
+  const currentTab =
+    settingsTabs.find((t) => pathname.startsWith(t.href))?.value ?? "general"
 
   return (
     <Container

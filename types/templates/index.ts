@@ -1,8 +1,3 @@
-export type {
-  CvWithRelations,
-} from "./types"
+export type { CvWithRelations } from "./types"
 
-export type {
-  TemplateMeta,
-  CoverLetterTemplateData,
-} from "./types"
+export type { TemplateMeta, CoverLetterTemplateData } from "./types"

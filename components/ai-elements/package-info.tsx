@@ -3,7 +3,12 @@
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { ArrowRight01Icon, MinusSignIcon, PackageIcon, PlusSignIcon } from "@hugeicons/core-free-icons"
+import {
+  ArrowRight01Icon,
+  MinusSignIcon,
+  PackageIcon,
+  PlusSignIcon,
+} from "@hugeicons/core-free-icons"
 import type { HTMLAttributes } from "react"
 import { createContext, useContext, useMemo } from "react"
 
@@ -46,7 +51,10 @@ export const PackageInfoName = ({
 
   return (
     <div className={cn("flex items-center gap-2", className)} {...props}>
-      <HugeiconsIcon icon={PackageIcon} className="size-4 text-muted-foreground" />
+      <HugeiconsIcon
+        icon={PackageIcon}
+        className="size-4 text-muted-foreground"
+      />
       <span className="font-mono text-sm font-medium">{children ?? name}</span>
     </div>
   )

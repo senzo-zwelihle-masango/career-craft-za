@@ -17,7 +17,10 @@ const publicRoutes = [
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  if (publicRoutes.some((route) => pathname.startsWith(route)) || pathname === "/") {
+  if (
+    publicRoutes.some((route) => pathname.startsWith(route)) ||
+    pathname === "/"
+  ) {
     return NextResponse.next()
   }
 
@@ -33,7 +36,9 @@ export async function proxy(request: NextRequest) {
       })
 
       if (user?.banned) {
-        return NextResponse.redirect(new URL("/unauthorized?reason=banned", request.url))
+        return NextResponse.redirect(
+          new URL("/unauthorized?reason=banned", request.url)
+        )
       }
     }
   } catch {

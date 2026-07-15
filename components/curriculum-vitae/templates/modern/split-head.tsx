@@ -118,7 +118,7 @@ export function SplitHeadTemplate({ cv }: { cv: CvWithRelations }) {
           {pd?.location && <div>{pd.location}</div>}
           {pd?.nationality && <div>{pd.nationality}</div>}
           {links.length > 0 && (
-              <div style={{ marginTop: `${4 * es}px` }}>
+            <div style={{ marginTop: `${4 * es}px` }}>
               {links.map((link, i) => (
                 <div key={i}>
                   {linkTypeLabels[link.type] || link.label || link.url}

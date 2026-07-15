@@ -5,7 +5,12 @@ import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { cn } from "@/lib/utils"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { CheckIcon, CopyIcon, EyeIcon, EyeOffIcon } from "@hugeicons/core-free-icons"
+import {
+  CheckIcon,
+  CopyIcon,
+  EyeIcon,
+  EyeOffIcon,
+} from "@hugeicons/core-free-icons"
 import type { ComponentProps, HTMLAttributes } from "react"
 import {
   createContext,
@@ -116,7 +121,11 @@ export const EnvironmentVariablesToggle = ({
   return (
     <div className={cn("flex items-center gap-2", className)}>
       <span className="text-xs text-muted-foreground">
-        {showValues ? <HugeiconsIcon icon={EyeIcon} size={14} /> : <HugeiconsIcon icon={EyeOffIcon} size={14} />}
+        {showValues ? (
+          <HugeiconsIcon icon={EyeIcon} size={14} />
+        ) : (
+          <HugeiconsIcon icon={EyeOffIcon} size={14} />
+        )}
       </span>
       <Switch
         aria-label="Toggle value visibility"

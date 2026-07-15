@@ -278,7 +278,7 @@ const JobTrackerPage = () => {
                 </div>
               </div>
             ) : (
-              <div className="flex h-full gap-4 flex-col md:flex-row">
+              <div className="flex h-full flex-col gap-4 md:flex-row">
                 {[
                   "WISHLIST",
                   "APPLIED",
@@ -345,7 +345,12 @@ const JobTrackerPage = () => {
 
             {/* Details dialog */}
             {showDetails && selectedJob && view === "table" && (
-              <Dialog open={showDetails} onOpenChange={(o) => { if (!o) setShowDetails(false) }}>
+              <Dialog
+                open={showDetails}
+                onOpenChange={(o) => {
+                  if (!o) setShowDetails(false)
+                }}
+              >
                 <DialogContent
                   className="flex max-h-[85vh] flex-col gap-0 overflow-hidden p-0 sm:max-w-3xl"
                   showCloseButton={false}

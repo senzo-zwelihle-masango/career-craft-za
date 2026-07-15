@@ -74,24 +74,25 @@ const Panel = ({ job, onClose, onUpdate, onDelete }: Props) => {
             className="flex min-h-0 flex-1 flex-col"
           >
             <TabsList className="w-full justify-center overflow-x-auto max-md:justify-start">
-              {["overview", "timeline", "notes", "contacts", "interviews", "ai-prep"].map(
-                (t) => (
-                  <TabsTrigger
-                    key={t}
-                    value={t}
-           
-                  >
-                    {t === "overview"
-                      ? "Overview"
-                      : t === "ai-prep"
-                        ? "AI Prep"
-                        : t.charAt(0).toUpperCase() + t.slice(1)}
-                  </TabsTrigger>
-                )
-              )}
+              {[
+                "overview",
+                "timeline",
+                "notes",
+                "contacts",
+                "interviews",
+                "ai-prep",
+              ].map((t) => (
+                <TabsTrigger key={t} value={t}>
+                  {t === "overview"
+                    ? "Overview"
+                    : t === "ai-prep"
+                      ? "AI Prep"
+                      : t.charAt(0).toUpperCase() + t.slice(1)}
+                </TabsTrigger>
+              ))}
             </TabsList>
 
-            <div className="flex-1 overflow-y-auto overflow-x-hidden">
+            <div className="flex-1 overflow-x-hidden overflow-y-auto">
               <TabsContent value="overview" className="m-0 space-y-6 p-6">
                 <OverviewContent
                   job={job}

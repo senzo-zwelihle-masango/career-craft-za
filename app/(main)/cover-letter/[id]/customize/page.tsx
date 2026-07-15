@@ -264,13 +264,13 @@ export default function CoverLetterCustomizePage() {
         >
           <div className="flex min-h-0 flex-1 flex-col md:flex-row">
             {/* Rail */}
-            <nav className="flex w-full shrink-0 items-center gap-1 overflow-x-auto scrollbar-hidden border-b bg-background px-3 py-2 md:w-[76px] md:flex-col md:gap-0.5 md:overflow-y-auto md:border-r md:border-b-0 md:px-2 md:py-3">
+            <nav className="scrollbar-hidden flex w-full shrink-0 items-center gap-1 overflow-x-auto border-b bg-background px-3 py-2 md:w-[76px] md:flex-col md:gap-0.5 md:overflow-y-auto md:border-r md:border-b-0 md:px-2 md:py-3">
               {railItems.map((item) => (
                 <button
                   key={item.label}
                   onClick={() => setActivePanel(item.label)}
                   className={cn(
-                    "flex shrink-0 flex-col items-center justify-center gap-0.5 rounded-xl text-[11px] md:text-[10px] font-medium transition-colors",
+                    "flex shrink-0 flex-col items-center justify-center gap-0.5 rounded-xl text-[11px] font-medium transition-colors md:text-[10px]",
                     "h-14 min-w-[60px] px-1 md:h-[56px] md:w-full",
                     activePanel === item.label
                       ? "bg-primary text-primary-foreground shadow-sm"
@@ -278,7 +278,10 @@ export default function CoverLetterCustomizePage() {
                   )}
                   title={item.label}
                 >
-                  <HugeiconsIcon icon={item.icon} className="h-5 w-5 md:h-4 md:w-4" />
+                  <HugeiconsIcon
+                    icon={item.icon}
+                    className="h-5 w-5 md:h-4 md:w-4"
+                  />
                   <span className="leading-tight">{item.label}</span>
                 </button>
               ))}
@@ -460,7 +463,7 @@ export default function CoverLetterCustomizePage() {
           >
             <div
               ref={fullscreenRef}
-              className="scrollbar-hidden group relative flex-1 overflow-y-auto p-4 lg:p-8"
+              className="group relative scrollbar-hidden flex-1 overflow-y-auto p-4 lg:p-8"
               data-lenis-prevent
             >
               <Button

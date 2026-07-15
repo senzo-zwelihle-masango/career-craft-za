@@ -4,8 +4,15 @@ import { useState } from "react"
 import Link from "next/link"
 import { toast } from "sonner"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { Loading03Icon, ArrowLeft01Icon, PencilEdit02Icon } from "@hugeicons/core-free-icons"
-import { createComment, deleteComment } from "@/lib/actions/community/community-comments"
+import {
+  Loading03Icon,
+  ArrowLeft01Icon,
+  PencilEdit02Icon,
+} from "@hugeicons/core-free-icons"
+import {
+  createComment,
+  deleteComment,
+} from "@/lib/actions/community/community-comments"
 import { deletePost } from "@/lib/actions/community/community-posts"
 import { VoteButton } from "./vote-button"
 import { CommentTree } from "./comment-tree"
@@ -53,7 +60,11 @@ function timeAgo(date: string) {
   return new Date(date).toLocaleDateString()
 }
 
-export function PostDetailClient({ post, comments, currentUserId }: PostDetailClientProps) {
+export function PostDetailClient({
+  post,
+  comments,
+  currentUserId,
+}: PostDetailClientProps) {
   const router = useRouter()
   const [commentText, setCommentText] = useState("")
   const [submitting, setSubmitting] = useState(false)
@@ -65,7 +76,10 @@ export function PostDetailClient({ post, comments, currentUserId }: PostDetailCl
   async function handleComment() {
     if (!commentText.trim()) return
     setSubmitting(true)
-    const { error } = await createComment({ body: commentText, postId: post.id })
+    const { error } = await createComment({
+      body: commentText,
+      postId: post.id,
+    })
     setSubmitting(false)
     if (error) {
       toast.error(error)
@@ -91,7 +105,7 @@ export function PostDetailClient({ post, comments, currentUserId }: PostDetailCl
     <div className="space-y-4">
       <Link
         href="/community"
-        className="inline-flex items-center gap-1 text-xs text-muted-foreground/50 hover:text-foreground/60 transition-colors"
+        className="inline-flex items-center gap-1 text-xs text-muted-foreground/50 transition-colors hover:text-foreground/60"
       >
         <HugeiconsIcon icon={ArrowLeft01Icon} className="size-3.5" />
         Back to community
@@ -99,20 +113,30 @@ export function PostDetailClient({ post, comments, currentUserId }: PostDetailCl
 
       <div className="flex gap-3">
         <div className="flex shrink-0 pt-1">
-          <VoteButton postId={post.id} score={post._count.votes} userVote={userVote} />
+          <VoteButton
+            postId={post.id}
+            score={post._count.votes}
+            userVote={userVote}
+          />
         </div>
         <div className="min-w-0 flex-1">
-          <h1 className="text-lg font-semibold leading-snug">{post.title}</h1>
+          <h1 className="text-lg leading-snug font-semibold">{post.title}</h1>
           <div className="mt-1.5 flex items-center gap-2 text-xs text-muted-foreground/50">
             <Avatar className="size-4">
               <AvatarImage src={post.user.image ?? undefined} />
-              <AvatarFallback className="text-[6px] font-medium">{post.user.name.charAt(0)}</AvatarFallback>
+              <AvatarFallback className="text-[6px] font-medium">
+                {post.user.name.charAt(0)}
+              </AvatarFallback>
             </Avatar>
             <span className="text-muted-foreground/60">{post.user.name}</span>
             <span>&middot;</span>
             <span>{timeAgo(post.createdAt)}</span>
-            {new Date(post.updatedAt).getTime() - new Date(post.createdAt).getTime() > 1000 && (
-              <span className="text-[10px] italic text-muted-foreground/40">(edited)</span>
+            {new Date(post.updatedAt).getTime() -
+              new Date(post.createdAt).getTime() >
+              1000 && (
+              <span className="text-[10px] text-muted-foreground/40 italic">
+                (edited)
+              </span>
             )}
           </div>
           <div
@@ -121,11 +145,17 @@ export function PostDetailClient({ post, comments, currentUserId }: PostDetailCl
           />
           <div className="mt-4 flex items-center gap-4 text-xs text-muted-foreground/50">
             <span className="flex items-center gap-1">
-              <span>{post._count.comments} comment{post._count.comments !== 1 ? "s" : ""}</span>
+              <span>
+                {post._count.comments} comment
+                {post._count.comments !== 1 ? "s" : ""}
+              </span>
             </span>
             {isOwn && (
               <>
-                <Link href={`/community/${post.id}/edit`} className="inline-flex items-center gap-1 hover:text-foreground/60 transition-colors">
+                <Link
+                  href={`/community/${post.id}/edit`}
+                  className="inline-flex items-center gap-1 transition-colors hover:text-foreground/60"
+                >
                   <HugeiconsIcon icon={PencilEdit02Icon} className="size-3.5" />
                   Edit
                 </Link>
@@ -162,15 +192,28 @@ export function PostDetailClient({ post, comments, currentUserId }: PostDetailCl
             placeholder="Share your thoughts..."
           />
           <div className="flex justify-end">
-            <Button onClick={handleComment} disabled={submitting || !commentText.trim()} size="sm">
-              {submitting && <HugeiconsIcon icon={Loading03Icon} className="size-3.5 animate-spin" />}
+            <Button
+              onClick={handleComment}
+              disabled={submitting || !commentText.trim()}
+              size="sm"
+            >
+              {submitting && (
+                <HugeiconsIcon
+                  icon={Loading03Icon}
+                  className="size-3.5 animate-spin"
+                />
+              )}
               Comment
             </Button>
           </div>
         </div>
 
         <div className="mt-4">
-          <CommentTree comments={comments} currentUserId={currentUserId} postId={post.id} />
+          <CommentTree
+            comments={comments}
+            currentUserId={currentUserId}
+            postId={post.id}
+          />
         </div>
       </div>
       <style jsx global>{`
@@ -204,11 +247,29 @@ export function PostDetailClient({ post, comments, currentUserId }: PostDetailCl
         .post-body ul[data-type="taskList"] li > div {
           flex: 1;
         }
-        .post-body h1 { font-size: 1.5rem; font-weight: 700; margin: 0.75em 0 0.5em; }
-        .post-body h2 { font-size: 1.25rem; font-weight: 600; margin: 0.75em 0 0.5em; }
-        .post-body h3 { font-size: 1.125rem; font-weight: 600; margin: 0.75em 0 0.5em; }
-        .post-body h4 { font-size: 1rem; font-weight: 600; margin: 0.75em 0 0.5em; }
-        .post-body p { margin: 0.5em 0; }
+        .post-body h1 {
+          font-size: 1.5rem;
+          font-weight: 700;
+          margin: 0.75em 0 0.5em;
+        }
+        .post-body h2 {
+          font-size: 1.25rem;
+          font-weight: 600;
+          margin: 0.75em 0 0.5em;
+        }
+        .post-body h3 {
+          font-size: 1.125rem;
+          font-weight: 600;
+          margin: 0.75em 0 0.5em;
+        }
+        .post-body h4 {
+          font-size: 1rem;
+          font-weight: 600;
+          margin: 0.75em 0 0.5em;
+        }
+        .post-body p {
+          margin: 0.5em 0;
+        }
         .post-body blockquote {
           border-left: 3px solid hsl(var(--border));
           padding-left: 1em;

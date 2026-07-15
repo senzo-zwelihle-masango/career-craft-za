@@ -37,9 +37,7 @@ export default function ResetPasswordEmail({
               If you didn&apos;t request this, you can safely ignore this email.
               This link expires in 1 hour.
             </Text>
-            <Text style={footer}>
-              Career Craft ZA
-            </Text>
+            <Text style={footer}>Career Craft ZA</Text>
           </Section>
         </Container>
       </Body>

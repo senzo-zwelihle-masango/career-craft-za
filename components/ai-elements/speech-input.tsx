@@ -314,8 +314,12 @@ export const SpeechInput = ({
         {...props}
       >
         {isProcessing && <Spinner />}
-        {!isProcessing && isListening && <HugeiconsIcon icon={SquareIcon} className="size-4" />}
-        {!(isProcessing || isListening) && <HugeiconsIcon icon={Mic01Icon} className="size-4" />}
+        {!isProcessing && isListening && (
+          <HugeiconsIcon icon={SquareIcon} className="size-4" />
+        )}
+        {!(isProcessing || isListening) && (
+          <HugeiconsIcon icon={Mic01Icon} className="size-4" />
+        )}
       </Button>
     </div>
   )

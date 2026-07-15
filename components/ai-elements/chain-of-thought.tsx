@@ -90,7 +90,8 @@ export const ChainOfThoughtHeader = memo(
           <span className="flex-1 text-left">
             {children ?? "Chain of Thought"}
           </span>
-          <HugeiconsIcon icon={ChevronDownIcon}
+          <HugeiconsIcon
+            icon={ChevronDownIcon}
             className={cn(
               "size-4 transition-transform",
               isOpen ? "rotate-180" : "rotate-0"

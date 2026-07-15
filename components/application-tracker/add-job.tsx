@@ -275,7 +275,10 @@ const AddJob = ({
           <Label htmlFor="salaryPeriod" className="text-sm font-medium">
             Period
           </Label>
-          <Select value={salaryPeriod} onValueChange={(v) => v != null && setSalaryPeriod(v)}>
+          <Select
+            value={salaryPeriod}
+            onValueChange={(v) => v != null && setSalaryPeriod(v)}
+          >
             <SelectTrigger id="salaryPeriod" className="h-9 text-sm">
               <SelectValue />
             </SelectTrigger>
@@ -388,12 +391,8 @@ const AddJob = ({
         <Select value={status} onValueChange={(v) => v != null && setStatus(v)}>
           <SelectTrigger id="status">
             <span className="flex flex-1 text-left">
-              {(
-                STATUS_CONFIG as Record<
-                  string,
-                  { label: string }
-                >
-              )[status]?.label || status}
+              {(STATUS_CONFIG as Record<string, { label: string }>)[status]
+                ?.label || status}
             </span>
           </SelectTrigger>
           <SelectContent>

@@ -214,7 +214,10 @@ const CurriculumVitaeGrid = ({
                       disabled={duplicating === cv.id}
                     >
                       {duplicating === cv.id ? (
-                        <HugeiconsIcon icon={Loading03Icon} className="animate-spin" />
+                        <HugeiconsIcon
+                          icon={Loading03Icon}
+                          className="animate-spin"
+                        />
                       ) : (
                         <HugeiconsIcon icon={Copy01Icon} />
                       )}

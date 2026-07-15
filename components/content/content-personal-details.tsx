@@ -271,7 +271,8 @@ const ContentPersonalDetails = ({
                             newLinks[i] = {
                               ...newLinks[i],
                               type: v ?? "custom",
-                              label: v !== "custom" ? undefined : newLinks[i].label,
+                              label:
+                                v !== "custom" ? undefined : newLinks[i].label,
                             }
                             setDetails({ ...details, links: newLinks })
                           }}
@@ -295,7 +296,10 @@ const ContentPersonalDetails = ({
                                 ? details.links
                                 : []),
                             ]
-                            newLinks[i] = { ...newLinks[i], url: e.target.value }
+                            newLinks[i] = {
+                              ...newLinks[i],
+                              url: e.target.value,
+                            }
                             setDetails({ ...details, links: newLinks })
                           }}
                           placeholder="https://..."
@@ -306,14 +310,15 @@ const ContentPersonalDetails = ({
                           className="h-9 w-9 shrink-0 text-destructive"
                           onClick={() => {
                             const newLinks = (
-                              Array.isArray(details.links)
-                                ? details.links
-                                : []
+                              Array.isArray(details.links) ? details.links : []
                             ).filter((_: unknown, j: number) => j !== i)
                             setDetails({ ...details, links: newLinks })
                           }}
                         >
-                          <HugeiconsIcon icon={Cancel01Icon} className="size-4" />
+                          <HugeiconsIcon
+                            icon={Cancel01Icon}
+                            className="size-4"
+                          />
                         </Button>
                       </div>
                       {link.type === "custom" && (
@@ -325,7 +330,10 @@ const ContentPersonalDetails = ({
                                 ? details.links
                                 : []),
                             ]
-                            newLinks[i] = { ...newLinks[i], label: e.target.value }
+                            newLinks[i] = {
+                              ...newLinks[i],
+                              label: e.target.value,
+                            }
                             setDetails({ ...details, links: newLinks })
                           }}
                           placeholder="e.g. Stack Overflow"

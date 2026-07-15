@@ -68,8 +68,7 @@ const CoverLetterNavigationBar = ({
   const avatarFallback = displayName.charAt(0).toUpperCase()
 
   const avatarSrc =
-    user?.image ??
-    `https://avatar.vercel.sh/${user?.email ?? ""}`
+    user?.image ?? `https://avatar.vercel.sh/${user?.email ?? ""}`
 
   return (
     <header>
@@ -172,8 +171,7 @@ const CoverLetterNavigationBar = ({
                       onClick={onDownloadDocx}
                       className="flex items-center gap-3 py-2 text-sm"
                     >
-                      <HugeiconsIcon icon={Doc02Icon} className="size-4" />{" "}
-                      DOCX
+                      <HugeiconsIcon icon={Doc02Icon} className="size-4" /> DOCX
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={onDownloadJson}

@@ -318,10 +318,10 @@ export default async function OverviewPage({
 
           <div className="mt-6 rounded-lg border bg-muted/30 p-3.5">
             <p className="text-xs leading-relaxed text-muted-foreground">
-              <strong>Quick Tips:</strong> Prioritize structural
-              consistency over decorative styling. Avoid embedding tracking
-              tables or custom graphics into layout nodes to verify seamless
-              cross-platform validation.
+              <strong>Quick Tips:</strong> Prioritize structural consistency
+              over decorative styling. Avoid embedding tracking tables or custom
+              graphics into layout nodes to verify seamless cross-platform
+              validation.
             </p>
           </div>
         </div>

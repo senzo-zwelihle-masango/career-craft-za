@@ -160,7 +160,9 @@ export function ContentEntryDialog({
                     onValueChange={(v) => setVal(f.key, v)}
                   >
                     <SelectTrigger className="h-11 w-full rounded-xl border border-border bg-input/50 px-3 text-base outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30">
-                      <SelectValue placeholder={`Select ${f.label.toLowerCase()}`} />
+                      <SelectValue
+                        placeholder={`Select ${f.label.toLowerCase()}`}
+                      />
                     </SelectTrigger>
                     <SelectContent>
                       {f.options.map((o) => (

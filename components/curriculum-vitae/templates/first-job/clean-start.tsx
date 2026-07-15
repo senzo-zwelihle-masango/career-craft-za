@@ -47,7 +47,7 @@ export function CleanStartTemplate({ cv }: CleanStartTemplateProps) {
         }}
       />
 
-            <div style={{ height: `${20 * es}px` }} />
+      <div style={{ height: `${20 * es}px` }} />
 
       {sections.map((section, idx) => (
         <div key={section.id}>

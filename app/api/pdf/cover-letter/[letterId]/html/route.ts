@@ -32,11 +32,12 @@ export async function GET(
     const font = FONT_MAP[letter.fontFamily] || FONT_MAP.serif
     const accentColor = letter.accentColor || "#1f2937"
 
-    const [createElement, { getCoverLetterTemplate }, { renderToString }] = await Promise.all([
-      import("react").then((m) => m.createElement),
-      import("@/components/cover-letter/templates/registry"),
-      import("react-dom/server"),
-    ])
+    const [createElement, { getCoverLetterTemplate }, { renderToString }] =
+      await Promise.all([
+        import("react").then((m) => m.createElement),
+        import("@/components/cover-letter/templates/registry"),
+        import("react-dom/server"),
+      ])
     const Template = getCoverLetterTemplate(letter.templateId)
     const rawHtml = renderToString(
       createElement(Template, {

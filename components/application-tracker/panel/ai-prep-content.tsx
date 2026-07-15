@@ -64,10 +64,14 @@ function buildContext(job: JobWithRelations): string {
 }
 
 const TYPE_COLORS: Record<string, string> = {
-  behavioral: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
-  technical: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
-  situational: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
-  general: "bg-slate-100 text-slate-700 dark:bg-slate-800/50 dark:text-slate-300",
+  behavioral:
+    "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+  technical:
+    "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
+  situational:
+    "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
+  general:
+    "bg-slate-100 text-slate-700 dark:bg-slate-800/50 dark:text-slate-300",
 }
 
 async function copyText(text: string) {
@@ -126,7 +130,8 @@ export function AiPrepContent({
     })
   }, [job.id])
 
-  const selectedRecord = dbRecords.find((r) => r.id === selectedRecordId) ?? null
+  const selectedRecord =
+    dbRecords.find((r) => r.id === selectedRecordId) ?? null
 
   const currentQuestions = selectedRecord
     ? parseQuestions(selectedRecord.questions)
@@ -166,7 +171,11 @@ export function AiPrepContent({
 
     const cleaned = text.replace(/```(?:json)?\s*\n?/g, "").trim()
 
-    let parsed: { questions: PrepQuestion[]; tips: string[]; topicsToReview: string[] }
+    let parsed: {
+      questions: PrepQuestion[]
+      tips: string[]
+      topicsToReview: string[]
+    }
     try {
       const p = JSON.parse(cleaned)
       if (!p.questions || !Array.isArray(p.questions)) {
@@ -240,25 +249,20 @@ export function AiPrepContent({
       <div className="rounded-lg border bg-card p-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-semibold leading-tight">
+            <h3 className="text-base leading-tight font-semibold">
               {job.title}
             </h3>
             <p className="mt-0.5 text-sm text-muted-foreground">
               {job.company}
               {job.interviews.length > 0 && (
                 <span className="ml-2 text-xs text-muted-foreground/60">
-                  &middot;{" "}
-                  {job.interviews.filter((i) => !i.completed).length} upcoming
-                  interview(s)
+                  &middot; {job.interviews.filter((i) => !i.completed).length}{" "}
+                  upcoming interview(s)
                 </span>
               )}
             </p>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleGenerate}
-          >
+          <Button variant="outline" size="sm" onClick={handleGenerate}>
             <HugeiconsIcon
               icon={isGenerating ? Loading03Icon : ArtificialIntelligence01Icon}
               className={isGenerating ? "size-3.5 animate-spin" : "size-3.5"}
@@ -280,7 +284,10 @@ export function AiPrepContent({
 
         {dbRecords.length > 0 && (
           <div className="flex flex-wrap items-center gap-2">
-            <HugeiconsIcon icon={HistoryIcon} className="size-3 text-muted-foreground/50" />
+            <HugeiconsIcon
+              icon={HistoryIcon}
+              className="size-3 text-muted-foreground/50"
+            />
             <span className="text-[11px] text-muted-foreground/60">
               {dbRecords.length} session{dbRecords.length > 1 ? "s" : ""}
             </span>
@@ -313,7 +320,7 @@ export function AiPrepContent({
           <p className="mb-2 text-xs font-medium text-destructive">
             Failed to parse AI response. Raw output:
           </p>
-          <pre className="max-h-48 overflow-auto whitespace-pre-wrap break-all text-xs text-muted-foreground">
+          <pre className="max-h-48 overflow-auto text-xs break-all whitespace-pre-wrap text-muted-foreground">
             {errorRaw}
           </pre>
         </div>
@@ -329,11 +336,7 @@ export function AiPrepContent({
                 <h4 className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
                   Practice Questions ({currentQuestions.length})
                 </h4>
-                <Button
-                  variant="ghost"
-                  size="xs"
-                  onClick={copyFullResult}
-                >
+                <Button variant="ghost" size="xs" onClick={copyFullResult}>
                   <HugeiconsIcon icon={Copy01Icon} className="size-3" />
                   Copy all
                 </Button>
@@ -348,7 +351,7 @@ export function AiPrepContent({
                           {i + 1}
                         </span>
                         <div className="min-w-0 text-left">
-                          <span className="text-sm font-medium leading-snug">
+                          <span className="text-sm leading-snug font-medium">
                             {q.question}
                           </span>
                           <div className="mt-0.5 flex flex-wrap gap-1.5">
@@ -394,7 +397,10 @@ export function AiPrepContent({
                             size="xs"
                             onClick={() => copyQuestion(q, i)}
                           >
-                            <HugeiconsIcon icon={Copy01Icon} className="size-3" />
+                            <HugeiconsIcon
+                              icon={Copy01Icon}
+                              className="size-3"
+                            />
                             Copy
                           </Button>
                         </div>
@@ -448,9 +454,9 @@ export function AiPrepContent({
           <p className="mt-3 text-sm font-medium text-foreground">
             No interview prep yet
           </p>
-          <p className="mt-1 text-xs text-muted-foreground/60 max-w-sm mx-auto">
-            Generate practice questions, tips, and topics to review based on
-            the job description, skills, and upcoming interviews
+          <p className="mx-auto mt-1 max-w-sm text-xs text-muted-foreground/60">
+            Generate practice questions, tips, and topics to review based on the
+            job description, skills, and upcoming interviews
           </p>
         </div>
       )}

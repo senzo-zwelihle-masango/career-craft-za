@@ -51,10 +51,7 @@ export function NavUser({
           >
             <Avatar className="h-8 w-8 rounded-lg">
               <AvatarImage
-                src={
-                  user.avatar ??
-                  `https://avatar.vercel.sh/${user.email}`
-                }
+                src={user.avatar ?? `https://avatar.vercel.sh/${user.email}`}
                 alt={user.name}
               />
               <AvatarFallback className="rounded-lg">
@@ -85,8 +82,7 @@ export function NavUser({
                   <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarImage
                       src={
-                        user.avatar ??
-                        `https://avatar.vercel.sh/${user.email}`
+                        user.avatar ?? `https://avatar.vercel.sh/${user.email}`
                       }
                       alt={user.name}
                     />
@@ -103,16 +99,16 @@ export function NavUser({
                         ? user.name
                         : user.email.split("@")[0]}
                     </span>
-                    <span className="truncate text-xs">
-                      {user.email}
-                    </span>
+                    <span className="truncate text-xs">{user.email}</span>
                   </div>
                 </div>
               </DropdownMenuLabel>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem onClick={() => (window.location.href = "/pricing")}>
+              <DropdownMenuItem
+                onClick={() => (window.location.href = "/pricing")}
+              >
                 <HugeiconsIcon icon={SparklesIcon} />
                 Upgrade to Pro
               </DropdownMenuItem>

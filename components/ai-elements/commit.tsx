@@ -359,7 +359,10 @@ export const CommitFileStatus = ({
   </span>
 )
 
-export type CommitFileIconProps = Omit<ComponentProps<typeof HugeiconsIcon>, "icon">
+export type CommitFileIconProps = Omit<
+  ComponentProps<typeof HugeiconsIcon>,
+  "icon"
+>
 
 export const CommitFileIcon = ({
   className,

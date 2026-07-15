@@ -35,9 +35,7 @@ function SpacingControl({ label, field, value, update }: SpacingControlProps) {
             [field]: (Array.isArray(v) ? v[0] : v) as number,
           } as Partial<CvWithRelations>)
         }
-        onValueCommitted={(v) =>
-          update(field, Array.isArray(v) ? v[0] : v)
-        }
+        onValueCommitted={(v) => update(field, Array.isArray(v) ? v[0] : v)}
         min={0.5}
         max={2}
         step={0.05}

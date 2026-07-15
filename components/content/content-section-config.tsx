@@ -72,7 +72,12 @@ const eFD: FieldDef[] = [
 
 const eduFD: FieldDef[] = [
   { key: "institution", label: "Institution", type: "text" },
-  { key: "type", label: "Qualification type", type: "select", options: EDUCATION_TYPES },
+  {
+    key: "type",
+    label: "Qualification type",
+    type: "select",
+    options: EDUCATION_TYPES,
+  },
   { key: "degree", label: "Qualification", type: "text" },
   { key: "startDate", label: "Start date", type: "date" },
   { key: "endDate", label: "End date", type: "date" },

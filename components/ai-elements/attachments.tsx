@@ -239,7 +239,10 @@ export const AttachmentPreview = ({
   const iconSize = variant === "inline" ? "size-3" : "size-4"
 
   const renderIcon = (icon: IconSvgElement) => (
-    <HugeiconsIcon icon={icon} className={cn(iconSize, "text-muted-foreground")} />
+    <HugeiconsIcon
+      icon={icon}
+      className={cn(iconSize, "text-muted-foreground")}
+    />
   )
 
   const renderContent = () => {

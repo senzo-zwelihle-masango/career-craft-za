@@ -347,7 +347,10 @@ export default function CoverLetterContentPage() {
               disabled={generating}
             >
               {generating ? (
-                <HugeiconsIcon icon={Loading03Icon} className="size-3 animate-spin" />
+                <HugeiconsIcon
+                  icon={Loading03Icon}
+                  className="size-3 animate-spin"
+                />
               ) : (
                 <HugeiconsIcon icon={SparklesIcon} className="size-3" />
               )}
@@ -405,16 +408,25 @@ export default function CoverLetterContentPage() {
           <div className="rounded-lg border bg-muted/20 p-3">
             <div className="mb-2 flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
               {clAiTool === "cl-improve" && (
-                <><HugeiconsIcon icon={MagicWand01Icon} className="size-3" /> Improved Text</>
+                <>
+                  <HugeiconsIcon icon={MagicWand01Icon} className="size-3" />{" "}
+                  Improved Text
+                </>
               )}
               {clAiTool === "cl-grammar" && (
-                <><HugeiconsIcon icon={TextCheckIcon} className="size-3" /> Proofread</>
+                <>
+                  <HugeiconsIcon icon={TextCheckIcon} className="size-3" />{" "}
+                  Proofread
+                </>
               )}
               {clAiTool === "cl-tone" && (
-                <><HugeiconsIcon icon={AiChat01Icon} className="size-3" /> Tone Analysis</>
+                <>
+                  <HugeiconsIcon icon={AiChat01Icon} className="size-3" /> Tone
+                  Analysis
+                </>
               )}
             </div>
-            <div className="whitespace-pre-wrap text-sm leading-relaxed">
+            <div className="text-sm leading-relaxed whitespace-pre-wrap">
               {clAiResult}
             </div>
             <div className="mt-3 flex items-center gap-2 border-t pt-2">
@@ -440,7 +452,7 @@ export default function CoverLetterContentPage() {
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-7 text-xs ml-auto"
+                className="ml-auto h-7 text-xs"
                 onClick={() => {
                   setClAiTool(null)
                   setClAiResult("")

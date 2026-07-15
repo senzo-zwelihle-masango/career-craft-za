@@ -20,7 +20,8 @@ export default function DocsLayout({
   const pathname = usePathname()
   const router = useRouter()
 
-  const currentTab = docsTabs.find((t) => pathname === t.href)?.value ?? "introduction"
+  const currentTab =
+    docsTabs.find((t) => pathname === t.href)?.value ?? "introduction"
 
   return (
     <Container

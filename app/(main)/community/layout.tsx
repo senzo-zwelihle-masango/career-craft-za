@@ -2,7 +2,11 @@ import { AppSidebar } from "@/components/layout/app-sidebar"
 import NavBreadcrumb from "@/components/layout/nav-breadcrumb"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 
-export default function CommunityLayout({ children }: { children: React.ReactNode }) {
+export default function CommunityLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <SidebarProvider
       style={
@@ -14,7 +18,7 @@ export default function CommunityLayout({ children }: { children: React.ReactNod
     >
       <AppSidebar />
       <SidebarInset>
-         <NavBreadcrumb />
+        <NavBreadcrumb />
         <main>{children}</main>
       </SidebarInset>
     </SidebarProvider>

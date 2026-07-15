@@ -11,7 +11,11 @@ async function getUserId() {
   return session?.user?.id ?? null
 }
 
-export async function createComment(data: { body: string; postId: string; parentId?: string }) {
+export async function createComment(data: {
+  body: string
+  postId: string
+  parentId?: string
+}) {
   const userId = await getUserId()
   if (!userId) return { error: "You must be signed in to comment" }
 
@@ -65,7 +69,8 @@ export async function deleteComment(commentId: string) {
   })
 
   if (!comment) return { error: "Comment not found" }
-  if (comment.userId !== userId) return { error: "You can only delete your own comments" }
+  if (comment.userId !== userId)
+    return { error: "You can only delete your own comments" }
 
   await prisma.communityComment.delete({ where: { id: commentId } })
 

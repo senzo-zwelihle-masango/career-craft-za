@@ -38,12 +38,13 @@ export function StudentSidebarTemplate({ cv }: StudentSidebarTemplateProps) {
         lineHeight: `${1.5 * lh}`,
         maxWidth,
         margin: "0 auto",
-        backgroundImage: "linear-gradient(to right, transparent 72%, #F3F4F6 72%)",
+        backgroundImage:
+          "linear-gradient(to right, transparent 72%, #F3F4F6 72%)",
         backgroundColor: "#fff",
       }}
     >
       {/* Main content */}
-          <div className="flex-1" style={{ padding: `${16 * mv}px ${18 * mh}px` }}>
+      <div className="flex-1" style={{ padding: `${16 * mv}px ${18 * mh}px` }}>
         <CvHeader
           pd={cv.personalDetails}
           cv={cv}
@@ -101,7 +102,7 @@ export function StudentSidebarTemplate({ cv }: StudentSidebarTemplateProps) {
         }}
       >
         {cv.personalDetails && (
-              <div style={{ marginBottom: `${12 * es}px` }}>
+          <div style={{ marginBottom: `${12 * es}px` }}>
             <h3
               style={{
                 fontSize: `${0.65 * fs}rem`,
@@ -148,7 +149,7 @@ export function StudentSidebarTemplate({ cv }: StudentSidebarTemplateProps) {
         )}
 
         {sidebarSections.map((section) => (
-              <div key={section.id} style={{ marginBottom: `${12 * es}px` }}>
+          <div key={section.id} style={{ marginBottom: `${12 * es}px` }}>
             <SectionRenderer
               section={section}
               cv={cv}

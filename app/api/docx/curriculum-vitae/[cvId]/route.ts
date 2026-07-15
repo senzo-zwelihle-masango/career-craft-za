@@ -98,7 +98,8 @@ export async function GET(
 
   return new NextResponse(wordHtml, {
     headers: {
-      "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "Content-Type":
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "Content-Disposition": `attachment; filename="${cv.title}.docx"`,
     },
   })

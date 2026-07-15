@@ -63,7 +63,7 @@ const ResetPasswordForm = ({
           onError: (ctx) => {
             toast.error(ctx.error.message)
           },
-        },
+        }
       )
     } catch {
       toast.error("Something went wrong. Please try again.")
@@ -98,9 +98,7 @@ const ResetPasswordForm = ({
                 autoComplete="new-password"
                 type="password"
               />
-              {fieldState.invalid && (
-                <FieldError errors={[fieldState.error]} />
-              )}
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
@@ -110,9 +108,7 @@ const ResetPasswordForm = ({
           control={form.control}
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="reset-confirm">
-                Confirm Password
-              </FieldLabel>
+              <FieldLabel htmlFor="reset-confirm">Confirm Password</FieldLabel>
               <Input
                 {...field}
                 id="reset-confirm"
@@ -120,9 +116,7 @@ const ResetPasswordForm = ({
                 autoComplete="new-password"
                 type="password"
               />
-              {fieldState.invalid && (
-                <FieldError errors={[fieldState.error]} />
-              )}
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
