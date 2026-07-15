@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://careercraftza.com"),
+   metadataBase: new URL("https://career-craft-za.vercel.app"),
   title: {
     default: "Career Craft ZA",
     template: "%s - Career Craft ZA",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_ZA",
-    url: "https://careercraftza.com",
+    url: "https://career-craft-za.vercel.app",
     siteName: "Career Craft ZA",
     title: "Career Craft ZA | Build Your CV & Land the Job",
     description:
